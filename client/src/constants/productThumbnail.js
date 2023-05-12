@@ -1,0 +1,15 @@
+export default {
+  'ipad-basic': '/products/ipad/ipad/thumbnail.png',
+  'ipad-air': '/products/ipad/ipad-air/thumbnail.png',
+  'ipad-mini': '/products/ipad/ipad-mini/thumbnail.png',
+  'ipad-pro': '/products/ipad/ipad-pro/thumbnail.png',
+  'iphone-13': '/products/iphone/iphone-13/thumbnail.png',
+  'iphone-14': '/products/iphone/iphone-14/thumbnail.png',
+  'iphone-14-pro': '/products/iphone/iphone-14-pro/thumbnail.png',
+  'iphone-se': '/products/iphone/iphone-se/thumbnail.png',
+  'macbook-air-m1': '/products/mac/macbook-air/m1/thumbnail.png',
+  'macbook-air-m2': '/products/mac/macbook-air/m2/thumbnail.png',
+  'macbook-pro-13': '/products/mac/macbook-pro/13/thumbnail.png',
+  'macbook-pro-14': '/products/mac/macbook-pro/14/thumbnail.png',
+  'macbook-pro-16': '/products/mac/macbook-pro/16/thumbnail.png',
+};

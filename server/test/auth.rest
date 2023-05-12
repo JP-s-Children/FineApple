@@ -1,0 +1,12 @@
+
+
+GET http://localhost:8000/api/users
+
+POST http://localhost:8000/api/signin
+Content-Type: application/json
+
+{
+  "email" : "cooljp95@naver.com",
+  "password" : "ABcdef12"
+}
+###

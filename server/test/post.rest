@@ -1,0 +1,52 @@
+
+// 유저 정보 확인
+GET http://localhost:8000/api/users
+###
+
+// 게시글 정보 확인
+GET http://localhost:8000/api/post/
+###
+
+GET http://localhost:8000/api/posts?category=iPhone&page=1
+
+###
+
+GET http://localhost:8000/api/post/search?keyword=아
+###
+
+
+// post 하나 가져오기
+GET http://localhost:8000/api/post/1
+
+
+// post 추가
+###
+POST http://localhost:8000/api/post/
+Content-Type: application/json
+
+{
+  "postInfo" : {
+    "title" : "아이폰 수리 맡겼는데 언제줌",
+    "content" : "A/S 센터 일 안하네",
+    "author": "cooljp95@naver.com",
+    "category" : "iphone"
+  }
+}
+
+###
+
+// post 내용 변경
+PATCH  http://localhost:8000/api/post/1
+Content-Type: application/json
+
+{
+  "postInfo" : {
+   "title" : "아 아이폰 고쳐야되느데"
+  }
+}
+
+// post 삭제
+###
+DELETE   http://localhost:8000/api/post/2
+
+###
