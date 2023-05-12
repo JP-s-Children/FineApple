@@ -9,24 +9,22 @@ import { Layout, RootError } from './components';
 import { postsByCategoryLoader, myPostsLoader, postDetailLoader, rankLoader, myProfileLoader } from './loaders';
 import {
   Home,
-  CommunityMain,
-  CommunityPostDetail,
-  CommunityQuestion,
-  ProfileEdit,
-  RegisterProduct,
   SignIn,
   SignUp,
-  CommunityRank,
-  CommunityMyPosts,
-  CommunityCategory,
-  PopularPosts,
+  Question,
+  ProfileEdit,
+  RegisterProduct,
+  Rank,
+  GuideFaq,
   MyProfile,
-  NotFound,
-  CommunityProfile,
-  CommunityFaq,
-  // PreparePage,
+  PopularPosts,
   ComputerIt,
   Game,
+  Post,
+  MyPosts,
+  Community,
+  Profile,
+  NotFound,
 } from './pages';
 import { SIGNIN_PATH } from './routes/routePaths';
 
@@ -60,11 +58,11 @@ const router = createBrowserRouter([
         path: '/computer-it',
         element: <ComputerIt />,
         children: [
-          { index: true, element: <CommunityMain category="computer-it" /> },
+          { index: true, element: <Community category="computer-it" /> },
           {
             path: ':subCategory',
             loader: postsByCategoryLoader(queryClient),
-            element: <CommunityCategory category="computer-it" />,
+            element: <Community category="computer-it" />,
           },
           {
             path: 'list/popular',
@@ -76,11 +74,11 @@ const router = createBrowserRouter([
         path: '/game',
         element: <Game />,
         children: [
-          { index: true, element: <CommunityMain category="game" /> },
+          { index: true, element: <Community category="game" /> },
           {
             path: ':subCategory',
             loader: postsByCategoryLoader(queryClient),
-            element: <CommunityCategory category="game" />,
+            element: <Community category="game" />,
           },
           {
             path: 'list/popular',
@@ -91,22 +89,22 @@ const router = createBrowserRouter([
       {
         path: 'post/:postId',
         loader: postDetailLoader(queryClient),
-        element: <CommunityPostDetail />,
+        element: <Post />,
       },
       {
         path: 'myposts',
         loader: myPostsLoader(queryClient),
-        element: <CommunityMyPosts />,
+        element: <MyPosts />,
       },
-      { path: 'guide-faq', element: <CommunityFaq /> },
+      { path: 'guide-faq', element: <GuideFaq /> },
       {
         path: 'question',
-        element: <AuthenticationGuard redirectTo={SIGNIN_PATH} element={<CommunityQuestion />} />,
+        element: <AuthenticationGuard redirectTo={SIGNIN_PATH} element={<Question />} />,
       },
-      { path: 'rank', loader: rankLoader(queryClient), element: <CommunityRank /> },
+      { path: 'rank', loader: rankLoader(queryClient), element: <Rank /> },
       {
         path: 'profile/:nickName',
-        element: <CommunityProfile />,
+        element: <Profile />,
       },
       {
         path: '/profile',

@@ -23,7 +23,7 @@ const RankChip = styled(Chip)`
   }
 `;
 
-const CommunityRank = () => {
+const Rank = () => {
   const [users, setUsers] = React.useState([]);
 
   const [curTopCount, setCurTopCount] = React.useState('10');
@@ -58,4 +58,4 @@ const CommunityRank = () => {
   );
 };
 
-export default CommunityRank;
+export default Rank;

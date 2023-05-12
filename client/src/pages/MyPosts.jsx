@@ -15,7 +15,7 @@ const Wrapper = styled(Container)`
   color: var(--font-color);
 `;
 
-const CommunityMyPosts = () => (
+const MyPosts = () => (
   <Wrapper>
     <Title size="52px" mt="40px">
       내가 작성한 질문
@@ -24,4 +24,4 @@ const CommunityMyPosts = () => (
   </Wrapper>
 );
 
-export default CommunityMyPosts;
+export default MyPosts;

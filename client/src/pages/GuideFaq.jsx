@@ -16,7 +16,7 @@ const Wrapper = styled(Container)`
   color: var(--font-color);
 `;
 
-const CommunityFaq = () => {
+const GuideFaq = () => {
   const faqList = [
     {
       title: 'SIM이 없는 iPhone은 왜 fineapple.com에서 구입하는 게 좋은가요?',
@@ -62,4 +62,4 @@ const CommunityFaq = () => {
   );
 };
 
-export default CommunityFaq;
+export default GuideFaq;

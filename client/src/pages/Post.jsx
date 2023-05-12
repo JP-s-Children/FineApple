@@ -25,7 +25,7 @@ const Wrapper = styled(Container)`
 `;
 
 // [] todo: postInfo의 author, certified auth 연결 후 임의 데이터 수정 필요
-const CommunityPostDetail = () => {
+const Post = () => {
   const { postId } = useParams();
   const { data: post } = useQuery(postDetailQuery(postId));
 
@@ -48,4 +48,4 @@ const CommunityPostDetail = () => {
   );
 };
 
-export default CommunityPostDetail;
+export default Post;
