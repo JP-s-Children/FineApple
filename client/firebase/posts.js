@@ -13,17 +13,53 @@ import {
   arrayUnion,
   query,
   where,
+  startAfter,
+  limit,
+  and,
 } from 'firebase/firestore';
 import app from './app';
 import { specifySnapshotIntoData, formattedCreateAt, formattedUpdateAt } from './utils';
 
 const db = getFirestore(app);
 const COLLECTION = 'posts';
+const PAGE_SIZE = 10;
 
-const getPosts = async () => {
-  const postSnapshot = await getDocs(collection(db, COLLECTION));
+// const getPosts = async () => {
+//   const postSnapshot = await getDocs(collection(db, COLLECTION));
 
-  return specifySnapshotIntoData(postSnapshot);
+//   return specifySnapshotIntoData(postSnapshot);
+// };
+
+const getPosts = async ({ pageParam }) => {
+  const q = pageParam
+    ? query(collection(db, COLLECTION), startAfter(pageParam), limit(PAGE_SIZE))
+    : query(collection(db, COLLECTION), limit(PAGE_SIZE));
+
+  const postSnapshot = await getDocs(q);
+
+  return postSnapshot;
+};
+
+const paginationPostsQuery = ({ pageParam, searchCondition }) => {
+  const dbRef = collection(db, COLLECTION);
+  const limitPage = limit(PAGE_SIZE);
+
+  return pageParam
+    ? query(dbRef, searchCondition, startAfter(pageParam), limitPage)
+    : query(dbRef, searchCondition, limit(PAGE_SIZE));
+};
+
+const getPostsByCategory = async ({ category = '', subCategory = '', pageParam }) => {
+  const q = paginationPostsQuery({
+    pageParam,
+    searchCondition: subCategory
+      ? and(where('category', '==', category), where('subCategory', '==', subCategory))
+      : where('category', '==', category),
+  });
+
+  const postSnapshot = await getDocs(q);
+
+  return postSnapshot;
 };
 
 // select된 값을 keyword로 받는 작업도 필요
@@ -42,7 +78,12 @@ const getSearchedPosts = async ({ keyword = '', category = '', subCategory = '' 
 };
 
 // 내가 작성한 글 목록 :auth 정보 필요
-const getMyPosts = async () => {};
+const getMyPosts = async ({ author, pageParam }) => {
+  const q = paginationPostsQuery({ pageParam, searchCondition: where('author', '==', author) });
+  const postSnapshot = await getDocs(q);
+
+  return postSnapshot;
+};
 
 const getPost = async ({ postId }) => {
   const postSnapshot = await getDoc(doc(db, COLLECTION, postId));
@@ -79,4 +120,14 @@ const togglePostLike = async ({ id, checked, userId }) => {
   });
 };
 
-export { getPosts, getSearchedPosts, getPost, createPost, editPost, removePost, togglePostLike };
+export {
+  getPosts,
+  getSearchedPosts,
+  getMyPosts,
+  getPostsByCategory,
+  getPost,
+  createPost,
+  editPost,
+  removePost,
+  togglePostLike,
+};

@@ -18,8 +18,8 @@ const CategoryImage = styled(Image)`
   }
 `;
 
-const CommunityCategorySection = ({ category }) => {
-  const { subCategory } = useParams();
+const CommunityCategorySection = () => {
+  const { category, subCategory } = useParams();
 
   return (
     <>
@@ -34,7 +34,7 @@ const CommunityCategorySection = ({ category }) => {
           <AutoComplete width={720} queryFn={getSearchedPosts} category={category} subCategory={subCategory} />
         </Flex>
       </Flex>
-      <PostSection queryFn={postsByCategoryQuery(subCategory)} />
+      <PostSection queryFn={postsByCategoryQuery({ category, subCategory })} />
     </>
   );
 };
