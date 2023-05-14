@@ -54,24 +54,25 @@ const router = createBrowserRouter([
         path: '/signup',
         element: <SignUp />,
       },
+      // {
+      //   path: '/computer-it',
+      //   element: <ComputerIt />,
+      //   children: [
+      //     { index: true, element: <Community category="computer-it" /> },
+      //     {
+      //       path: ':subCategory',
+      //       loader: postsByCategoryLoader(queryClient),
+      //       element: <Community category="computer-it" />,
+      //     },
+      //     {
+      //       path: 'list/popular',
+      //       element: <PopularPosts category="computer-it" />,
+      //     },
+      //   ],
+      // },
       {
-        path: '/computer-it',
-        element: <ComputerIt />,
-        children: [
-          { index: true, element: <Community category="computer-it" /> },
-          {
-            path: ':subCategory',
-            loader: postsByCategoryLoader(queryClient),
-            element: <Community category="computer-it" />,
-          },
-          {
-            path: 'list/popular',
-            element: <PopularPosts category="computer-it" />,
-          },
-        ],
-      },
-      {
-        path: '/game',
+        path: ':category',
+        loader: postsByCategoryLoader(queryClient),
         element: <Game />,
         children: [
           { index: true, element: <Community category="game" /> },
