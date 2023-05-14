@@ -24,8 +24,6 @@ const MyPosts = styled(List)`
 const PostSection = ({ queryFn, isShownQuestionButton = true }) => {
   const { data: posts, fetchNextPage, hasNextPage, isFetchingNextPage } = useInfiniteQuery(queryFn);
 
-  console.log(posts);
-
   const [currentSort, setCurrentSort] = React.useState('recent');
   const [currentFilter, setCurrentFilter] = React.useState(FILTERS.all);
   const [opened, { toggle }] = useDisclosure(false);
@@ -72,7 +70,7 @@ const PostSection = ({ queryFn, isShownQuestionButton = true }) => {
           <EmptyPostIndicator isShownButton={isShownQuestionButton} />
         )}
       </PostsContainer>
-      {posts?.length > 0 && hasNextPage && <ShowMoreButton onClick={fetchNextPage} loading={isFetchingNextPage} />}
+      {hasNextPage && <ShowMoreButton onClick={fetchNextPage} loading={isFetchingNextPage} />}
     </>
   );
 };
