@@ -39,7 +39,7 @@ const InfoCard = ({ icon, title, desc, onClick }) => (
   <Container>
     <Stack align="center">
       <Icon>{icon}</Icon>
-      <Text fz="28px" fw="600">
+      <Text fz="24px" fw="600">
         {title}
       </Text>
       <Text w="60%">{desc}</Text>
