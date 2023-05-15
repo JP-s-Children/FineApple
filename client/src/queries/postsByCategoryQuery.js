@@ -1,5 +1,5 @@
-import { getPostsByCategory } from '../../firebase/posts';
-import { specifySnapshotIntoData } from '../../firebase/utils';
+import { getPostsByCategory } from '../services/posts';
+import { specifySnapshotIntoData } from '../services/utils';
 
 const staleTime = 3000;
 

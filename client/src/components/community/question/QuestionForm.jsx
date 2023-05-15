@@ -12,7 +12,7 @@ import { SubjectSelect, ContentEditor } from '..';
 import { POST_PATH } from '../../../constants/routes';
 import userState from '../../../recoil/atoms/userState';
 import useToast from '../../../hooks/useToast';
-import { createPost } from '../../../../firebase/posts';
+import { createPost } from '../../../services/posts';
 
 const TitleInput = styled(Input)`
   input {
