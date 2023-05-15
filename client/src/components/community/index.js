@@ -1,5 +1,5 @@
 export * from './comment';
-export * from './main';
+export * from './home';
 export * from './posts';
 export * from './question';
 export * from './rank';

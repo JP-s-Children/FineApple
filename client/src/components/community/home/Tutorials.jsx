@@ -9,7 +9,7 @@ import { InfoCard } from '../../common';
 import { ContentInfoModal, QuestionInfoModal, RuleInfoModal } from '..';
 
 const Container = styled(Flex)`
-  margin-top: 6rem;
+  margin-top: 8rem;
   padding: 30px;
   gap: 30px;
   border-radius: 20px;

@@ -11,14 +11,15 @@ const paginationQuery = ({ collectionName, pageParam, searchCondition }) => {
     ? query(collectionRef, searchCondition, startAfter(pageParam), limitPage)
     : query(collectionRef, searchCondition, limitPage);
 };
+
 const specifySnapshotIntoData = snapshot =>
   snapshot.docs.map(doc => {
     const specifiedData = doc.data();
 
     return {
       ...specifiedData,
-      createAt: new Date(formattedCreateAt(specifiedData)),
-      updateAt: new Date(formattedUpdateAt(specifiedData)),
+      createAt: formattedCreateAt(specifiedData),
+      updateAt: formattedUpdateAt(specifiedData),
       id: doc.id,
     };
   });
