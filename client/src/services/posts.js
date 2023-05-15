@@ -17,7 +17,7 @@ import {
   and,
 } from 'firebase/firestore';
 import { db } from './firebase';
-import { specifySnapshotIntoData, formattedCreateAt, formattedUpdateAt } from './utils';
+import { specifySnapshotIntoData, formattedCreateAt, formattedUpdateAt, paginationQuery } from './utils';
 
 const COLLECTION = 'posts';
 const PAGE_SIZE = 10;
@@ -38,17 +38,9 @@ const getPosts = async ({ pageParam }) => {
   return postSnapshot;
 };
 
-const paginationPostsQuery = ({ pageParam, searchCondition }) => {
-  const dbRef = collection(db, COLLECTION);
-  const limitPage = limit(PAGE_SIZE);
-
-  return pageParam
-    ? query(dbRef, searchCondition, startAfter(pageParam), limitPage)
-    : query(dbRef, searchCondition, limit(PAGE_SIZE));
-};
-
 const getPostsByCategory = async ({ category = '', subCategory = '', pageParam }) => {
-  const q = paginationPostsQuery({
+  const q = paginationQuery({
+    collectionName: COLLECTION,
     pageParam,
     searchCondition: subCategory
       ? and(where('category', '==', category), where('subCategory', '==', subCategory))
@@ -77,7 +69,7 @@ const getSearchedPosts = async ({ keyword = '', category = '', subCategory = '' 
 
 // 내가 작성한 글 목록 :auth 정보 필요
 const getMyPosts = async ({ author, pageParam }) => {
-  const q = paginationPostsQuery({ pageParam, searchCondition: where('author', '==', author) });
+  const q = paginationQuery({ collectionName: COLLECTION, pageParam, searchCondition: where('author', '==', author) });
   const postSnapshot = await getDocs(q);
 
   return postSnapshot;
