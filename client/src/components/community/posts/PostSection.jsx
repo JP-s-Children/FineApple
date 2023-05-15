@@ -1,13 +1,12 @@
 import React from 'react';
 import styled from '@emotion/styled';
-import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
+import { useInfiniteQuery } from '@tanstack/react-query';
 import { Chip, Flex, Group, List, Text, Burger, Divider } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import FILTERS from '../../../constants/filters';
 import { EmptyPostIndicator, PostItem, ShowMoreButton, SideFilter } from '..';
 import filterPosts from '../../../utils/filterPosts';
-import sortPosts from '../../../utils/sortPosts';
-import { getPosts } from '../../../services/posts';
+import { getPosts, sortPosts } from '../../../services/posts';
 
 const PostsContainer = styled(Flex)`
   margin-top: 1rem;
@@ -23,11 +22,7 @@ const MyPosts = styled(List)`
 `;
 
 const PostSection = ({ queryFn, isShownQuestionButton = true }) => {
-  const { data, fetchNextPage, hasNextPage, isFetchingNextPage } = useInfiniteQuery(queryFn);
-  const { data: posts } = useQuery({
-    queryKey: ['postsFire'],
-    queryFn: getPosts,
-  });
+  const { data: posts, fetchNextPage, hasNextPage, isFetchingNextPage } = useInfiniteQuery(queryFn);
 
   const [currentSort, setCurrentSort] = React.useState('recent');
   const [currentFilter, setCurrentFilter] = React.useState(FILTERS.all);
@@ -42,7 +37,7 @@ const PostSection = ({ queryFn, isShownQuestionButton = true }) => {
           질문
         </Text>
         <Text c="blue" fz="2.5rem">
-          {data?.totalLength}
+          {posts?.totalLength}
         </Text>
       </Flex>
       <Divider mb="1rem" variant="dashed" />
@@ -75,7 +70,7 @@ const PostSection = ({ queryFn, isShownQuestionButton = true }) => {
           <EmptyPostIndicator isShownButton={isShownQuestionButton} />
         )}
       </PostsContainer>
-      {posts?.length > 0 && hasNextPage && <ShowMoreButton onClick={fetchNextPage} loading={isFetchingNextPage} />}
+      {hasNextPage && <ShowMoreButton onClick={fetchNextPage} loading={isFetchingNextPage} />}
     </>
   );
 };

@@ -1,25 +1,14 @@
-import { getPostsByCategory } from '../api/posts';
+import { getPostsByCategory } from '../../firebase/posts';
+import { specifySnapshotIntoData } from '../../firebase/utils';
 
 const staleTime = 3000;
 
-const postsByCategoryQuery = category => ({
-  queryKey: ['category', category],
-  queryFn: async ({ pageParam = 1 }) => {
-    const { data } = await getPostsByCategory({ param: category, pageParam });
-    return data;
-  },
-  getNextPageParam: (lastPage, allPages) => {
-    const nextPage = allPages.length + 1;
-    const { totalLength } = lastPage;
+const postsByCategoryQuery = ({ category, subCategory }) => ({
+  queryKey: ['category', category, subCategory],
+  queryFn: async ({ pageParam }) => getPostsByCategory({ category, subCategory, pageParam }),
 
-    return totalLength === 0 || Math.ceil(totalLength / allPages[0].posts.length) === allPages.length
-      ? undefined
-      : nextPage;
-  },
-  select: data => ({
-    posts: data.pages.map(({ posts }) => posts).flat(),
-    totalLength: data.pages[0].totalLength,
-  }),
+  getNextPageParam: lastPage => (lastPage.size === 10 ? lastPage.docs[lastPage.docs.length - 1] : undefined),
+  select: ({ pages }) => pages.map(postSnapshot => specifySnapshotIntoData(postSnapshot)).flat(),
   staleTime,
 });
 
