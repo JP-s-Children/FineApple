@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { Container, Image, List, Text, Title } from '@mantine/core';
 import { AutoComplete, Tutorials } from '../components';
 import categoryList from '../constants/categoryList';
-import { COMPUTER_IT_PATH } from '../routes/routePaths';
+import { COMPUTER_IT_PATH } from '../constants/routes';
 import { getSearchedPosts } from '../../firebase/posts';
 
 const Wrapper = styled(Container)`

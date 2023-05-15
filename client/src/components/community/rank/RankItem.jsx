@@ -2,7 +2,7 @@ import React from 'react';
 import styled from '@emotion/styled';
 import { Link } from 'react-router-dom';
 import { AvatarIcon } from '../..';
-import { PROFILE_PATH } from '../../../routes/routePaths';
+import { PROFILE_PATH } from '../../../constants/routes';
 
 const AvatarWrapper = styled.td`
   display: flex;

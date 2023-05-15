@@ -2,7 +2,7 @@ import React from 'react';
 import styled from '@emotion/styled';
 import { Header, Group } from '@mantine/core';
 import { Link } from 'react-router-dom';
-import { MAIN_PATH } from '../../../routes/routePaths';
+import { MAIN_PATH } from '../../../constants/routes';
 import { MenuList, ThemeButton, UserMenu, Logo } from '..';
 
 const NavContainer = styled(Header)`

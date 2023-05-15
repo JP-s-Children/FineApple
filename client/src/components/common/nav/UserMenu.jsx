@@ -6,7 +6,7 @@ import { Menu } from '@mantine/core';
 import userState from '../../../recoil/atoms/userState';
 import { AvatarIcon, SubMenu } from '..';
 import { signOut } from '../../../api/auth';
-import { PROFILE_PATH, FAV_CATEGORY_PATH, SIGNIN_PATH } from '../../../routes/routePaths';
+import { PROFILE_PATH, FAV_CATEGORY_PATH, SIGNIN_PATH } from '../../../constants/routes';
 
 const AvatarWrapper = styled.div`
   background: none;

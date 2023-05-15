@@ -1,5 +1,5 @@
 import React from 'react';
-import { GAME_AOS_PATH, GAME_FPS_PATH, GAME_MMORPG_PATH, GAME_PATH, GAME_POPULAR_PATH } from '../../routes/routePaths';
+import { GAME_AOS_PATH, GAME_FPS_PATH, GAME_MMORPG_PATH, GAME_PATH, GAME_POPULAR_PATH } from '../../constants/routes';
 import { Header } from '../common';
 
 const GameHeader = () => (

@@ -2,7 +2,7 @@ import React from 'react';
 import styled from '@emotion/styled';
 import { Link } from 'react-router-dom';
 import { Badge, Flex, Group, List, Text, Title } from '@mantine/core';
-import { POST_PATH } from '../../../routes/routePaths';
+import { POST_PATH } from '../../../constants/routes';
 import formattedDate from '../../../utils/formattedDate';
 import { AvatarIcon, AppleRecommendIcon, CompletedIcon } from '../..';
 import { CATEGORY } from '../../../constants/category';

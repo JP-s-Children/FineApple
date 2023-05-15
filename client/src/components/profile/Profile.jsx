@@ -4,7 +4,7 @@ import styled from '@emotion/styled';
 import { Button, Divider, Flex, Grid, Text } from '@mantine/core';
 import { AvatarIcon } from '..';
 import formattedDate from '../../utils/formattedDate';
-import { PROFILE_EDIT_PATH } from '../../routes/routePaths';
+import { PROFILE_EDIT_PATH } from '../../constants/routes';
 
 const Container = styled.div`
   min-width: 1024px;

@@ -5,7 +5,7 @@ import { AiFillCheckCircle } from 'react-icons/ai';
 import { Badge, Box, Button, CloseButton, Divider, Flex, Group, List, Text } from '@mantine/core';
 import { useRecoilValue } from 'recoil';
 import { AvatarIcon, AppleRecommendIcon, TextEditor, UsefulCommentChip, AppleRecommendButton } from '../..';
-import { PROFILE_PATH } from '../../../routes/routePaths';
+import { PROFILE_PATH } from '../../../constants/routes';
 import formattedDate from '../../../utils/formattedDate';
 import transientOptions from '../../../utils/transientOptions';
 import useTextEditor from '../../../hooks/useTextEditor';

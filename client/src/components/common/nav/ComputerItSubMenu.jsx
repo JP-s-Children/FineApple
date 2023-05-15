@@ -5,7 +5,7 @@ import {
   COMPUTER_IT_PATH,
   COMPUTER_IT_POPULAR_PATH,
   COMPUTER_IT_PROGRAMMING_PATH,
-} from '../../../routes/routePaths';
+} from '../../../constants/routes';
 import SubMenu from './SubMenu';
 
 const ComputerItSubMenu = () => {

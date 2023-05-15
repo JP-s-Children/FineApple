@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import styled from '@emotion/styled';
 import { Menu, Text } from '@mantine/core';
 import { ComputerItSubMenu } from '.';
-import { GUIDE_FAQ_PATH, QUESTION_PATH, RANK_PATH } from '../../../routes/routePaths';
+import { GUIDE_FAQ_PATH, QUESTION_PATH, RANK_PATH } from '../../../constants/routes';
 import GameSubMenu from './GameSubMenu';
 
 const NavItem = styled(Text)`

@@ -7,7 +7,7 @@ import { Badge, Button, Flex, Text, Title } from '@mantine/core';
 import formattedDate from '../../utils/formattedDate';
 import { AvatarIcon, CompletedIcon, AppleRecommendIcon, DeletePostModal } from '..';
 import userState from '../../recoil/atoms/userState';
-import { PROFILE_PATH } from '../../routes/routePaths';
+import { PROFILE_PATH } from '../../constants/routes';
 
 const PostSection = styled.section`
   margin-top: 2.5rem;

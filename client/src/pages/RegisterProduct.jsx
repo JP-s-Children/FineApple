@@ -6,7 +6,7 @@ import { Button, Container } from '@mantine/core';
 import { useController, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { registerProduct } from '../api/profile';
-import { PROFILE_PATH } from '../routes/routePaths';
+import { PROFILE_PATH } from '../constants/routes';
 import { SelectProduct, SelectedProduct } from '../components';
 import useToast from '../hooks/useToast';
 
