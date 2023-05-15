@@ -1,10 +1,12 @@
 import React from 'react';
 import styled from '@emotion/styled';
 import { useInfiniteQuery } from '@tanstack/react-query';
-import { Chip, Flex, Group, List, Text, Burger, Divider } from '@mantine/core';
-import { useDisclosure } from '@mantine/hooks';
+import { Flex, List, Text, Divider, Loader } from '@mantine/core';
 import FILTERS from '../../../constants/filters';
-import { EmptyPostIndicator, PostItem, ShowMoreButton, SideFilter } from '..';
+import { EmptyPostIndicator, PostItem, SideMenu } from '..';
+import useInfinityScroll from '../../../hooks/useInfinityScroll';
+import sortPosts from '../../../utils/sortPosts';
+import filterPosts from '../../../utils/filterPosts';
 
 const PostsContainer = styled(Flex)`
   margin-top: 1rem;
@@ -20,13 +22,13 @@ const MyPosts = styled(List)`
 `;
 
 const PostSection = ({ queryFn, isShownQuestionButton = true }) => {
-  const { data: posts, fetchNextPage, hasNextPage, isFetchingNextPage } = useInfiniteQuery(queryFn);
+  const { data: posts, fetchNextPage, hasNextPage } = useInfiniteQuery(queryFn);
 
   const [currentSort, setCurrentSort] = React.useState('recent');
   const [currentFilter, setCurrentFilter] = React.useState(FILTERS.all);
-  const [opened, { toggle }] = useDisclosure(false);
+  const ref = useInfinityScroll(fetchNextPage);
 
-  // const filteredPosts = filterPosts(data.posts, currentFilter);
+  const displayPosts = sortPosts(filterPosts(posts, currentFilter), currentSort);
 
   return (
     <>
@@ -39,28 +41,17 @@ const PostSection = ({ queryFn, isShownQuestionButton = true }) => {
         </Text>
       </Flex>
       <Divider mb="1rem" variant="dashed" />
-      <Flex justify="end" pos="relative">
-        <Burger
-          opened={opened}
-          onClick={toggle}
-          pos="absolute"
-          top="2rem"
-          left="0"
-          color="var(--font-color)"
-          aria-label={opened ? 'Close' : 'Open'}
-        />
-        <Chip.Group value={currentSort} onChange={setCurrentSort}>
-          <Group position="center" mt="2rem">
-            <Chip value="recent">최신 순</Chip>
-            <Chip value="old">오래된 순</Chip>
-          </Group>
-        </Chip.Group>
-      </Flex>
+
       <PostsContainer>
-        <SideFilter open={opened} currentFilter={currentFilter} setCurrentFilter={setCurrentFilter} />
+        <SideMenu
+          currentFilter={currentFilter}
+          currentSort={currentSort}
+          setCurrentFilter={setCurrentFilter}
+          setCurrentSort={setCurrentSort}
+        />
         {posts?.length !== 0 ? (
           <MyPosts>
-            {posts?.map(post => (
+            {displayPosts?.map(post => (
               <PostItem key={post.id} post={post} />
             ))}
           </MyPosts>
@@ -68,7 +59,10 @@ const PostSection = ({ queryFn, isShownQuestionButton = true }) => {
           <EmptyPostIndicator isShownButton={isShownQuestionButton} />
         )}
       </PostsContainer>
-      {hasNextPage && <ShowMoreButton onClick={fetchNextPage} loading={isFetchingNextPage} />}
+
+      <Flex ref={ref} justify="center" mt="40px">
+        {hasNextPage && <Loader />}
+      </Flex>
     </>
   );
 };
