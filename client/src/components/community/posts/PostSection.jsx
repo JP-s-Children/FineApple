@@ -5,8 +5,6 @@ import { Chip, Flex, Group, List, Text, Burger, Divider } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import FILTERS from '../../../constants/filters';
 import { EmptyPostIndicator, PostItem, ShowMoreButton, SideFilter } from '..';
-import filterPosts from '../../../utils/filterPosts';
-import { getPosts, sortPosts } from '../../../services/posts';
 
 const PostsContainer = styled(Flex)`
   margin-top: 1rem;
