@@ -1,7 +1,7 @@
 import React from 'react';
 import Recoil from 'recoil';
 import { Navigate, useRouteError } from 'react-router-dom';
-import { SIGNIN_PATH } from '../routes/routePaths';
+import { SIGNIN_PATH } from '../constants/routes';
 import userState from '../recoil/atoms/userState';
 
 const RootError = () => {

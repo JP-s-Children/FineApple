@@ -5,7 +5,7 @@ import {
   GAME_MMORPG_PATH,
   GAME_PATH,
   GAME_POPULAR_PATH,
-} from '../../../routes/routePaths';
+} from '../../../constants/routes';
 import SubMenu from './SubMenu';
 
 const GameSubMenu = () => {

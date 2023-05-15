@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { Title, Text, Flex } from '@mantine/core';
 import { WiDirectionUpRight } from 'react-icons/wi';
 import { SignInForm } from '../components/auth';
-import { SIGNUP_PATH } from '../routes/routePaths';
+import { SIGNUP_PATH } from '../constants/routes';
 
 const LinkBox = styled.span`
   display: inline-block;

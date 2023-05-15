@@ -11,7 +11,7 @@ import { checkNickName } from '../../api/auth';
 import { editProfile } from '../../api/profile';
 import userState from '../../recoil/atoms/userState';
 import useToast from '../../hooks/useToast';
-import { PROFILE_PATH } from '../../routes/routePaths';
+import { PROFILE_PATH } from '../../constants/routes';
 import { myProfileQuery } from '../../queries';
 import {
   AvatarEditButton,

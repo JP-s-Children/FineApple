@@ -9,7 +9,7 @@ import { useRecoilValue } from 'recoil';
 import { InputWrapper } from '../../common';
 import { SubjectSelect, ContentEditor } from '..';
 // import { addPost } from '../../../api/post';
-import { POST_PATH } from '../../../routes/routePaths';
+import { POST_PATH } from '../../../constants/routes';
 import userState from '../../../recoil/atoms/userState';
 import useToast from '../../../hooks/useToast';
 import { createPost } from '../../../../firebase/posts';

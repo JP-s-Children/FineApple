@@ -8,7 +8,7 @@ import { useSetRecoilState } from 'recoil';
 import { Stack, Input, Button } from '@mantine/core';
 import userState from '../../recoil/atoms/userState';
 import { signIn } from '../../api/auth';
-import { MAIN_PATH } from '../../routes/routePaths';
+import { MAIN_PATH } from '../../constants/routes';
 import { InputWrapper } from '../common/form';
 
 const signinScheme = z.object({

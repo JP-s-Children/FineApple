@@ -3,7 +3,7 @@ import styled from '@emotion/styled';
 import { useNavigate } from 'react-router';
 import { Flex, Text } from '@mantine/core';
 import { AvatarIcon } from '../..';
-import { POST_PATH } from '../../../routes/routePaths';
+import { POST_PATH } from '../../../constants/routes';
 
 const Container = styled.div`
   border: 1px solid transparent;

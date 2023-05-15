@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router';
 import { Text, Button } from '@mantine/core';
-import { QUESTION_PATH } from '../../../routes/routePaths';
+import { QUESTION_PATH } from '../../../constants/routes';
 
 const NothingFound = () => {
   const navigate = useNavigate();

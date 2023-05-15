@@ -2,7 +2,7 @@ import React from 'react';
 import styled from '@emotion/styled';
 import { useNavigate } from 'react-router-dom';
 import { Button, Flex, Title } from '@mantine/core';
-import { QUESTION_PATH } from '../../../routes/routePaths';
+import { QUESTION_PATH } from '../../../constants/routes';
 
 const Container = styled(Flex)`
   flex-direction: column;

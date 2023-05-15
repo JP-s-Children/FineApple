@@ -5,7 +5,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useNavigate } from 'react-router-dom';
 import { Stack, Flex, Button, Input, Divider } from '@mantine/core';
 import { checkEmail, checkNickName, signUp } from '../../api/auth';
-import { SIGNIN_PATH } from '../../routes/routePaths';
+import { SIGNIN_PATH } from '../../constants/routes';
 import useToast from '../../hooks/useToast';
 import { PasswordTooltipInput } from '.';
 import { InputWrapper, CountrySelect, BirthDateInput, DuplicateCheckInput, PhoneNumberInput } from '../common/form';

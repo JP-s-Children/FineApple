@@ -5,7 +5,7 @@ import { FiSearch } from 'react-icons/fi';
 import { Autocomplete } from '@mantine/core';
 import { useDebouncedValue } from '@mantine/hooks';
 import useAutoCompleteQuery from '../../../hooks/queries/useAutoCompleteQuery';
-import { POST_PATH } from '../../../routes/routePaths';
+import { POST_PATH } from '../../../constants/routes';
 import { AutoCompleteItem, NothingFound } from '.';
 
 const CommunityAutoComplete = styled(Autocomplete)`

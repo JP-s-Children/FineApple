@@ -26,7 +26,7 @@ import {
   Profile,
   NotFound,
 } from './pages';
-import { SIGNIN_PATH } from './routes/routePaths';
+import { SIGNIN_PATH } from './constants/routes';
 
 const queryClient = new QueryClient({
   defaultOptions: {

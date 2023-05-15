@@ -2,7 +2,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button, Flex, Image, Text } from '@mantine/core';
 import { PopupModal } from '../common';
-import { MY_POSTS_PATH } from '../../routes/routePaths';
+import { MY_POSTS_PATH } from '../../constants/routes';
 import useToast from '../../hooks/useToast';
 import { removePost } from '../../../firebase/posts';
 

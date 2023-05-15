@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button } from '@mantine/core';
 import { useNavigate } from 'react-router-dom';
-import { FAV_CATEGORY_PATH } from '../../routes/routePaths';
+import { FAV_CATEGORY_PATH } from '../../constants/routes';
 
 const RegisterProductButton = () => {
   const navigate = useNavigate();
