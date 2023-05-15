@@ -3,7 +3,7 @@ import styled from '@emotion/styled';
 import { Button, Container, Flex, Text } from '@mantine/core';
 import { BsArrowRightCircleFill } from 'react-icons/bs';
 import { useNavigate } from 'react-router-dom';
-import { MAIN_PATH } from '../routes/routePaths';
+import { MAIN_PATH } from '../constants/routes';
 
 const Wrapper = styled(Container)`
   min-width: 1024px;

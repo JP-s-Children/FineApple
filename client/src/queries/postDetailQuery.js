@@ -1,4 +1,4 @@
-import { getPost } from '../../firebase/posts';
+import { getPost } from '../services/posts';
 
 const staleTime = 3000;
 
