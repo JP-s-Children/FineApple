@@ -4,7 +4,7 @@ import { Container } from '@mantine/core';
 import { CommunityCategorySection } from '../components';
 
 const Wrapper = styled(Container)`
-  min-width: 1024px;
+  min-width: 1280px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
