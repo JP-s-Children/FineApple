@@ -21,6 +21,7 @@ const useAutoCompleteQuery = ({ inputValue, queryFn, category, subCategory }) =>
     staleTime,
     select: posts => posts.map(post => ({ ...post, value: post.id })),
   });
+  // console.log(posts);
 
   React.useEffect(() => {
     if (isFetched) setValue(posts);

@@ -7,17 +7,18 @@ import { useDebouncedValue } from '@mantine/hooks';
 import useAutoCompleteQuery from '../../../hooks/queries/useAutoCompleteQuery';
 import { POST_PATH } from '../../../constants/routes';
 import { AutoCompleteItem, NothingFound } from '.';
+import transientOptions from '../../../constants/transientOptions';
 
-const CommunityAutoComplete = styled(Autocomplete)`
+const CommunityAutoComplete = styled(Autocomplete, transientOptions)`
   & .mantine-Autocomplete-wrapper {
     margin: 0 auto;
-    width: ${({ wrapperwidth }) => `${wrapperwidth}px`};
+    width: ${({ $wrapperWidth }) => `${$wrapperWidth}px`};
   }
 
   & .mantine-Autocomplete-input {
     padding-left: 3rem;
     height: 50px;
-    font-size: 21px;
+    font-size: 18px;
     border-radius: 10px;
     color: var(--font-color);
     background-color: var(--secondary-bg-color);
@@ -52,10 +53,10 @@ const AutoComplete = ({ width = 620, queryFn, category = '', subCategory = '' })
   return (
     <CommunityAutoComplete
       icon={<FiSearch />}
-      wrapperwidth={width}
+      $wrapperWidth={width}
       zIndex={10}
       dropdownPosition="bottom"
-      placeholder="검색하기"
+      placeholder="질문을 검색해보세요!"
       value={value}
       limit={LIMIT_OF_POSTS}
       itemComponent={AutoCompleteItem}
