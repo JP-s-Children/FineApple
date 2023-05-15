@@ -5,7 +5,7 @@ import { Flex, Title, Image } from '@mantine/core';
 import { CATEGORY } from '../../constants/category';
 import { AutoComplete, PostSection } from '.';
 import { postsByCategoryQuery } from '../../queries';
-import { getSearchedPosts } from '../../../firebase/posts';
+import { getSearchedPosts } from '../../services/posts';
 
 const CategoryImage = styled(Image)`
   display: flex;

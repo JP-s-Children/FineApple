@@ -14,10 +14,9 @@ import {
   query,
   where,
 } from 'firebase/firestore';
-import app from './app';
+import { db } from './firebase';
 import { specifySnapshotIntoData, formattedCreateAt, formattedUpdateAt } from './utils';
 
-const db = getFirestore(app);
 const COLLECTION = 'posts';
 
 const getPosts = async () => {

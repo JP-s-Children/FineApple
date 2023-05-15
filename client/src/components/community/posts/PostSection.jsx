@@ -7,7 +7,7 @@ import FILTERS from '../../../constants/filters';
 import { EmptyPostIndicator, PostItem, ShowMoreButton, SideFilter } from '..';
 import filterPosts from '../../../utils/filterPosts';
 import sortPosts from '../../../utils/sortPosts';
-import { getPosts } from '../../../../firebase/posts';
+import { getPosts } from '../../../services/posts';
 
 const PostsContainer = styled(Flex)`
   margin-top: 1rem;
