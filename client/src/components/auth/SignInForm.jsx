@@ -7,9 +7,9 @@ import { useNavigate } from 'react-router-dom';
 import { useSetRecoilState } from 'recoil';
 import { Stack, Input, Button } from '@mantine/core';
 import userState from '../../recoil/atoms/userState';
-import { signIn } from '../../api/auth';
 import { MAIN_PATH } from '../../constants/routes';
 import { InputWrapper } from '../common/form';
+import { authSignIn } from '../../services/auth';
 
 const signinScheme = z.object({
   email: z.string().email({ message: '이메일 형식에 맞게 입력해 주세요.' }),
@@ -17,6 +17,10 @@ const signinScheme = z.object({
 });
 
 const SignInForm = () => {
+  const navigate = useNavigate();
+  const setUser = useSetRecoilState(userState);
+  const [errorMessage, setErrorMessage] = React.useState('');
+
   const {
     handleSubmit,
     register,
@@ -24,15 +28,11 @@ const SignInForm = () => {
     formState: { errors },
   } = useForm({ resolver: zodResolver(signinScheme), shouldFocusError: true });
 
-  const [errorMessage, setErrorMessage] = React.useState('');
-  const navigate = useNavigate();
-  const setUser = useSetRecoilState(userState);
-
   const onSubmit = async data => {
     try {
-      const { data: user } = await signIn(data);
+      const userData = await authSignIn(data);
 
-      setUser(user);
+      setUser(userData);
       navigate(MAIN_PATH);
     } catch (e) {
       setErrorMessage(e.response.data.error);

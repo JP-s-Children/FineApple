@@ -4,18 +4,18 @@ import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useNavigate } from 'react-router-dom';
 import { Stack, Flex, Button, Input, Divider } from '@mantine/core';
-import { checkEmail, checkNickName, signUp } from '../../api/auth';
 import { SIGNIN_PATH } from '../../constants/routes';
 import useToast from '../../hooks/useToast';
 import { PasswordTooltipInput } from '.';
 import { InputWrapper, CountrySelect, BirthDateInput, DuplicateCheckInput, PhoneNumberInput } from '../common/form';
+import { authSignUp, checkDuplicatedEmail, checkDuplicatedNickName } from '../../services/auth';
 
 const signupScheme = z
   .object({
     firstName: z.string().regex(/.+/, { message: '이름을 입력해주세요' }),
     lastName: z.string().regex(/.+/, { message: '성을 입력해주세요' }),
     country: z.string(),
-    birthDate: z.date(),
+    birthDate: z.date({ invalid_type_error: '날짜를 선택해 주세요' }),
     email: z.string().email({ message: '적절한 이메일이 아닙니다.' }),
     password: z.string().regex(/^(?=.*\d)(?=.*[a-zA-Z]).{8,}$/, { message: '적절한 패스워드가 아닙니다.' }),
     confirmPassword: z.string().regex(/.+/, { message: '확인을 위해 패스워드를 한 번 더 입력해주세요' }),
@@ -45,7 +45,7 @@ const SignUpForm = () => {
 
   const onSubmit = async data => {
     try {
-      await signUp(data);
+      await authSignUp(data);
 
       toast.success({ message: '회원가입에 성공하였습니다.' });
       navigate(SIGNIN_PATH);
@@ -56,19 +56,17 @@ const SignUpForm = () => {
 
   const checkDuplicateEmail = async email => {
     try {
-      const { data } = await checkEmail(email);
-
-      return data.duplicated;
+      const isDuplicatedEmail = await checkDuplicatedEmail(email);
+      return isDuplicatedEmail;
     } catch (e) {
       return false;
     }
   };
 
-  const checkDuplicateNickName = async email => {
+  const checkDuplicateNickName = async nickName => {
     try {
-      const { data } = await checkNickName(email);
-
-      return data.duplicated;
+      const isDuplicatedNickName = checkDuplicatedNickName(nickName);
+      return isDuplicatedNickName;
     } catch (e) {
       return false;
     }
