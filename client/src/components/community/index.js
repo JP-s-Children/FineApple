@@ -16,3 +16,4 @@ export { default as ShowMoreButton } from './ShowMoreButton';
 export { default as TextEditor } from './TextEditor';
 export { default as Faq } from './Faq';
 export { default as DeletePostModal } from './DeletePostModal';
+export { default as HeartIcon } from './HeartIcon';
