@@ -18,13 +18,12 @@ import {
   GuideFaq,
   MyProfile,
   PopularPosts,
-  ComputerIt,
-  Game,
   Post,
   MyPosts,
-  Community,
   Profile,
   NotFound,
+  CategoryLayout,
+  CategoryPosts,
 } from './pages';
 import { SIGNIN_PATH } from './constants/routes';
 
@@ -54,36 +53,20 @@ const router = createBrowserRouter([
         path: '/signup',
         element: <SignUp />,
       },
-      // {
-      //   path: '/computer-it',
-      //   element: <ComputerIt />,
-      //   children: [
-      //     { index: true, element: <Community category="computer-it" /> },
-      //     {
-      //       path: ':subCategory',
-      //       loader: postsByCategoryLoader(queryClient),
-      //       element: <Community category="computer-it" />,
-      //     },
-      //     {
-      //       path: 'list/popular',
-      //       element: <PopularPosts category="computer-it" />,
-      //     },
-      //   ],
-      // },
       {
         path: ':category',
         loader: postsByCategoryLoader(queryClient),
-        element: <Game />,
+        element: <CategoryLayout />,
         children: [
-          { index: true, element: <Community category="game" /> },
+          { index: true, element: <CategoryPosts /> },
           {
             path: ':subCategory',
             loader: postsByCategoryLoader(queryClient),
-            element: <Community category="game" />,
+            element: <CategoryPosts />,
           },
           {
             path: 'list/popular',
-            element: <PopularPosts category="game" />,
+            element: <PopularPosts />,
           },
         ],
       },
