@@ -6,12 +6,17 @@ import userState from '../recoil/atoms/userState';
 
 const RootError = () => {
   const error = useRouteError();
+
   const setUser = Recoil.useSetRecoilState(userState);
 
-  if (error.response.status === 403) {
+  React.useEffect(() => {
     setUser(null);
+  }, [setUser]);
 
-    return <Navigate to={SIGNIN_PATH} />;
+  if (error) {
+    if (error.name === 'InvalidAuthError') {
+      return <Navigate to={SIGNIN_PATH} />;
+    }
   }
 
   return <Navigate to="*" />;
