@@ -2,7 +2,7 @@ import React from 'react';
 import styled from '@emotion/styled';
 import { RichTextEditor } from '@mantine/tiptap';
 import { BubbleMenu } from '@tiptap/react';
-import transientOptions from '../../utils/transientOptions';
+import transientOptions from '../../constants/transientOptions';
 
 const EditorWrapper = styled(RichTextEditor, transientOptions)`
   border-radius: 10px;

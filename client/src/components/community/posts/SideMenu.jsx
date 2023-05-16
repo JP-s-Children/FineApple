@@ -63,7 +63,7 @@ const SideMenu = ({ currentSort, currentFilter, setCurrentSort, setCurrentFilter
         />
       ))}
 
-      <Text fz="20px" fw="600">
+      <Text mt="16px" fz="20px" fw="600">
         정렬
       </Text>
       {sortList.map(({ title, sort }) => (

@@ -1,9 +1,14 @@
 import { CATEGORY } from './category';
 
 const categoryList = [
-  { imgPath: '/community/iphone/iphone-family.png', category: CATEGORY.iphone },
-  { imgPath: '/community/mac/mbp-notebooks.png', category: CATEGORY.mac },
-  { imgPath: '/community/ipad/ipad-family.png', category: CATEGORY.ipad },
+  { path: '', category: 'computer-it', content: CATEGORY['computer-it'] },
+  { path: 'programming', category: 'computer-it', content: CATEGORY.programming },
+  { path: 'computer', category: 'computer-it', content: CATEGORY.computer },
+  { path: 'mobile', category: 'computer-it', content: CATEGORY.mobile },
+  { path: '', category: 'game', content: CATEGORY.game },
+  { path: 'fps', category: 'game', content: CATEGORY.fps },
+  { path: 'mmorpg', category: 'game', content: CATEGORY.mmorpg },
+  { path: 'aos', category: 'game', content: CATEGORY.aos },
 ];
 
 export default categoryList;

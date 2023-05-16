@@ -15,6 +15,8 @@ import {
   startAfter,
   limit,
   and,
+  orderBy,
+  getCountFromServer,
 } from 'firebase/firestore';
 import { db } from './firebase';
 import { specifySnapshotIntoData, formattedCreateAt, formattedUpdateAt, paginationQuery } from './utils';
@@ -39,7 +41,7 @@ const getPosts = async ({ pageParam }) => {
 };
 
 const getPostsByCategory = async ({ category = '', subCategory = '', pageParam }) => {
-  const q = paginationQuery({
+  const { data, nextPage } = await paginationQuery({
     collectionName: COLLECTION,
     pageParam,
     searchCondition: subCategory
@@ -47,32 +49,60 @@ const getPostsByCategory = async ({ category = '', subCategory = '', pageParam }
       : where('category', '==', category),
   });
 
-  const postSnapshot = await getDocs(q);
+  const postIds = data.map(data => data.id);
+  const commentsRef = collection(db, 'comments');
 
-  return postSnapshot;
+  const commentsLengthList = await Promise.all(
+    postIds.map(async postId => {
+      const snapshot = await getCountFromServer(query(commentsRef, where('postId', '==', postId)));
+      return {
+        [postId]: snapshot.data().count,
+      };
+    })
+  );
+
+  const commentsLength = commentsLengthList.reduce((prev, curr) => ({ ...prev, ...curr }), {});
+
+  return {
+    posts: data.map(item => ({ ...item, commentsLength: commentsLength[item.id] })),
+    nextPage,
+  };
 };
 
-// select된 값을 keyword로 받는 작업도 필요
 const getSearchedPosts = async ({ keyword = '', category = '', subCategory = '' }) => {
   const postsRef = collection(db, COLLECTION);
-  const postSnapshot = await getDocs(collection(db, COLLECTION));
 
-  const q = query(postsRef, or(where('category', '==', category), where('subCategory', '==', subCategory)));
+  const q =
+    category === '' && subCategory === ''
+      ? query(postsRef, orderBy('createAt', 'desc'))
+      : query(
+          postsRef,
+          or(where('category', '==', category), where('subCategory', '==', subCategory)),
+          orderBy('createAt', 'desc'),
+          limit(5)
+        );
+
   const filteredPostSnapshot = await getDocs(q);
 
-  const searchedPosts = specifySnapshotIntoData(category === '' ? postSnapshot : filteredPostSnapshot)
-    .filter(({ title }) => new RegExp(keyword, 'i').test(title))
-    .slice(0, 5);
+  const searchedPosts = specifySnapshotIntoData(filteredPostSnapshot).filter(({ title }) =>
+    new RegExp(keyword, 'i').test(title)
+  );
 
   return searchedPosts;
 };
 
 // 내가 작성한 글 목록 :auth 정보 필요
 const getMyPosts = async ({ author, pageParam }) => {
-  const q = paginationQuery({ collectionName: COLLECTION, pageParam, searchCondition: where('author', '==', author) });
-  const postSnapshot = await getDocs(q);
+  const { data, nextPage } = await paginationQuery({
+    collectionName: COLLECTION,
+    pageParam,
+    searchCondition: where('author', '==', author),
+  });
 
-  return postSnapshot;
+  return {
+    posts: data,
+    nextPage,
+  };
 };
 
 const getPost = async ({ postId }) => {

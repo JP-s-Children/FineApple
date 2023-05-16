@@ -7,7 +7,7 @@ import { useRecoilValue } from 'recoil';
 import { AvatarIcon, AppleRecommendIcon, TextEditor, UsefulCommentChip, AppleRecommendButton } from '../..';
 import { PROFILE_PATH } from '../../../constants/routes';
 import formattedDate from '../../../utils/formattedDate';
-import transientOptions from '../../../utils/transientOptions';
+import transientOptions from '../../../constants/transientOptions';
 import useTextEditor from '../../../hooks/useTextEditor';
 import userState from '../../../recoil/atoms/userState';
 
