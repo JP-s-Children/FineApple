@@ -6,7 +6,7 @@ import { Global } from '@emotion/react';
 import GlobalStyle from './styles/GlobalStyle';
 import AuthenticationGuard from './guard/AuthenticationGuard';
 import { Layout, RootError } from './components';
-import { postsByCategoryLoader, myPostsLoader, postDetailLoader, rankLoader, myProfileLoader } from './loaders';
+import { postsByCategoryLoader, myPostsLoader, postDetailLoader, rankLoader } from './loaders';
 import {
   Home,
   SignIn,
@@ -108,8 +108,7 @@ const router = createBrowserRouter([
         element: <Profile />,
       },
       {
-        path: '/profile',
-        loader: myProfileLoader(queryClient),
+        path: '/myprofile',
         element: <MyProfile />,
       },
       {

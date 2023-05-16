@@ -1,8 +1,9 @@
 export const MAIN_PATH = '/';
 export const SIGNUP_PATH = '/signup';
 export const SIGNIN_PATH = '/signin';
-export const PROFILE_PATH = '/profile';
+export const MY_PROFILE_PATH = '/myprofile';
 export const PROFILE_EDIT_PATH = '/profile/edit';
+export const PROFILE_PATH = '/profile';
 export const MY_POSTS_PATH = '/myposts';
 export const FAV_CATEGORY_PATH = '/fav-category';
 
