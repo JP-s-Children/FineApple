@@ -1,4 +1,4 @@
-const add = (oldData, variables) => ({
+const create = (oldData, variables) => ({
   ...oldData,
   pages: oldData.pages.map((page, idx) =>
     idx === 0
@@ -42,4 +42,4 @@ const toggleCertified = (oldData, { commentId, certified }) => ({
   })),
 });
 
-export { add, edit, remove, toggleUseful, toggleCertified };
+export { create, edit, remove, toggleUseful, toggleCertified };
