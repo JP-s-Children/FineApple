@@ -10,28 +10,34 @@ import {
   serverTimestamp,
   arrayRemove,
   arrayUnion,
+  and,
 } from 'firebase/firestore';
 import { db } from './firebase';
-import { specifySnapshotIntoData, formattedCreateAt, formattedUpdateAt } from './utils';
+import { paginationQuery } from './utils';
 
 const COLLECTION = 'comments';
 
-const getComments = async ({ postId }) => {
-  const commentRef = collection(db, 'comments');
-  const q = query(commentRef, where('postId', '==', postId));
+const getAdoptedComment = async ({ postId }) => {
+  const q = query(collection(db, COLLECTION), and(where('postId', '==', postId), where('adopted', '==', true)));
 
   const commentSnapshot = await getDocs(q);
 
-  return commentSnapshot.docs.map(comment => {
-    const commentData = comment.data();
+  return commentSnapshot;
+};
 
-    return {
-      ...commentData,
-      createAt: new Date(formattedCreateAt(commentData)),
-      updateAt: new Date(formattedUpdateAt(commentData)),
-      id: comment.id,
-    };
+const getComments = async ({ postId, pageParam }) => {
+  const { data, nextPage, totalLength } = await paginationQuery({
+    pageParam,
+    collectionName: COLLECTION,
+    searchCondition: and(where('postId', '==', postId), where('adopted', '==', false)),
+    totalPageSearchCondition: where('postId', '==', postId),
   });
+
+  return {
+    comments: data,
+    nextPage,
+    totalLength,
+  };
 };
 
 const createComment = async commentInfo => {
@@ -58,4 +64,4 @@ const removeComment = async ({ id }) => {
   await deleteDoc(doc(db, COLLECTION, id));
 };
 
-export { getComments, createComment, editComment, removeComment, toggleAdopted, toggleCommentLike };
+export { getComments, getAdoptedComment, createComment, editComment, removeComment, toggleAdopted, toggleCommentLike };

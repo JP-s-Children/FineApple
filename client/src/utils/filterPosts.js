@@ -1,7 +1,7 @@
 import FILTERS from '../constants/filters';
 
 const filterPosts = (posts, currentFilter) =>
-  posts.filter(post =>
+  posts?.filter(post =>
     currentFilter === FILTERS.active ? !post.completed : currentFilter === FILTERS.completed ? post.completed : true
   ) ?? [];
 

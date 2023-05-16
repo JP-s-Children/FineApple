@@ -40,7 +40,7 @@ const getPosts = async ({ pageParam }) => {
 };
 
 const getPostsByCategory = async ({ category = '', subCategory = '', pageParam }) => {
-  const q = paginationQuery({
+  const { data, nextPage } = await paginationQuery({
     collectionName: COLLECTION,
     pageParam,
     searchCondition: subCategory
@@ -48,9 +48,10 @@ const getPostsByCategory = async ({ category = '', subCategory = '', pageParam }
       : where('category', '==', category),
   });
 
-  const postSnapshot = await getDocs(q);
-
-  return postSnapshot;
+  return {
+    posts: data,
+    nextPage,
+  };
 };
 
 // select된 값을 keyword로 받는 작업도 필요
@@ -78,10 +79,16 @@ const getSearchedPosts = async ({ keyword = '', category = '', subCategory = '' 
 
 // 내가 작성한 글 목록 :auth 정보 필요
 const getMyPosts = async ({ author, pageParam }) => {
-  const q = paginationQuery({ collectionName: COLLECTION, pageParam, searchCondition: where('author', '==', author) });
-  const postSnapshot = await getDocs(q);
+  const { data, nextPage } = await paginationQuery({
+    collectionName: COLLECTION,
+    pageParam,
+    searchCondition: where('author', '==', author),
+  });
 
-  return postSnapshot;
+  return {
+    posts: data,
+    nextPage,
+  };
 };
 
 const getPost = async ({ postId }) => {

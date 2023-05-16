@@ -2,6 +2,7 @@ import React from 'react';
 import styled from '@emotion/styled';
 import { Link } from 'react-router-dom';
 import { Badge, Flex, Group, List, Text, Title } from '@mantine/core';
+import { AiOutlineHeart } from 'react-icons/ai';
 import { POST_PATH } from '../../../constants/routes';
 import formattedDate from '../../../utils/formattedDate';
 import { AvatarIcon, AppleRecommendIcon, CompletedIcon } from '../..';
@@ -43,12 +44,12 @@ const PostDescription = styled(Group)`
 `;
 
 const PostItem = ({
-  post: { id, title, createAt, category, completed, avatarId, certified, commentsLength, productType },
+  post: { id, title, createAt, category, completed, avatarId, certified, commentsLength, subCategory, like },
 }) => {
   const conditionalColor = category === CATEGORY.iphone ? 'red' : category === CATEGORY.mac ? 'green' : 'blue';
 
   return (
-    <Post key={id} fz="15px" bg="var(--opacity-bg-color)">
+    <Post fz="15px" bg="var(--opacity-bg-color)">
       <PostLink to={`${POST_PATH}/${id}`}>
         <Flex mih={50} gap="xl">
           <AvatarIcon avatarId={avatarId} />
@@ -69,17 +70,26 @@ const PostItem = ({
               <Badge size="md" variant="outline" color={conditionalColor}>
                 {category}
               </Badge>
-              {productType && (
+              {subCategory && (
                 <Badge size="md" variant="filled" color={conditionalColor}>
-                  {productType}
+                  {subCategory}
                 </Badge>
               )}
             </Flex>
-            <Flex gap="4px" align="center" pr="0.8rem" fz="15px" c="var(--font-color)">
-              <Text>답글</Text>
-              <Text fz="16px" fw="600">
-                {commentsLength}
-              </Text>
+            <Flex fz="15px" c="var(--font-color)">
+              <Flex gap="4px" align="flex-end" pr="0.8rem">
+                <AiOutlineHeart size="20px" />
+                <Text fz="16px" fw="600">
+                  {like.length}
+                </Text>
+              </Flex>
+
+              <Flex gap="4px" align="center" pr="0.8rem">
+                <Text>답글</Text>
+                <Text fz="16px" fw="600">
+                  {commentsLength}
+                </Text>
+              </Flex>
             </Flex>
           </Flex>
         </Flex>

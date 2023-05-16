@@ -6,7 +6,7 @@ import { Container, Divider } from '@mantine/core';
 import { postDetailQuery } from '../queries';
 import { PostContent, CommentSection, CommentLoader } from '../components';
 import {
-  useAddCommentMutation,
+  useCreateCommentMutation,
   useEditCommentMutation,
   useRemoveCommentMutation,
   useToggleCommentUsefulMutation,
@@ -14,7 +14,7 @@ import {
 } from '../hooks/mutations';
 
 const Wrapper = styled(Container)`
-  min-width: 1024px;
+  min-width: 1280px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -32,7 +32,7 @@ const Post = () => {
   const mutateFns = {
     editMutate: useEditCommentMutation(postId),
     removeMutate: useRemoveCommentMutation(postId),
-    addMutate: useAddCommentMutation(postId),
+    createMutate: useCreateCommentMutation(postId),
     toggleUsefulMutate: useToggleCommentUsefulMutation(postId),
     toggleCertifiedMutate: useToggleCertifiedMutation(postId),
   };
