@@ -7,7 +7,7 @@ const CheckCircleIcon = styled.i`
   display: inline-flex;
   justify-content: center;
   align-items: center;
-  font-size: 24px;
+  font-size: 21px;
   color: ${({ completed }) => (completed ? '#58be7d' : '#c2c2c2')};
 `;
 
