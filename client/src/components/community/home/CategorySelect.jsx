@@ -2,6 +2,7 @@ import React from 'react';
 import styled from '@emotion/styled';
 import { RiHashtag } from 'react-icons/ri';
 import { Select as MantineSelect } from '@mantine/core';
+import { CATEGORY } from '../../../constants/category';
 
 const Select = styled(MantineSelect)`
   & .mantine-Select-icon {
@@ -47,13 +48,13 @@ const Select = styled(MantineSelect)`
 `;
 
 const data = [
-  { value: 'computer-it', label: '컴퓨터 / IT', group: '컴퓨터/IT' },
-  { value: 'programming', label: '프로그래밍', group: '컴퓨터/IT' },
-  { value: 'computer', label: '컴퓨터', group: '컴퓨터/IT' },
-  { value: 'mobile', label: '모바일', group: '컴퓨터/IT' },
-  { value: 'fps', label: 'FPS', group: '게임' },
-  { value: 'mmorpg', label: 'MMORPG', group: '게임' },
-  { value: 'aos', label: 'AOS', group: '게임' },
+  { value: 'computer-it', label: '컴퓨터 / IT', group: CATEGORY['computer-it'] },
+  { value: 'programming', label: '프로그래밍', group: CATEGORY['computer-it'] },
+  { value: 'computer', label: '컴퓨터', group: CATEGORY['computer-it'] },
+  { value: 'mobile', label: '모바일', group: CATEGORY['computer-it'] },
+  { value: 'fps', label: 'FPS', group: CATEGORY.game },
+  { value: 'mmorpg', label: 'MMORPG', group: CATEGORY.game },
+  { value: 'aos', label: 'AOS', group: CATEGORY.game },
   { value: '', label: '전체', group: null },
 ];
 
@@ -64,8 +65,7 @@ const CategorySelect = ({ currentValue, setCurrentValue }) => (
     placeholder="카테고리 선택"
     icon={<RiHashtag />}
     dropdownPosition="bottom"
-    // defaultValue="total"
-    data={data}
+    data={data ?? []}
     radius="10px"
     zIndex={10}
     clearable

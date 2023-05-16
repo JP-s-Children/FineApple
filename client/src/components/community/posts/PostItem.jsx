@@ -1,12 +1,11 @@
 import React from 'react';
 import styled from '@emotion/styled';
 import { Link } from 'react-router-dom';
+import { AiFillHeart } from 'react-icons/ai';
 import { Badge, Flex, Group, List, Text, Title } from '@mantine/core';
-import { AiOutlineHeart } from 'react-icons/ai';
 import { POST_PATH } from '../../../constants/routes';
 import formattedDate from '../../../utils/formattedDate';
-import { AvatarIcon, AppleRecommendIcon, CompletedIcon } from '../..';
-import { CATEGORY } from '../../../constants/category';
+import { CompletedIcon } from '../..';
 
 const Post = styled(List.Item)`
   border: 1px solid var(--opacity-border-color);
@@ -40,58 +39,51 @@ const PostDescription = styled(Group)`
   display: flex;
   flex-direction: column;
   align-items: start;
+  width: 100%;
   word-break: keep-all;
 `;
 
-const PostItem = ({
-  post: { id, title, createAt, category, completed, avatarId, certified, commentsLength, subCategory, like },
-}) => {
-  const conditionalColor = category === CATEGORY.iphone ? 'red' : category === CATEGORY.mac ? 'green' : 'blue';
+const PostItem = ({ post: { id, title, createAt, category, subCategory, completed, like, commentsLength } }) => {
+  const conditionalColor = category === 'computer-it' ? 'red' : category === 'game' ? 'yellow' : 'violet';
 
   return (
-    <Post fz="15px" bg="var(--opacity-bg-color)">
+    <Post key={id} fz="15px" bg="var(--opacity-bg-color)">
       <PostLink to={`${POST_PATH}/${id}`}>
-        <Flex mih={50} gap="xl">
-          <AvatarIcon avatarId={avatarId} />
+        <Flex gap="8px" mb="1.25rem">
+          <Badge size="md" variant="outline" color={conditionalColor}>
+            {category}
+          </Badge>
+          {subCategory && (
+            <Badge size="md" variant="filled" color={conditionalColor}>
+              {subCategory}
+            </Badge>
+          )}
+        </Flex>
+
+        <Flex justify="space-between">
           <PostDescription>
             <Title size="21px" fw="600" c="var(--font-color)">
               {title}
             </Title>
-            <Flex direction="column">
-              <Text c="var(--font-color)">{formattedDate(new Date(createAt))}</Text>
-              <Flex mt="10px" fz="20px" gap="1rem" align="center">
-                <CompletedIcon completed={completed} />
-                {certified && <AppleRecommendIcon />}
+            <Text c="var(--footer-font-color)">{formattedDate(createAt)}</Text>
+            <Flex w="100%" mt="1rem" justify="space-between" fz="15px" c="var(--font-color)">
+              <CompletedIcon completed={completed} />
+              <Flex>
+                <Flex mr="1rem" gap="0.5rem" align="center">
+                  <Text>답변</Text>
+                  <Text fz="1.2rem" fw="500">
+                    {commentsLength}
+                  </Text>
+                </Flex>
+                <Flex mr="1rem" gap="0.4rem" align="center">
+                  <AiFillHeart size="20" color="#F59F01" />
+                  <Text fz="1.2rem" fw="500">
+                    {like.length}
+                  </Text>
+                </Flex>
               </Flex>
             </Flex>
           </PostDescription>
-          <Flex ml="auto" direction="column" justify="space-between" align="flex-end">
-            <Flex gap="8px" mt="4px">
-              <Badge size="md" variant="outline" color={conditionalColor}>
-                {category}
-              </Badge>
-              {subCategory && (
-                <Badge size="md" variant="filled" color={conditionalColor}>
-                  {subCategory}
-                </Badge>
-              )}
-            </Flex>
-            <Flex fz="15px" c="var(--font-color)">
-              <Flex gap="4px" align="flex-end" pr="0.8rem">
-                <AiOutlineHeart size="20px" />
-                <Text fz="16px" fw="600">
-                  {like.length}
-                </Text>
-              </Flex>
-
-              <Flex gap="4px" align="center" pr="0.8rem">
-                <Text>답글</Text>
-                <Text fz="16px" fw="600">
-                  {commentsLength}
-                </Text>
-              </Flex>
-            </Flex>
-          </Flex>
         </Flex>
       </PostLink>
     </Post>

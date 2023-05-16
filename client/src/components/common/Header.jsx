@@ -4,6 +4,7 @@ import { Container } from '@mantine/core';
 import { Link } from 'react-router-dom';
 
 const HeaderContainer = styled.header`
+  padding: 15px 1rem 12px 1rem;
   width: 100%;
   border-bottom: 1px solid #e9ecef50;
   background-color: var(--body-bg-color);
@@ -14,11 +15,10 @@ const HeaderContainer = styled.header`
 `;
 
 const Wrapper = styled(Container)`
-  min-width: 1024px;
+  min-width: 1280px;
   display: flex;
   justify-content: space-between;
   font-size: 0.75rem;
-  padding: 15px 0px 10px;
 `;
 
 const Title = styled(Link)`

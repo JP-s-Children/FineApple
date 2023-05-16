@@ -16,6 +16,7 @@ import {
   limit,
   and,
   orderBy,
+  getCountFromServer,
 } from 'firebase/firestore';
 import { db } from './firebase';
 import { specifySnapshotIntoData, formattedCreateAt, formattedUpdateAt, paginationQuery } from './utils';
@@ -48,13 +49,26 @@ const getPostsByCategory = async ({ category = '', subCategory = '', pageParam }
       : where('category', '==', category),
   });
 
+  const postIds = data.map(data => data.id);
+  const commentsRef = collection(db, 'comments');
+
+  const commentsLengthList = await Promise.all(
+    postIds.map(async postId => {
+      const snapshot = await getCountFromServer(query(commentsRef, where('postId', '==', postId)));
+      return {
+        [postId]: snapshot.data().count,
+      };
+    })
+  );
+
+  const commentsLength = commentsLengthList.reduce((prev, curr) => ({ ...prev, ...curr }), {});
+
   return {
-    posts: data,
+    posts: data.map(item => ({ ...item, commentsLength: commentsLength[item.id] })),
     nextPage,
   };
 };
 
-// select된 값을 keyword로 받는 작업도 필요
 const getSearchedPosts = async ({ keyword = '', category = '', subCategory = '' }) => {
   const postsRef = collection(db, COLLECTION);
 
