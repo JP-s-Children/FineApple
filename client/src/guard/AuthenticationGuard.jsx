@@ -15,7 +15,11 @@ const AuthenticationGuard = ({ redirectTo, element }) => {
   };
 
   React.useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, setAuth);
+    const unsubscribe = onAuthStateChanged(auth, user => {
+      console.log(user);
+
+      setUser(user);
+    });
     return () => unsubscribe();
   }, []);
 

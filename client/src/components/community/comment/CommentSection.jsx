@@ -45,6 +45,8 @@ const CommentSection = ({ postInfo, mutateFns }) => {
 
   const user = useRecoilValue(userState);
 
+  console.log(user);
+
   const { scrollIntoView, targetRef } = useScrollIntoView({
     offset: 180,
   });
@@ -66,9 +68,9 @@ const CommentSection = ({ postInfo, mutateFns }) => {
           postId: postInfo.id,
           like: [],
           adopted: false,
-          // author: user.email,
-          // nickName: user.nickName,
-          // avatarId: user.avatarId,
+          author: user.email,
+          nickName: user.nickName,
+          avatarId: user.avatarId,
           content: textEditorContent,
         },
       },
