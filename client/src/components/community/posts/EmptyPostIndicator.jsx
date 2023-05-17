@@ -22,7 +22,7 @@ const EmptyPostIndicator = ({ isButtonShown }) => {
   return (
     <Container>
       <Title mb="0.5rem" fz="2rem" fw="500" ta="center">
-        작성한 글이 없습니다 👷🏻‍♂️
+        관련 질문이 없습니다 👷🏻‍♂️
       </Title>
       {isButtonShown && (
         <Button onClick={() => navigate(QUESTION_PATH)} w="300px" h="50px" radius="10px" fz="lg">

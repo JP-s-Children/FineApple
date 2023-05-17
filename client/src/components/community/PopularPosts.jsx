@@ -30,7 +30,10 @@ const PostLabel = styled(Text)`
   align-items: center;
   margin-top: 2rem;
   padding: 0.5rem 1rem;
-  font-size: 20px;
+  font-size: 18px;
+  font-weight: 500;
+  border-radius: 10px;
+  background-color: var(--third-bg-color);
 `;
 
 const PopularPosts = () => {
@@ -46,7 +49,7 @@ const PopularPosts = () => {
         </Button>
       </Flex>
       <Flex justify="end" p="0" miw="1280px">
-        <PostLabel>💡 인기글은 좋아요 순으로 정렬됩니다.</PostLabel>
+        <PostLabel>💡 좋아요가 많은 순으로 10개의 질문을 보여줍니다.</PostLabel>
       </Flex>
       <PostSection queryFn={popularPostsByCategoryQuery({ category })} />
     </Wrapper>

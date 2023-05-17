@@ -23,6 +23,16 @@ const Description = styled.section`
   word-break: keep-all;
 `;
 
+const CategoryListContainer = styled(Flex)`
+  justify-content: space-between;
+  flex-direction: column;
+  margin-top: 8rem;
+  width: 940px;
+  padding: 2rem;
+  border: 1px solid var(--opacity-border-color);
+  border-radius: 20px;
+`;
+
 const CategoryList = styled(List)`
   display: grid;
   grid-template-rows: 1fr 1fr;
@@ -35,7 +45,7 @@ const Category = styled(List.Item)`
   display: flex;
   flex-direction: column;
   align-items: center;
-  border: 1px solid #e5e5e5;
+  border: 1px solid var(--opacity-border-color);
   border-radius: 20px;
   cursor: pointer;
 
@@ -92,7 +102,7 @@ const Home = () => {
       </Description>
 
       <Text w="940px" fz="24px" fw={500}>
-        전 세계 FineApple 고객들과 소통해 보세요
+        FineApple이 지원하는 커뮤니티를 사용해 보세요!
       </Text>
 
       <Flex w="940px" justify="center" align="center" gap="10px" mt="2rem">
@@ -105,19 +115,21 @@ const Home = () => {
         />
       </Flex>
 
-      <Text mt="8rem" mb="2rem" fz="21px" fw="600">
-        🎛️ 카테고리를 선택하시면 관련 질문들이 표시됩니다
-      </Text>
+      <CategoryListContainer>
+        <Text mb="2rem" fz="21px" fw="600">
+          카테고리를 선택하시면 관련 질문들이 표시됩니다
+        </Text>
 
-      <CategoryList>
-        {categoryList.map(({ path, category, content }) => (
-          <Category key={content} path={path}>
-            <Link to={`${category}/${path}`}>
-              <CategoryDescription>{content}</CategoryDescription>
-            </Link>
-          </Category>
-        ))}
-      </CategoryList>
+        <CategoryList>
+          {categoryList.map(({ path, category, content }) => (
+            <Category key={content} path={path}>
+              <Link to={`${category}/${path}`}>
+                <CategoryDescription>{content}</CategoryDescription>
+              </Link>
+            </Category>
+          ))}
+        </CategoryList>
+      </CategoryListContainer>
 
       <Tutorials />
     </Wrapper>
