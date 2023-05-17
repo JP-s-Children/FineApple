@@ -6,7 +6,6 @@ const myProfileQuery = email => ({
   queryKey: ['profile', email],
   queryFn: async () => {
     const data = await getMyProfile({ email });
-    console.log('myProfileQuery', data);
     return data;
   },
   staleTime,

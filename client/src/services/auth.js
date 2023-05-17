@@ -1,43 +1,13 @@
 import {
   createUserWithEmailAndPassword,
   fetchSignInMethodsForEmail,
-  onAuthStateChanged,
   signInWithEmailAndPassword,
   signOut,
 } from 'firebase/auth';
 import { collection, doc, getDoc, getDocs, query, setDoc, where } from 'firebase/firestore';
 import { auth, db } from './firebase';
-import { InvalidAuthError } from './error';
 
 const COLLECTION = 'users';
-
-const checkAuth = () => {
-  // TODO: check auth
-  console.log('[checkAuth]');
-
-  // onAuthStateChanged(auth, user => {
-  //   if (user?.email) {
-  //     return user.email;
-  //   }
-  //   throw new InvalidAuthError();
-  // });
-  return true;
-};
-
-const getCurrentLoginUser = () => {
-  // TODO:
-  console.log(auth.currentUser);
-
-  onAuthStateChanged(auth, user => {
-    if (user?.email) {
-      console.log('a', user.email);
-      console.log('b', auth.currentUser);
-      return user.email;
-    }
-    throw new InvalidAuthError();
-    // return null;
-  });
-};
 
 const authSignIn = async ({ email, password }) => {
   try {
@@ -98,12 +68,4 @@ const checkDuplicatedNickName = async nickName => {
   return usersSnapshot.docs.length > 0;
 };
 
-export {
-  checkAuth,
-  getCurrentLoginUser,
-  authSignIn,
-  authSignUp,
-  authSignOut,
-  checkDuplicatedEmail,
-  checkDuplicatedNickName,
-};
+export { authSignIn, authSignUp, authSignOut, checkDuplicatedEmail, checkDuplicatedNickName };

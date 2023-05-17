@@ -1,21 +1,25 @@
 import React from 'react';
 import Recoil from 'recoil';
 import { Navigate } from 'react-router-dom';
+import { onAuthStateChanged } from 'firebase/auth';
 import userState from '../recoil/atoms/userState';
-import { checkAuth } from '../services/auth';
+import { auth } from '../services/firebase';
 
 const AuthenticationGuard = ({ redirectTo, element }) => {
-  const isLogin = checkAuth();
+  const [user, setUser] = Recoil.useRecoilState(userState);
 
-  const setLoginUser = Recoil.useSetRecoilState(userState);
+  const setAuth = user => {
+    if (!user) {
+      setUser(null);
+    }
+  };
 
   React.useEffect(() => {
-    if (!isLogin) {
-      setLoginUser(null);
-    }
-  }, [isLogin, setLoginUser]);
+    const unsubscribe = onAuthStateChanged(auth, setAuth);
+    return () => unsubscribe();
+  }, []);
 
-  return isLogin ? element : <Navigate to={redirectTo} />;
+  return user ? element : <Navigate to={redirectTo} />;
 };
 
 export default AuthenticationGuard;
