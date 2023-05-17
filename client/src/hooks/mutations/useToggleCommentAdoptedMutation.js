@@ -5,19 +5,19 @@ import useCommentMutation from './useCommentMutation';
 import usePostInfoMutation from './usePostInfoMutation';
 
 const useToggleCommentAdoptedMutation = postId => {
+  const postMutate = usePostInfoMutation({
+    postId,
+    requestFn: ({ postId, adopted }) => togglePostCompleted({ id: postId, completed: adopted }),
+    updateFn: (oldData, variables) => ({ ...oldData, completed: variables.adopted }),
+  });
+
   const commentMutate = useCommentMutation({
     postId,
     requestFn: ({ commentId, adopted }) => toggleCommentAdopted({ id: commentId, adopted }),
     updateFn: toggleAdopted,
   });
 
-  const postMutate = usePostInfoMutation({
-    postId,
-    requestFn: ({ postId, adopted }) => togglePostCompleted({ id: postId, completed: adopted }),
-    updateFn: (oldData, variables) => ({ ...oldData, post: { ...oldData.post, completed: variables.adopted } }),
-  });
-
-  return variables => {
+  return async variables => {
     commentMutate(variables);
     postMutate(variables);
   };

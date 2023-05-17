@@ -88,6 +88,7 @@ const CommentContent = styled(Text)`
 const Comment = ({
   comment,
   postInfo,
+  isTopComment,
   mutateFns: { editMutate, toggleAdoptedMutate, toggleCertifiedMutate, removeMutate },
 }) => {
   const { id, author, avatarId, adopted, content, createAt, level, nickName, like } = comment;
@@ -143,7 +144,7 @@ const Comment = ({
                 {!postInfo.completed && <AppleRecommendButton onClick={handleClickAdopt(id, true)} />}
 
                 {/* 해결된 글이고, 채택된 답변일 경우 채택 취소 버튼을 노출한다. */}
-                {postInfo.completed && adopted && (
+                {isTopComment && postInfo.completed && adopted && (
                   <Button h="32px" radius="xl" color="red" onClick={handleClickAdopt(id, false)}>
                     채택 취소
                   </Button>

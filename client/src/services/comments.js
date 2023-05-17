@@ -29,7 +29,7 @@ const getComments = async ({ postId, pageParam }) => {
   const { data, nextPage, totalLength } = await paginationQuery({
     pageParam,
     collectionName: COLLECTION,
-    searchCondition: and(where('postId', '==', postId), where('adopted', '==', false)),
+    searchCondition: where('postId', '==', postId),
     totalPageSearchCondition: where('postId', '==', postId),
   });
 

@@ -113,7 +113,7 @@ const CommentSection = ({ postInfo, mutateFns }) => {
         }
       </CommentsHeader>
       <CommentList>
-        {adoptedComment && <Comment comment={adoptedComment} postInfo={postInfo} mutateFns={mutateFns} />}
+        {adoptedComment && <Comment comment={adoptedComment} postInfo={postInfo} mutateFns={mutateFns} isTopComment />}
       </CommentList>
       {comments.length > 0 && <Divider mt="2rem" variant="dashed" />}
 
