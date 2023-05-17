@@ -4,9 +4,13 @@ import { Avatar } from '@mantine/core';
 import avatars from '../../constants/avatars';
 
 const Container = styled(Avatar)`
-  background-color: #d1d1d1;
-  border: 3px solid #d1d1d1;
+  background-color: var(--opacity-border-color);
+  border: 3px solid var(--opacity-border-color);
   border-radius: 100%;
+
+  :hover {
+    border: 3px solid var(--hover-font-color);
+  }
 `;
 
 /**
