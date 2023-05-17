@@ -1,27 +1,25 @@
 import React from 'react';
 import Recoil from 'recoil';
-import { useQuery } from '@tanstack/react-query';
 import { Navigate } from 'react-router-dom';
-import { auth } from '../api/auth';
+import { onAuthStateChanged } from 'firebase/auth';
 import userState from '../recoil/atoms/userState';
+import { auth } from '../services/firebase';
 
 const AuthenticationGuard = ({ redirectTo, element }) => {
-  const { isFetched, error } = useQuery({
-    queryKey: ['isAuthenticated'],
-    queryFn: auth,
-    retry: false,
-    staleTime: 1000,
-  });
+  const [user, setUser] = Recoil.useRecoilState(userState);
 
-  const setLoginUser = Recoil.useSetRecoilState(userState);
+  const setAuth = user => {
+    if (!user) {
+      setUser(null);
+    }
+  };
 
   React.useEffect(() => {
-    if (isFetched && error) {
-      setLoginUser(null);
-    }
-  }, [error, isFetched, setLoginUser]);
+    const unsubscribe = onAuthStateChanged(auth, setAuth);
+    return () => unsubscribe();
+  }, []);
 
-  return isFetched ? error === null ? element : <Navigate to={redirectTo} /> : null;
+  return user ? element : <Navigate to={redirectTo} />;
 };
 
 export default AuthenticationGuard;

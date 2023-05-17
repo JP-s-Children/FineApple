@@ -1,19 +1,18 @@
 import React from 'react';
 import styled from '@emotion/styled';
 import { Link } from 'react-router-dom';
-import { Container, Image, List, Text, Title } from '@mantine/core';
-import { AutoComplete, Tutorials } from '../components';
+import { Container, Flex, List, Text, Title } from '@mantine/core';
+import { AutoComplete, CategorySelect, Tutorials } from '../components';
 import categoryList from '../constants/categoryList';
-import { COMPUTER_IT_PATH } from '../constants/routes';
 import { getSearchedPosts } from '../services/posts';
 
 const Wrapper = styled(Container)`
-  min-width: 1024px;
+  min-width: 1280px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  margin-top: 1rem;
+  margin-top: 2rem;
   margin-bottom: 5rem;
   font-size: 0.75rem;
   text-align: center;
@@ -21,15 +20,15 @@ const Wrapper = styled(Container)`
 `;
 
 const Description = styled.section`
-  width: 730px;
   word-break: keep-all;
 `;
 
 const CategoryList = styled(List)`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 20px;
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  gap: 30px;
+  margin-top: 1rem;
 `;
 
 const Category = styled(List.Item)`
@@ -37,17 +36,24 @@ const Category = styled(List.Item)`
   flex-direction: column;
   align-items: center;
   border: 1px solid #e5e5e5;
-  border-radius: 10px;
+  border-radius: 20px;
   cursor: pointer;
 
+  background-color: ${({ path }) => !path.length && '#e5e5e580'};
+
+  & .mantine-List-itemWrapper {
+    width: 100%;
+  }
+
   span {
-    display: flex;
+    display: inline-flex;
     justify-content: center;
     align-items: center;
   }
 
   a {
-    padding: 30px 45px;
+    width: 100%;
+    padding: 1rem 2rem;
   }
 
   &:hover {
@@ -59,44 +65,63 @@ const Category = styled(List.Item)`
 `;
 
 const CategoryDescription = styled.p`
-  margin-top: 30px;
-  font-size: 18px;
+  font-size: 16px;
+  font-weight: 500;
+  word-break: keep-all;
   color: var(--font-color);
   text-decoration: none;
 `;
 
-const CommunityMain = ({ category }) => (
-  <Wrapper>
-    <Description>
-      <Title size="52px" mt="24px" mb="40px">
-        FineApple이 지원하는 커뮤니티
-      </Title>
-      <Text fz="26px" mb="40px">
-        전 세계 FineApple 고객들과 소통해 보세요 🚀
+const Home = () => {
+  const [currentValue, setCurrentValue] = React.useState('');
+  const isValueMainCategory = currentValue === 'computer-it' || currentValue === 'game';
+
+  return (
+    <Wrapper>
+      <Description>
+        <Title mt="2rem" mb="3rem" ta="center">
+          <Flex gap="1rem" justify="center" align="center">
+            <Text mt="1rem" fz="6rem">
+              Welcome.
+            </Text>
+            <Text fz="7rem" variant="gradient" gradient={{ from: 'blue', to: '#FF7E37', deg: 120 }}>
+              FineApple
+            </Text>
+          </Flex>
+        </Title>
+      </Description>
+
+      <Text w="940px" fz="24px" fw={500}>
+        전 세계 FineApple 고객들과 소통해 보세요
       </Text>
 
-      {/* TODO: 카테고리 선택 select */}
-      <AutoComplete width={720} queryFn={getSearchedPosts} category={category} />
-    </Description>
+      <Flex w="940px" justify="center" align="center" gap="10px" mt="2rem">
+        <CategorySelect currentValue={currentValue} setCurrentValue={setCurrentValue} />
+        <AutoComplete
+          width={680}
+          queryFn={getSearchedPosts}
+          category={isValueMainCategory ? currentValue : ''}
+          subCategory={isValueMainCategory ? '' : currentValue}
+        />
+      </Flex>
 
-    <Text mt="4rem" mb="2rem" fz="21px" fw="600">
-      제품을 선택하시면 관련 주제가 표시됩니다 ⭐️
-    </Text>
+      <Text mt="8rem" mb="2rem" fz="21px" fw="600">
+        🎛️ 카테고리를 선택하시면 관련 질문들이 표시됩니다
+      </Text>
 
-    <CategoryList>
-      {/* TODO: 카테고리 선택       */}
-      {categoryList.map(({ imgPath, category }) => (
-        <Category key={imgPath}>
-          <Link to={`${COMPUTER_IT_PATH}/${category.toLowerCase()}`}>
-            <Image src={imgPath} alt={`category-${category}`} />
-            <CategoryDescription>{category}</CategoryDescription>
-          </Link>
-        </Category>
-      ))}
-    </CategoryList>
+      <CategoryList>
+        {categoryList.map(({ path, category, content }) => (
+          <Category key={content} path={path}>
+            <Link to={`${category}/${path}`}>
+              <CategoryDescription>{content}</CategoryDescription>
+            </Link>
+          </Category>
+        ))}
+      </CategoryList>
 
-    <Tutorials />
-  </Wrapper>
-);
+      <Tutorials />
+    </Wrapper>
+  );
+};
 
-export default CommunityMain;
+export default Home;

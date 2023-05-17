@@ -21,11 +21,11 @@ const GlobalStyle = css`
   body[data-theme='dark'] {
     --font-color: #fff;
     --hover-font-color: #56abff;
-    --body-bg-color: #232323;
+    --body-bg-color: #141517;
     --secondary-bg-color: #1a1b1e;
     --opacity-bg-color: #e5e5e530;
     --opacity-border-color: #141517;
-    --footer-bg-color: #232323;
+    --footer-bg-color: #1a1b1e;
     --footer-font-color: #909296;
   }
 

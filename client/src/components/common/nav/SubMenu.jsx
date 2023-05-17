@@ -64,7 +64,7 @@ const SubMenu = ({ label, menuItems }) => (
         {label && <SubMenuLabel>{label}</SubMenuLabel>}
         {menuItems.map(({ size, content, path, onClick }) =>
           path ? (
-            <SubMenuItem key={path} size={size} component="a" href={path}>
+            <SubMenuItem key={`${content}-${path}`} size={size} component="a" href={path}>
               {content}
             </SubMenuItem>
           ) : (

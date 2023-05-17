@@ -3,9 +3,9 @@ import Recoil from 'recoil';
 import styled from '@emotion/styled';
 import { Link } from 'react-router-dom';
 import { useDisclosure } from '@mantine/hooks';
-import { Badge, Box, Button, Flex, Text, Title } from '@mantine/core';
+import { Badge, Button, Flex, Text, Title } from '@mantine/core';
 import formattedDate from '../../utils/formattedDate';
-import { AvatarIcon, CompletedIcon, DeletePostModal, HeartIcon } from '..';
+import { AvatarIcon, CompletedIcon, DeletePostModal } from '..';
 import userState from '../../recoil/atoms/userState';
 import { PROFILE_PATH } from '../../constants/routes';
 
@@ -49,7 +49,7 @@ const PostContent = ({
         <Flex justify="space-between" w="100%" mb="1rem">
           <Flex gap="1rem" mt="0.2rem" mb="0.5rem" h="30px">
             <CompletedIcon completed={completed} />
-            <HeartIcon likeCount={like.length} />
+            {/* <HeartIcon likeCount={like.length} /> */}
           </Flex>
           {author === userInfo?.email && (
             <Button radius="xl" color="red" variant="outline" onClick={openModal}>

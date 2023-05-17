@@ -1,11 +1,11 @@
-import { getMyProfile } from '../api/profile';
+import { getMyProfile } from '../services/profile';
 
 const staleTime = 3000;
 
-const myProfileQuery = () => ({
-  queryKey: ['profile'],
+const myProfileQuery = email => ({
+  queryKey: ['profile', email],
   queryFn: async () => {
-    const { data } = await getMyProfile();
+    const data = await getMyProfile({ email });
     return data;
   },
   staleTime,

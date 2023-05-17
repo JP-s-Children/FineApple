@@ -33,8 +33,8 @@ const specifySnapshotIntoData = snapshot =>
 
     return {
       ...specifiedData,
-      createAt: new Date(formattedCreateAt(specifiedData)),
-      updateAt: new Date(formattedUpdateAt(specifiedData)),
+      createAt: formattedCreateAt(specifiedData),
+      updateAt: formattedUpdateAt(specifiedData),
       id: doc.id,
     };
   });

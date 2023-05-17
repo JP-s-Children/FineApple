@@ -6,7 +6,7 @@ import { Global } from '@emotion/react';
 import GlobalStyle from './styles/GlobalStyle';
 import AuthenticationGuard from './guard/AuthenticationGuard';
 import { Layout, RootError } from './components';
-import { postsByCategoryLoader, myPostsLoader, postDetailLoader, rankLoader, myProfileLoader } from './loaders';
+import { postsByCategoryLoader, postDetailLoader, rankLoader } from './loaders';
 import {
   Home,
   SignIn,
@@ -18,13 +18,12 @@ import {
   GuideFaq,
   MyProfile,
   PopularPosts,
-  ComputerIt,
-  Game,
   Post,
   MyPosts,
-  Community,
   Profile,
   NotFound,
+  CategoryLayout,
+  CategoryPosts,
 } from './pages';
 import { SIGNIN_PATH } from './constants/routes';
 
@@ -54,36 +53,20 @@ const router = createBrowserRouter([
         path: '/signup',
         element: <SignUp />,
       },
-      // {
-      //   path: '/computer-it',
-      //   element: <ComputerIt />,
-      //   children: [
-      //     { index: true, element: <Community category="computer-it" /> },
-      //     {
-      //       path: ':subCategory',
-      //       loader: postsByCategoryLoader(queryClient),
-      //       element: <Community category="computer-it" />,
-      //     },
-      //     {
-      //       path: 'list/popular',
-      //       element: <PopularPosts category="computer-it" />,
-      //     },
-      //   ],
-      // },
       {
         path: ':category',
         loader: postsByCategoryLoader(queryClient),
-        element: <Game />,
+        element: <CategoryLayout />,
         children: [
-          { index: true, element: <Community category="game" /> },
+          { index: true, element: <CategoryPosts /> },
           {
             path: ':subCategory',
             loader: postsByCategoryLoader(queryClient),
-            element: <Community category="game" />,
+            element: <CategoryPosts />,
           },
           {
             path: 'list/popular',
-            element: <PopularPosts category="game" />,
+            element: <PopularPosts />,
           },
         ],
       },
@@ -94,8 +77,7 @@ const router = createBrowserRouter([
       },
       {
         path: 'myposts',
-        loader: myPostsLoader(queryClient),
-        element: <MyPosts />,
+        element: <AuthenticationGuard redirectTo={SIGNIN_PATH} element={<MyPosts />} />,
       },
       { path: 'guide-faq', element: <GuideFaq /> },
       {
@@ -108,9 +90,8 @@ const router = createBrowserRouter([
         element: <Profile />,
       },
       {
-        path: '/profile',
-        loader: myProfileLoader(queryClient),
-        element: <MyProfile />,
+        path: '/myprofile',
+        element: <AuthenticationGuard redirectTo={SIGNIN_PATH} element={<MyProfile />} />,
       },
       {
         path: '/profile/edit',

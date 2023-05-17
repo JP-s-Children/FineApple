@@ -40,7 +40,7 @@ const PostSection = ({ queryFn, isShownQuestionButton = true }) => {
           {posts?.totalLength}
         </Text>
       </Flex>
-      <Divider mb="1rem" variant="dashed" />
+      <Divider mb="1rem" />
 
       <PostsContainer>
         <SideMenu
