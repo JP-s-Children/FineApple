@@ -13,8 +13,8 @@ const Logo = ({ clickable }) => (
   <Svg
     version="1.0"
     xmlns="http://www.w3.org/2000/svg"
-    width="28px"
-    height="28px"
+    width="30px"
+    height="30px"
     viewBox="0 0 6000.000000 6000.000000"
     preserveAspectRatio="xMidYMid meet"
     clickable={clickable}>

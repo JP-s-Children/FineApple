@@ -22,7 +22,7 @@ const ThemeIcon = styled.i`
   align-items: center;
   padding: 6px;
   border-radius: 10px;
-  border: 1px solid #e5e5e5;
+  border: 1px solid var(--opacity-border-color);
   color: var(--font-color);
 `;
 

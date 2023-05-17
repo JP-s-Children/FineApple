@@ -24,7 +24,7 @@ const GlobalStyle = css`
     --body-bg-color: #141517;
     --secondary-bg-color: #1a1b1e;
     --opacity-bg-color: #e5e5e530;
-    --opacity-border-color: #141517;
+    --opacity-border-color: #2a2a2a;
     --footer-bg-color: #1a1b1e;
     --footer-font-color: #909296;
   }
