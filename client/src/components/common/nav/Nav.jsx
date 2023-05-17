@@ -27,7 +27,8 @@ const LogoLink = styled(Link)`
 
 const Nav = () => (
   <NavContainer>
-    <Flex justify="space-between" miw="1280px" w="1280px" m="0 auto">
+    {/* <Flex justify="space-between" miw="1280px" w="1280px" m="0 auto"> */}
+    <Flex justify="space-between" miw="800px" m="0 auto">
       <Wrapper>
         <LogoLink to={MAIN_PATH}>
           <Logo clickable={true} />
