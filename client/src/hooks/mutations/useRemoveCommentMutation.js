@@ -1,19 +1,15 @@
-import { removeComment } from '../../api/post';
+import { removeComment } from '../../services/comments';
 import { remove } from '../../constants/mutateComment';
 import usePostInfoMutation from './usePostInfoMutation';
 
 const useRemoveCommentMutation = postId =>
   usePostInfoMutation({
     postId,
-    requestFn: removeComment,
+    requestFn: ({ commentId }) => removeComment({ id: commentId }),
     commentUpdateFn: remove,
     postUpdateFn: (oldData, variables) => ({
       ...oldData,
-      post: {
-        ...oldData.post,
-        certified: variables.certified ? false : oldData.post.certified,
-        completed: variables.useful ? false : oldData.post.completed,
-      },
+      completed: variables.adopted ? false : oldData.completed,
     }),
   });
 
