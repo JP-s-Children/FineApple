@@ -6,7 +6,7 @@ import { Global } from '@emotion/react';
 import GlobalStyle from './styles/GlobalStyle';
 import AuthenticationGuard from './guard/AuthenticationGuard';
 import { Layout, RootError } from './components';
-import { postsByCategoryLoader, myPostsLoader, postDetailLoader, rankLoader } from './loaders';
+import { postsByCategoryLoader, postDetailLoader, rankLoader } from './loaders';
 import {
   Home,
   SignIn,
@@ -77,8 +77,7 @@ const router = createBrowserRouter([
       },
       {
         path: 'myposts',
-        loader: myPostsLoader(queryClient),
-        element: <MyPosts />,
+        element: <AuthenticationGuard redirectTo={SIGNIN_PATH} element={<MyPosts />} />,
       },
       { path: 'guide-faq', element: <GuideFaq /> },
       {
@@ -92,7 +91,7 @@ const router = createBrowserRouter([
       },
       {
         path: '/myprofile',
-        element: <MyProfile />,
+        element: <AuthenticationGuard redirectTo={SIGNIN_PATH} element={<MyProfile />} />,
       },
       {
         path: '/profile/edit',
