@@ -6,12 +6,12 @@ import userState from '../recoil/atoms/userState';
 import { auth } from '../services/firebase';
 
 const AuthenticationGuard = ({ redirectTo, element }) => {
-  const [user, setUser] = Recoil.useRecoilState(userState);
+  const [loginUser, setLoginUser] = Recoil.useRecoilState(userState);
+  const [isLoading, setLoading] = React.useState(true);
 
   const setAuth = user => {
-    if (!user) {
-      setUser(null);
-    }
+    setLoading(false);
+    if (!user) setLoginUser(null);
   };
 
   React.useEffect(() => {
@@ -19,7 +19,8 @@ const AuthenticationGuard = ({ redirectTo, element }) => {
     return () => unsubscribe();
   }, []);
 
-  return user ? element : <Navigate to={redirectTo} />;
+  if (!loginUser) return <Navigate to={redirectTo} />;
+  return isLoading ? null : loginUser ? element : <Navigate to={redirectTo} />;
 };
 
 export default AuthenticationGuard;
