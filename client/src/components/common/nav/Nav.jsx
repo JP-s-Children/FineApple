@@ -9,6 +9,9 @@ const NavContainer = styled.nav`
   display: flex;
   align-items: center;
   height: 60px;
+  min-width: 880px;
+  max-width: 1280px;
+  padding: 0 30px;
   background-color: var(--footer-bg-color);
   border-bottom: 1px solid #e1e1e1;
   color: var(--font-color);
@@ -27,8 +30,7 @@ const LogoLink = styled(Link)`
 
 const Nav = () => (
   <NavContainer>
-    {/* <Flex justify="space-between" miw="1280px" w="1280px" m="0 auto"> */}
-    <Flex justify="space-between" miw="800px" m="0 auto">
+    <Flex justify="space-between" w="100%" m="0 auto">
       <Wrapper>
         <LogoLink to={MAIN_PATH}>
           <Logo clickable={true} />
