@@ -41,7 +41,7 @@ const getComments = async ({ postId, pageParam }) => {
 };
 
 const createComment = async commentInfo => {
-  const commentRef = addDoc(collection(db, COLLECTION), { commentInfo, createAt: serverTimestamp() });
+  const commentRef = addDoc(collection(db, COLLECTION), { ...commentInfo, createAt: serverTimestamp() });
 
   return commentRef.id;
 };

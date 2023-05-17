@@ -38,7 +38,7 @@ const Content = styled(Text)`
 `;
 
 const PostContent = ({
-  post: { id, author, title, createAt, content, completed, like, avatarId, certified, nickName, level, point },
+  post: { id, author, title, createAt, content, completed, like, avatarId, nickName, level, point },
 }) => {
   const userInfo = Recoil.useRecoilValue(userState);
   const [opened, { close: closeModal, open: openModal }] = useDisclosure(false);

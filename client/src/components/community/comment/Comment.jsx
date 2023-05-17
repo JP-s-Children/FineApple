@@ -2,9 +2,9 @@ import React from 'react';
 import styled from '@emotion/styled';
 import { Link } from 'react-router-dom';
 import { AiFillCheckCircle } from 'react-icons/ai';
-import { Badge, Box, Button, CloseButton, Divider, Flex, Group, List, Text } from '@mantine/core';
+import { Badge, Box, Button, Chip, CloseButton, Divider, Flex, Group, List, Text } from '@mantine/core';
 import { useRecoilValue } from 'recoil';
-import { AvatarIcon, AppleRecommendIcon, TextEditor, UsefulCommentChip, AppleRecommendButton } from '../..';
+import { AvatarIcon, AppleRecommendIcon, TextEditor, UsefulCommentChip, AppleRecommendButton, LikeChip } from '../..';
 import { PROFILE_PATH } from '../../../constants/routes';
 import formattedDate from '../../../utils/formattedDate';
 import transientOptions from '../../../constants/transientOptions';
@@ -24,6 +24,7 @@ const Container = styled(List.Item)`
 
 const CommentHeader = styled(Flex, transientOptions)`
   display: flex;
+
   justify-content: space-between;
   align-items: center;
   height: 32px;
@@ -31,7 +32,7 @@ const CommentHeader = styled(Flex, transientOptions)`
   font-weight: 500;
   border-bottom: 1px solid var(--body-bg-color);
   border-radius: 10px 10px 0 0;
-  background: ${({ $certified }) => ($certified ? '#238BE680' : 'var(--secondary-bg-color)')};
+  background: ${({ $adopted }) => ($adopted ? '#238BE680' : 'var(--secondary-bg-color)')};
 `;
 
 const CommentWrapper = styled(Flex)`
@@ -73,28 +74,26 @@ const CommentContent = styled(Text)`
   word-break: keep-all;
 `;
 
-const UsefulBadge = styled(Group)`
-  gap: 6px;
-  padding: 2px 12px;
-  height: 32px;
-  border: 1px solid #58be7d;
-  border-radius: 30px;
-  color: #58be7d;
-  font-size: 14px;
-  font-weight: 600;
-`;
+// const UsefulBadge = styled(Group)`
+//   gap: 6px;
+//   padding: 2px 12px;
+//   height: 32px;
+//   border: 1px solid #58be7d;
+//   border-radius: 30px;
+//   color: #58be7d;
+//   font-size: 14px;
+//   font-weight: 600;
+// `;
 
 const Comment = ({
   comment,
   postInfo,
-  isAdmin,
-  isOneOfCommentsIsUseful,
   mutateFns: { editMutate, toggleUsefulMutate, toggleCertifiedMutate, removeMutate },
 }) => {
-  const { id, author, avatarId, certified, content, createAt, level, nickName, useful } = comment;
+  const { id, author, avatarId, adopted, content, createAt, level, nickName, like } = comment;
   const user = useRecoilValue(userState);
 
-  const isAuthor = author === user?.email;
+  const isCommentAuthor = author === user?.email;
 
   const [commentEditable, setCommentEditable] = React.useState(false);
 
@@ -108,9 +107,11 @@ const Comment = ({
   return (
     <Container>
       <CommentWrapper>
-        <CommentHeader $certified={certified}>
-          {certified && <AppleRecommendIcon color="white" />}
-          {isAuthor && (
+        <CommentHeader $adopted={adopted}>
+          {adopted && <AppleRecommendIcon color="white" />}
+
+          {/* 답글 작성자는 답글 삭제 버튼이 보인다. */}
+          {isCommentAuthor && (
             <CloseButton
               title="Close popover"
               ml="auto"
@@ -119,10 +120,11 @@ const Comment = ({
               variant="transparent"
               iconSize={20}
               c="var(--font-color)"
-              onClick={() => removeMutate({ commentId: id, certified, useful })}
+              onClick={() => removeMutate({ commentId: id, adopted })}
             />
           )}
         </CommentHeader>
+
         <CommentBody>
           <Link to={`${PROFILE_PATH}/${nickName}`}>
             <AvatarIcon avatarId={avatarId} />
@@ -137,32 +139,24 @@ const Comment = ({
               </Link>
 
               <Flex ml="auto" gap="10px">
-                {isAdmin && !postInfo.certified && !certified && (
+                {/* 해결된 글이 아닐 떄, 채택 버튼을 노출한다. */}
+                {!postInfo.completed && postInfo.email === user?.email && (
                   <AppleRecommendButton onClick={handleClickCertified(id, true)} />
                 )}
-                {isAdmin && postInfo.certified && certified && (
+
+                {/* 해결된 글이고, 채택된 답변일 경우 채택 취소 버튼을 노출한다. */}
+                {postInfo.completed && adopted && (
                   <Button h="32px" radius="xl" color="red" onClick={handleClickCertified(id, false)}>
-                    권장 답변 취소
+                    채택 취소
                   </Button>
                 )}
 
-                {postInfo.author === user?.email ? (
-                  <UsefulCommentChip
-                    commentId={id}
-                    useful={useful}
-                    isOneOfCommentsIsUseful={isOneOfCommentsIsUseful}
-                    toggleUsefulMutate={toggleUsefulMutate}
-                  />
-                ) : (
-                  useful && (
-                    <UsefulBadge>
-                      <AiFillCheckCircle pos="absolute" top="0" size="16" />
-                      <Text>유용함</Text>
-                    </UsefulBadge>
-                  )
-                )}
+                {/* 좋아요는 항상 노출한다. */}
+                {/* 좋아요를 누른 사용자이면 checked를 true로 넣는다. */}
+                <LikeChip checked={false} likeCount={like.length} />
 
-                {isAuthor && (
+                {/* 답글 작성자는 편집 버튼이 보인다. */}
+                {isCommentAuthor && (
                   <Button
                     mb="4px"
                     h="32px"
@@ -177,10 +171,13 @@ const Comment = ({
                 )}
               </Flex>
             </Flex>
+
             <Text mb="10px" c="grey">
               {formattedDate(new Date(createAt))}
             </Text>
+
             <Divider variant="dashed" />
+
             {commentEditable ? (
               <Box mt="20px">
                 <TextEditor editor={editor} />
