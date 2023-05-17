@@ -8,9 +8,10 @@ const Container = styled(Box)`
   width: 280px;
   margin-right: 40px;
   padding-right: 40px;
-  border-right: 1px solid #e5e5e5;
+  border-right: 1px solid var(--opacity-border-color);
 
   button {
+    height: 40px;
     color: var(--font-color);
     border-radius: 10px;
     &:hover {

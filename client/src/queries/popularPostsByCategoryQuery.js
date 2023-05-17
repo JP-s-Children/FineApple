@@ -6,7 +6,7 @@ const popularPostsByCategoryQuery = ({ category }) => ({
   queryKey: ['category', category],
   queryFn: async () => getPopularPostsByCategory({ category }),
 
-  select: ({ pages }) => pages.map(({ posts }) => posts).flat(),
+  select: ({ pages }) => ({ posts: pages.map(({ posts }) => posts).flat(), totalLength: pages[0].totalLength }),
   staleTime,
 });
 

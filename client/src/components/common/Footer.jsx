@@ -13,9 +13,10 @@ const FooterContainer = styled.footer`
 `;
 
 const Wrapper = styled(Container)`
-  margin-top: 1rem;
   min-width: 1280px;
   display: flex;
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
   justify-content: space-between;
   font-size: 0.75rem;
 `;
@@ -23,9 +24,8 @@ const Wrapper = styled(Container)`
 const footerContents = {
   regulations: ['개인정보 처리방침', '웹 사이트 이용약관', '판매 및 환불', '법적 고지', '사이트 맵'],
   businessInfo: [
-    '사업자등록번호 : 120-00-12345 | 통신판매업신고번호 : 제 2023-서울강남-00013호',
-    '대표이사 : Cool JP | 주소 : 서울특별시 강남구 역삼동 826-21, 미왕빌딩',
-    '대표전화 : 080-330-8877 | 팩스 : 02-6928-0000',
+    '대표이사 : Cool JP | 주소 : 서울특별시 강남구 역삼동 826-21, 파인애플빌딩',
+    '대표전화 : 080-333-8877 | 팩스 : 02-0000-0000',
   ],
 };
 
@@ -34,10 +34,10 @@ const Footer = () => {
 
   return (
     <FooterContainer>
-      <Wrapper>
-        <Logo />
-      </Wrapper>
-      <Divider my="sm" m="0 auto" miw="1280px" color="var(--opacity-border-color)" />
+      <Container miw="1280px" p="0" h="50px">
+        <Logo width={'60px'} height={'60px'} />
+      </Container>
+      <Divider my="lg" m="0 auto" miw="1280px" color="var(--opacity-border-color)" />
       <Wrapper>
         <Flex justify="center" align="align-items" direction="column">
           {businessInfo.map((info, idx) => (
@@ -45,15 +45,17 @@ const Footer = () => {
           ))}
         </Flex>
       </Wrapper>
-      <Wrapper>
-        <Text>Copyright © 2023 Apple Inc. 모든 권리 보유.</Text>
-        <Flex gap="1rem">
+      <Container miw="1280px" display="flex" justify="space-between" fz="0.75rem">
+        <Text>Copyright © 2023 FineApple Inc. 모든 권리 보유.</Text>
+        <Flex gap="1rem" ml="auto">
           {regulations.map((regulation, idx) => (
             <li key={idx}>{regulation}</li>
           ))}
         </Flex>
-        <Text fw="500">대한민국</Text>
-      </Wrapper>
+        <Text ml="auto" fw="500">
+          대한민국
+        </Text>
+      </Container>
     </FooterContainer>
   );
 };

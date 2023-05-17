@@ -53,7 +53,11 @@ const getPosts = async ({ pageParam }) => {
 };
 
 const getPostsByCategory = async ({ category = '', subCategory = '', pageParam }) => {
-  const { data: posts, nextPage } = await paginationQuery({
+  const {
+    data: posts,
+    totalLength,
+    nextPage,
+  } = await paginationQuery({
     collectionName: COLLECTION,
     pageParam,
     searchCondition: subCategory
@@ -63,6 +67,7 @@ const getPostsByCategory = async ({ category = '', subCategory = '', pageParam }
 
   return {
     posts: await addCommentsLengthListInPosts(posts),
+    totalLength,
     nextPage,
   };
 };

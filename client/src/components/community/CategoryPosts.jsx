@@ -24,7 +24,7 @@ const PostsDescription = styled(Title)`
   position: relative;
   margin: 1rem 1rem 1.5rem 0;
   width: 240px;
-  font-size: 3.2rem;
+  font-size: 3.5rem;
   word-break: keep-all;
 `;
 

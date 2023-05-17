@@ -30,7 +30,7 @@ const MyPosts = styled(List, transientOptions)`
 `;
 
 const PostSection = ({ queryFn, isQuestionButtonShown = true }) => {
-  const { data: posts, fetchNextPage, hasNextPage } = useInfiniteQuery(queryFn);
+  const { data, fetchNextPage, hasNextPage } = useInfiniteQuery(queryFn);
 
   const [currentSort, setCurrentSort] = React.useState('recent');
   const [currentFilter, setCurrentFilter] = React.useState(FILTERS.all);
@@ -39,7 +39,9 @@ const PostSection = ({ queryFn, isQuestionButtonShown = true }) => {
   const { pathname } = useLocation();
   const isPathPopularIncluded = pathname.includes('popular');
 
-  const displayPosts = isPathPopularIncluded ? posts : sortPosts(filterPosts(posts, currentFilter), currentSort);
+  const displayPosts = isPathPopularIncluded
+    ? data?.posts
+    : sortPosts(filterPosts(data?.posts, currentFilter), currentSort);
 
   return (
     <Wrapper>
@@ -50,10 +52,10 @@ const PostSection = ({ queryFn, isQuestionButtonShown = true }) => {
               질문
             </Text>
             <Text c="blue" fz="2.5rem">
-              {posts?.totalLength}
+              {data?.totalLength}
             </Text>
           </Flex>
-          <Divider mb="1rem" />
+          <Divider mb="1rem" color="var(--opacity-border-color)" />
         </>
       )}
 
@@ -66,7 +68,7 @@ const PostSection = ({ queryFn, isQuestionButtonShown = true }) => {
             setCurrentSort={setCurrentSort}
           />
         )}
-        {posts?.length !== 0 ? (
+        {data?.posts?.length !== 0 ? (
           <MyPosts>
             {displayPosts?.map(post => (
               <PostItem key={post.id} post={post} />
