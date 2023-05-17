@@ -22,7 +22,7 @@ const Wrapper = styled(Container)`
 `;
 
 const Title = styled(Link)`
-  font-size: 21px;
+  font-size: 18px;
   font-weight: 600;
   color: var(--font-color);
   text-decoration: none;

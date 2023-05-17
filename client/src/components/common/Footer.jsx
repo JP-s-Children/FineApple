@@ -4,6 +4,8 @@ import { Container, Flex, Text, Divider } from '@mantine/core';
 import Logo from './Logo';
 
 const FooterContainer = styled.footer`
+  min-width: 1280px;
+  width: 100vw;
   padding-top: 0.5rem;
   padding-bottom: 1.25rem;
   background-color: var(--footer-bg-color);
@@ -11,10 +13,10 @@ const FooterContainer = styled.footer`
 `;
 
 const Wrapper = styled(Container)`
-  min-width: 1024px;
+  margin-top: 1rem;
+  min-width: 1280px;
   display: flex;
   justify-content: space-between;
-  margin-top: 1rem;
   font-size: 0.75rem;
 `;
 
@@ -35,7 +37,7 @@ const Footer = () => {
       <Wrapper>
         <Logo />
       </Wrapper>
-      <Divider my="sm" m="0 auto" maw="1024px" />
+      <Divider my="sm" m="0 auto" miw="1280px" color="var(--opacity-border-color)" />
       <Wrapper>
         <Flex justify="center" align="align-items" direction="column">
           {businessInfo.map((info, idx) => (
