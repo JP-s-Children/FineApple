@@ -42,7 +42,7 @@ const Post = () => {
       <PostContent post={post} />
       <Divider variant="dashed" />
       <React.Suspense fallback={<CommentLoader />}>
-        <CommentSection postInfo={{ id: postId, author: 'cool jp', certified: true }} mutateFns={mutateFns} />
+        <CommentSection postInfo={post} mutateFns={mutateFns} />
       </React.Suspense>
     </Wrapper>
   );
