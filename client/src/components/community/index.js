@@ -5,6 +5,8 @@ export * from './question';
 export * from './rank';
 export * from './autoComplete';
 
+export { default as CategoryPosts } from './CategoryPosts';
+export { default as PopularPosts } from './PopularPosts';
 export { default as AppleRecommendButton } from './AppleRecommendButton';
 export { default as AppleRecommendIcon } from './AppleRecommendIcon';
 export { default as CompletedIcon } from './CompletedIcon';
