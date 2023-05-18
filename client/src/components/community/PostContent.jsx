@@ -4,6 +4,7 @@ import styled from '@emotion/styled';
 import { Link } from 'react-router-dom';
 import { useDisclosure } from '@mantine/hooks';
 import { Badge, Box, Button, Flex, Text, Title } from '@mantine/core';
+import { throttle } from 'lodash';
 import formattedDate from '../../utils/formattedDate';
 import { AvatarIcon, CompletedIcon, DeletePostModal, LikeChip } from '..';
 import userState from '../../recoil/atoms/userState';
