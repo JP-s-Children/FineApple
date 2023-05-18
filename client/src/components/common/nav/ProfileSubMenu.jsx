@@ -1,6 +1,8 @@
 import React from 'react';
+import Recoil from 'recoil';
 import styled from '@emotion/styled';
-import { Flex, Menu, Text } from '@mantine/core';
+import { Flex, Group, Menu, Text } from '@mantine/core';
+import userState from '../../../recoil/atoms/userState';
 
 const SubMenuContainer = styled(Menu.Dropdown)`
   min-width: 100vw;
@@ -23,15 +25,7 @@ const SubMenuWrapper = styled.div`
   min-width: 720px;
   max-width: 720px;
   display: flex;
-  flex-direction: row;
-`;
-
-const SubMenuLabel = styled(Text)`
-  color: var(--footer-font-color);
-  font-size: 15px;
-  font-weight: 300;
-  margin-bottom: 8px;
-  padding-left: 5px;
+  flex-direction: column;
 `;
 
 const SubMenuItem = styled(Menu.Item)`
@@ -59,19 +53,32 @@ const SubMenuItem = styled(Menu.Item)`
  *
  * }} props
  */
-const SubMenu = ({ label, menuItems }) => (
-  <SubMenuContainer>
-    <SubMenuWrapper>
-      <Flex direction="column">
-        {label && <SubMenuLabel>{label}</SubMenuLabel>}
-        {menuItems.map(({ size, content, path }) => (
-          <SubMenuItem key={`${content}-${path}`} size={size} component="a" href={path}>
-            {content}
-          </SubMenuItem>
-        ))}
-      </Flex>
-    </SubMenuWrapper>
-  </SubMenuContainer>
-);
+const ProfileSubMenu = ({ menuItems, handleLogout }) => {
+  const { nickName, level, point } = Recoil.useRecoilValue(userState);
 
-export default SubMenu;
+  return (
+    <SubMenuContainer>
+      <SubMenuWrapper>
+        <Flex direction="column" px="6px" mb="10px">
+          <Text fz="lg" fw="600">{`${nickName} 님`}</Text>
+          <Group>
+            <Text>레벨 {level}</Text>
+            <Text>포인트 {point}</Text>
+          </Group>
+        </Flex>
+        <Flex direction="column">
+          {menuItems.map(({ size, content, path }) => (
+            <SubMenuItem key={`${content}-${path}`} size={size} component="a" href={path}>
+              {content}
+            </SubMenuItem>
+          ))}
+          <SubMenuItem key={'로그아웃'} size="sm" component="a" onClick={handleLogout}>
+            {'로그아웃'}
+          </SubMenuItem>
+        </Flex>
+      </SubMenuWrapper>
+    </SubMenuContainer>
+  );
+};
+
+export default ProfileSubMenu;
