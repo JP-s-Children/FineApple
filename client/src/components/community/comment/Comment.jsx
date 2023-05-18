@@ -3,7 +3,7 @@ import styled from '@emotion/styled';
 import { Link } from 'react-router-dom';
 import { Badge, Box, Button, CloseButton, Divider, Flex, List, Text } from '@mantine/core';
 import { useRecoilValue } from 'recoil';
-import { AvatarIcon, AppleRecommendIcon, TextEditor, AppleRecommendButton, LikeChip } from '../..';
+import { AvatarIcon, AdoptedLabel, TextEditor, AdoptedButton, LikeChip } from '../..';
 import { PROFILE_PATH } from '../../../constants/routes';
 import formattedDate from '../../../utils/formattedDate';
 import transientOptions from '../../../constants/transientOptions';
@@ -98,7 +98,7 @@ const Comment = ({
     <Container>
       <CommentWrapper>
         <CommentHeader $adopted={adopted}>
-          {adopted && <AppleRecommendIcon color="white" />}
+          {adopted && <AdoptedLabel color="white" />}
           {isCommentAuthor && (
             <CloseButton
               title="Close popover"
@@ -127,7 +127,7 @@ const Comment = ({
               </Link>
 
               <Flex ml="auto" gap="10px">
-                {isPostAuthor && !postInfo.completed && <AppleRecommendButton onClick={handleClickAdopt(true)} />}
+                {isPostAuthor && !postInfo.completed && <AdoptedButton onClick={handleClickAdopt(true)} />}
                 {isPostAuthor && isTopComment && postInfo.completed && adopted && (
                   <Button h="32px" radius="xl" color="red" onClick={handleClickAdopt(false)}>
                     채택 취소

@@ -7,8 +7,8 @@ export * from './autoComplete';
 
 export { default as CategoryPosts } from './CategoryPosts';
 export { default as PopularPosts } from './PopularPosts';
-export { default as AppleRecommendButton } from './AppleRecommendButton';
-export { default as AppleRecommendIcon } from './AppleRecommendIcon';
+export { default as AdoptedButton } from './AdoptedButton';
+export { default as AdoptedLabel } from './AdoptedLabel';
 export { default as CompletedIcon } from './CompletedIcon';
 export { default as CategoryHeader } from './CategoryHeader';
 export { default as PostContent } from './PostContent';
