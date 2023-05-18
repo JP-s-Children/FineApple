@@ -53,7 +53,7 @@ const router = createBrowserRouter([
         element: <SignUp />,
       },
       {
-        path: ':category',
+        path: '/posts/:category',
         loader: postsByCategoryLoader(queryClient),
         element: <CategoryLayout />,
         children: [
