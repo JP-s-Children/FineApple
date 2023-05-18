@@ -44,7 +44,7 @@ const UserMenu = () => {
     <Menu trigger="hover">
       <Menu.Target>
         <AvatarWrapper>
-          <AvatarIcon avatarId={loginUser.avatarId} />
+          <AvatarIcon avatarId={loginUser.avatarId} activeHoverStyle={true} />
         </AvatarWrapper>
       </Menu.Target>
       <SubMenu

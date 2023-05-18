@@ -9,16 +9,21 @@ const Container = styled(Avatar)`
   border-radius: 100%;
 
   :hover {
-    border: 3px solid var(--hover-font-color);
+    border: ${({ activeHoverStyle }) => activeHoverStyle && '3px solid var(--hover-font-color)'};
   }
 `;
 
 /**
  * - avatarId 목록 : /constants/avatars
- * @param {{avatarId?: string}} param
+ * @param {{avatarId?: string, size: 'sm' | 'md' | 'lg', activeHoverStyle: boolean}} param
  */
-const AvatarIcon = ({ avatarId, size = 'md' }) => (
-  <Container src={avatarId ? avatars[avatarId] : null} size={size} alt="avatar image" />
+const AvatarIcon = ({ avatarId, size = 'md', activeHoverStyle = false }) => (
+  <Container
+    src={avatarId ? avatars[avatarId] : null}
+    size={size}
+    alt="avatar image"
+    activeHoverStyle={activeHoverStyle}
+  />
 );
 
 export default AvatarIcon;
