@@ -3,7 +3,7 @@ import styled from '@emotion/styled';
 import { Link } from 'react-router-dom';
 import { Container, Flex, List, Text, Title } from '@mantine/core';
 import { AutoComplete, CategorySelect, Tutorials } from '../components';
-import categoryList from '../constants/categoryList';
+import { CATEGORY_INFO } from '../constants/category';
 import { getSearchedPosts } from '../services/posts';
 
 const Wrapper = styled(Container)`
@@ -121,10 +121,10 @@ const Home = () => {
         </Text>
 
         <CategoryList>
-          {categoryList.map(({ path, category, content }) => (
-            <Category key={content} path={path}>
+          {Object.values(CATEGORY_INFO).map(({ name, path, category }) => (
+            <Category key={name} path={path}>
               <Link to={`${category}/${path}`}>
-                <CategoryDescription>{content}</CategoryDescription>
+                <CategoryDescription>{name}</CategoryDescription>
               </Link>
             </Category>
           ))}
