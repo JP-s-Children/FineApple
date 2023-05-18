@@ -8,10 +8,16 @@ const useToggleLikeMutation = postId =>
       toggleCommentLike({ id: commentId, checked, userId: email });
     },
     updateFn: toggleLike,
-    adoptedCommentUpdateFn: ({ prevAdoptedComment }, { checked, email }) => ({
-      ...prevAdoptedComment,
-      like: checked ? [...prevAdoptedComment.like, email] : prevAdoptedComment.like.filter(_email => _email !== email),
-    }),
+    adoptedCommentUpdateFn: ({ prevAdoptedComment }, { checked, email }) => {
+      if (!prevAdoptedComment) return prevAdoptedComment;
+
+      return {
+        ...prevAdoptedComment,
+        like: checked
+          ? [...prevAdoptedComment.like, email]
+          : prevAdoptedComment.like.filter(_email => _email !== email),
+      };
+    },
     postId,
   });
 
