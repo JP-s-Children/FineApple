@@ -1,5 +1,6 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
+import _ from 'lodash';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useNavigate } from 'react-router-dom';
@@ -37,7 +38,9 @@ const SignUpForm = () => {
     handleSubmit,
     register,
     setValue,
-    formState: { errors },
+    setError,
+    clearErrors,
+    formState: { isDirty, errors },
   } = useForm({
     resolver: zodResolver(signupScheme),
     shouldFocusError: true,
@@ -57,6 +60,13 @@ const SignUpForm = () => {
   const checkDuplicateEmail = async email => {
     try {
       const isDuplicatedEmail = await checkDuplicatedEmail(email);
+
+      if (isDuplicatedEmail) {
+        setError('email', { type: 'custom' });
+      } else if (errors.email?.type === 'custom') {
+        clearErrors('email');
+      }
+
       return isDuplicatedEmail;
     } catch (e) {
       return false;
@@ -65,7 +75,14 @@ const SignUpForm = () => {
 
   const checkDuplicateNickName = async nickName => {
     try {
-      const isDuplicatedNickName = checkDuplicatedNickName(nickName);
+      const isDuplicatedNickName = await checkDuplicatedNickName(nickName);
+
+      if (isDuplicatedNickName) {
+        setError('nickName', { type: 'custom' });
+      } else if (errors.nickName?.type === 'custom') {
+        clearErrors('nickName');
+      }
+
       return isDuplicatedNickName;
     } catch (e) {
       return false;
@@ -112,7 +129,7 @@ const SignUpForm = () => {
           <PhoneNumberInput {...register('phoneNumber')} setValue={setValue} placeholder="전화번호" />
         </InputWrapper>
 
-        <Button type="submit" mt="xl" size="lg" radius="10px">
+        <Button type="submit" disabled={!isDirty || !_.isEmpty(errors)} mt="xl" size="lg" radius="10px">
           회원가입
         </Button>
       </Stack>
