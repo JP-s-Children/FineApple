@@ -97,7 +97,9 @@ const MyProfile = () => {
             {interestedCategory.length === 0 && <Content>{'등록된 관심 카테고리가 없습니다.'}</Content>}
 
             {interestedCategory.map((categoryType, index) => (
-              <Link key={index} to={`/${CATEGORY_INFO[categoryType].category}/${CATEGORY_INFO[categoryType].path}`}>
+              <Link
+                key={index}
+                to={`/posts/${CATEGORY_INFO[categoryType].category}/${CATEGORY_INFO[categoryType].path}`}>
                 <Badge size="lg" variant={CATEGORY_INFO[categoryType].style} color={CATEGORY_INFO[categoryType].color}>
                   {CATEGORY_INFO[categoryType].name}
                 </Badge>
