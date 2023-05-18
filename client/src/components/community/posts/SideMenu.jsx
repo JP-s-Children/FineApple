@@ -49,6 +49,7 @@ const sortList = [
     sort: SORTS.like,
   },
 ];
+
 const SideMenu = ({ currentSort, currentFilter, setCurrentSort, setCurrentFilter }) => (
   <Container>
     <Stack my="xl" spacing="xl">
