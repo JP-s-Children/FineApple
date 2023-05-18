@@ -1,28 +1,13 @@
-// import {
-//   getDocs,
-//   collection,
-//   addDoc,
-//   query,
-//   where,
-//   doc,
-//   updateDoc,
-//   deleteDoc,
-//   serverTimestamp,
-//   arrayRemove,
-//   arrayUnion,
-//   getDoc,
-// } from 'firebase/firestore';
-
-import { doc, getDoc } from 'firebase/firestore';
+import { doc, getDoc, updateDoc } from 'firebase/firestore';
 import { db } from './firebase';
 
 const COLLECTION = 'users';
 
+const getProfile = async email => {
+  console.log(email);
+};
+
 const getMyProfile = async ({ email }) => {
-  // TODO: check auth
-
-  // console.log('ㅠㅠ', auth.currentUser);
-
   try {
     const userDocRef = doc(db, COLLECTION, email);
     const userSnapshot = await getDoc(userDocRef);
@@ -33,7 +18,7 @@ const getMyProfile = async ({ email }) => {
       country,
       firstName,
       lastName,
-      interestedCategory,
+      interestCategories,
       level,
       point,
       phoneNumber,
@@ -48,7 +33,7 @@ const getMyProfile = async ({ email }) => {
       country,
       birthDate: birthDate.toDate(),
       aboutMe,
-      interestedCategory,
+      interestCategories,
       avatarId,
       level,
       point,
@@ -60,8 +45,14 @@ const getMyProfile = async ({ email }) => {
   }
 };
 
-const getProfile = async email => {
-  console.log(email);
+const editMyProfile = async ({ userInfo: { email, ...userInfo } }) => {
+  try {
+    await updateDoc(doc(db, COLLECTION, email), {
+      ...userInfo,
+    });
+  } catch (e) {
+    console.log(e);
+  }
 };
 
-export { getMyProfile, getProfile };
+export { getProfile, getMyProfile, editMyProfile };

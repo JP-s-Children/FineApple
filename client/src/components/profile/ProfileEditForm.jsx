@@ -1,5 +1,6 @@
 import React from 'react';
 import Recoil from 'recoil';
+import _ from 'lodash';
 import { z } from 'zod';
 import { useNavigate } from 'react-router-dom';
 import { useController, useForm } from 'react-hook-form';
@@ -7,11 +8,9 @@ import { useQuery } from '@tanstack/react-query';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Button, Container, Radio, Stack, Textarea } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
-import { checkNickName } from '../../api/auth';
-import { editProfile } from '../../api/profile';
 import userState from '../../recoil/atoms/userState';
 import useToast from '../../hooks/useToast';
-import { PROFILE_PATH } from '../../constants/routes';
+import { MY_PROFILE_PATH } from '../../constants/routes';
 import { myProfileQuery } from '../../queries';
 import {
   AvatarEditButton,
@@ -20,8 +19,11 @@ import {
   CountrySelect,
   DuplicateCheckInput,
   InputWrapper,
+  SelectInterestCategories,
   PhoneNumberInput,
 } from '..';
+import { editMyProfile } from '../../services/profile';
+import { checkDuplicatedNickName } from '../../services/auth';
 
 const editProfileScheme = z.object({
   country: z.string(),
@@ -30,15 +32,16 @@ const editProfileScheme = z.object({
   phoneNumber: z.string().regex(/^01(?:0|1|[6-9])-(?:\d{3}|\d{4})-\d{4}$/, { message: '적절한 전화번호가 아닙니다.' }),
   avatarId: z.string(),
   aboutMe: z.string().max(1000),
+  interestCategories: z.string().array(),
 });
 
 const ProfileEditForm = () => {
   const navigate = useNavigate();
   const toast = useToast();
 
-  const [loginUser, setLoginUser] = Recoil.useRecoilState(userState);
+  const [user, setUser] = Recoil.useRecoilState(userState);
 
-  const { data: userInfo } = useQuery({ ...myProfileQuery(), suspense: true });
+  const { data: userInfo } = useQuery(myProfileQuery(user.email));
 
   const [avatarEditPopupOpened, { open: openAvatarEditPopup, close: closeAvatarEditPopup }] = useDisclosure(false);
 
@@ -46,7 +49,9 @@ const ProfileEditForm = () => {
     handleSubmit,
     register,
     setValue,
+    setError,
     getValues,
+    clearErrors,
     control,
     formState: { isDirty, errors },
   } = useForm({
@@ -57,6 +62,7 @@ const ProfileEditForm = () => {
       birthDate: new Date(userInfo.birthDate),
       aboutMe: userInfo.aboutMe,
       avatarId: userInfo.avatarId ?? '',
+      interestCategories: userInfo.interestCategories,
     },
   });
 
@@ -65,27 +71,36 @@ const ProfileEditForm = () => {
   } = useController({ name: 'avatarId', control });
 
   const onSubmit = async data => {
-    if (!isDirty) return;
+    console.log(data);
 
     try {
-      await editProfile({ ...data, userId: loginUser.email });
+      await editMyProfile({
+        userInfo: { ...data, email: user.email },
+      });
 
-      setLoginUser({ email: loginUser.email, nickName: data.nickName, avatarId: data.avatarId });
+      setUser({ ...user, email: user.email, nickName: data.nickName, avatarId: data.avatarId });
+
       toast.success({ message: '회원정보가 수정되었습니다.' });
-      navigate(PROFILE_PATH);
+      navigate(MY_PROFILE_PATH);
     } catch (e) {
       toast.error({ message: '회원정보를 수정하는데 실패하였습니다. 잠시 후 다시 시도해주세요.' });
     }
   };
 
-  const checkChangeNickName = async newNickName => {
-    if (newNickName === userInfo.nickName) {
+  const checkDuplicateNickName = async newNickName => {
+    if (newNickName === userInfo.nickName) return false;
+
+    try {
+      const isDuplicatedNickName = await checkDuplicatedNickName(newNickName);
+      if (isDuplicatedNickName) {
+        setError('nickName', { type: 'custom' });
+      } else if (errors.nickName?.type === 'custom') {
+        clearErrors('nickName');
+      }
+      return isDuplicatedNickName;
+    } catch (e) {
       return false;
     }
-    const {
-      data: { duplicated },
-    } = await checkNickName(newNickName);
-    return duplicated;
   };
 
   return (
@@ -102,7 +117,7 @@ const ProfileEditForm = () => {
           </Radio.Group>
 
           <InputWrapper label="닉네임" desc="커뮤니티에서 사용할 닉네임입니다.." error={errors?.nickName?.message}>
-            <DuplicateCheckInput placeholder="닉네임" checker={checkChangeNickName} {...register('nickName')} />
+            <DuplicateCheckInput placeholder="닉네임" checker={checkDuplicateNickName} {...register('nickName')} />
           </InputWrapper>
 
           <InputWrapper label="전화번호" error={errors?.phoneNumber?.message}>
@@ -122,11 +137,15 @@ const ProfileEditForm = () => {
             <CountrySelect defaultCountry={userInfo.country} {...register('country')} />
           </InputWrapper>
 
+          <InputWrapper label="관심 카테고리">
+            <SelectInterestCategories control={control} />
+          </InputWrapper>
+
           <InputWrapper label="자기소개">
             <Textarea {...register('aboutMe')} />
           </InputWrapper>
 
-          <Button type="submit" mt="xl" size="lg" disabled={!isDirty} radius="10px">
+          <Button type="submit" disabled={!isDirty || !_.isEmpty(errors)} mt="xl" size="lg" radius="10px">
             수정하기
           </Button>
         </Stack>
