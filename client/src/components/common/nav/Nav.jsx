@@ -13,7 +13,7 @@ const NavContainer = styled.nav`
   width: 100%;
   padding: 0 30px;
   background-color: var(--footer-bg-color);
-  border-bottom: 1px solid #e1e1e1;
+  border-bottom: 1px solid var(--opacity-border-color);
   color: var(--font-color);
 `;
 
@@ -25,6 +25,9 @@ const Wrapper = styled(Group)`
 `;
 
 const LogoLink = styled(Link)`
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
   margin-right: 30px;
 `;
 

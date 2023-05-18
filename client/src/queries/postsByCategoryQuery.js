@@ -8,7 +8,7 @@ const postsByCategoryQuery = ({ category, subCategory }) => ({
 
   getNextPageParam: lastPage => lastPage.nextPage,
 
-  select: ({ pages }) => pages.map(({ posts }) => posts).flat(),
+  select: ({ pages }) => ({ posts: pages.map(({ posts }) => posts).flat(), totalLength: pages[0].totalLength }),
   staleTime,
 });
 

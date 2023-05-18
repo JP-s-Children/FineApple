@@ -1,18 +1,18 @@
 import React from 'react';
-import { Link, useParams } from 'react-router-dom';
 import styled from '@emotion/styled';
+import { Link, useParams } from 'react-router-dom';
 import { Menu, Text } from '@mantine/core';
-import { ComputerItSubMenu } from '.';
+import { ComputerItSubMenu, GameSubMenu } from '.';
 import { GUIDE_FAQ_PATH, QUESTION_PATH, RANK_PATH } from '../../../constants/routes';
-import GameSubMenu from './GameSubMenu';
 import { CATEGORY } from '../../../constants/category';
 import transientOptions from '../../../constants/transientOptions';
 
 const NavItem = styled(Text, transientOptions)`
   padding: 8px 15px;
-  font-size: 20px;
+  font-size: 16px;
   font-weight: 500;
-  border-bottom: ${({ $isActive }) => $isActive && '2px solid var(--hover-font-color)'};
+  font-family: 'Noto Sans Kr';
+  border-bottom: ${({ $isActive }) => ($isActive ? '2px solid var(--hover-font-color)' : '1px solid transparent')};
   :hover {
     color: var(--hover-font-color);
   }
@@ -22,10 +22,11 @@ const NavItem = styled(Text, transientOptions)`
 `;
 
 const LinkMenu = styled(Link)`
-  font-size: 20px;
-  font-weight: 500;
   padding: 8px 15px;
+  font-size: 16px;
+  font-weight: 500;
   color: var(--font-color);
+  border-bottom: 1px solid transparent;
   :hover {
     color: var(--hover-font-color);
   }

@@ -5,7 +5,7 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { Global } from '@emotion/react';
 import GlobalStyle from './styles/GlobalStyle';
 import AuthenticationGuard from './guard/AuthenticationGuard';
-import { Layout, RootError } from './components';
+import { Layout, RootError, CategoryPosts, PopularPosts } from './components';
 import { postsByCategoryLoader, postDetailLoader, rankLoader } from './loaders';
 import {
   Home,
@@ -16,13 +16,11 @@ import {
   Rank,
   GuideFaq,
   MyProfile,
-  PopularPosts,
   Post,
   MyPosts,
   Profile,
   NotFound,
   CategoryLayout,
-  CategoryPosts,
   ProfileLayout,
   MyFavPosts,
 } from './pages';
@@ -62,7 +60,6 @@ const router = createBrowserRouter([
           { index: true, element: <CategoryPosts /> },
           {
             path: ':subCategory',
-            loader: postsByCategoryLoader(queryClient),
             element: <CategoryPosts />,
           },
           {

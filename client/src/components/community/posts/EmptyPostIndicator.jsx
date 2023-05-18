@@ -16,16 +16,16 @@ const Container = styled(Flex)`
   background-color: var(--secondary-bg-color);
 `;
 
-const EmptyPostIndicator = ({ isShownButton }) => {
+const EmptyPostIndicator = ({ isButtonShown }) => {
   const navigate = useNavigate();
 
   return (
     <Container>
       <Title mb="0.5rem" fz="2rem" fw="500" ta="center">
-        작성한 글이 없습니다 👷🏻‍♂️
+        관련 질문이 없습니다 👷🏻‍♂️
       </Title>
-      {isShownButton && (
-        <Button onClick={() => navigate(QUESTION_PATH)} w="300px" radius="xl" fz="md">
+      {isButtonShown && (
+        <Button onClick={() => navigate(QUESTION_PATH)} w="300px" h="50px" radius="10px" fz="lg">
           질문하기
         </Button>
       )}

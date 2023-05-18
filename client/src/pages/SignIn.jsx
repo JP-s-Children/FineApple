@@ -11,20 +11,24 @@ const LinkBox = styled.span`
   transform: translateY(8px);
 `;
 
+const SignUpLink = styled(Link)`
+  margin-left: 6px;
+`;
+
 const SignIn = () => (
   <Flex py="48px" c="var(--font-color)" direction="column" align="center" gap="8px" h="100vh">
-    <Title fz="28px" mb="24px" order={2}>
-      FineApple Store에 로그인하세요
+    <Title fz="32px" mb="24px" order={2}>
+      FineApple에 로그인 하세요
     </Title>
     <SignInForm />
     <Text fz="14px">
-      {'FineApple ID가 없으십니까? '}
-      <Link to={SIGNUP_PATH}>
+      {'FineApple ID가 없으신가요? '}
+      <SignUpLink to={SIGNUP_PATH}>
         {'지금 만드세요.'}
         <LinkBox>
           <WiDirectionUpRight size="24" />
         </LinkBox>
-      </Link>
+      </SignUpLink>
     </Text>
   </Flex>
 );
