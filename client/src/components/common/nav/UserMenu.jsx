@@ -26,12 +26,12 @@ const LoginLink = styled(Link)`
 
 const UserMenu = () => {
   const navigate = useNavigate();
-  const [loginUser, setLoginUser] = Recoil.useRecoilState(userState);
+  const [user, setUser] = Recoil.useRecoilState(userState);
 
   const handleLogout = async () => {
     try {
       await authSignOut();
-      setLoginUser(null);
+      setUser(null);
     } catch (e) {
       console.error(e);
     } finally {
@@ -39,13 +39,13 @@ const UserMenu = () => {
     }
   };
 
-  return !loginUser ? (
+  return !user ? (
     <LoginLink to={SIGNIN_PATH}>로그인</LoginLink>
   ) : (
     <Menu trigger="hover">
       <Menu.Target>
         <AvatarWrapper>
-          <AvatarIcon avatarId={loginUser.avatarId} activeHoverStyle={true} />
+          <AvatarIcon avatarId={user.avatarId} activeHoverStyle={true} />
         </AvatarWrapper>
       </Menu.Target>
       <ProfileSubMenu

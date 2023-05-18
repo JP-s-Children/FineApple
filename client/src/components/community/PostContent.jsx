@@ -42,7 +42,7 @@ const Content = styled(Text)`
 const PostContent = ({
   post: { id, author, title, createAt, content, completed, like, avatarId, nickName, level, point },
 }) => {
-  const userInfo = Recoil.useRecoilValue(userState);
+  const user = Recoil.useRecoilValue(userState);
   const [opened, { close: closeModal, open: openModal }] = useDisclosure(false);
   const toggleLikeMutate = useTogglePostLike({ postId: id });
 
@@ -53,7 +53,7 @@ const PostContent = ({
           <Flex gap="1rem" mt="0.2rem" mb="0.5rem" h="30px">
             <CompletedIcon completed={completed} />
           </Flex>
-          {author === userInfo?.email && (
+          {author === user?.email && (
             <Button radius="xl" color="red" variant="outline" onClick={openModal}>
               질문 삭제하기
             </Button>
@@ -89,12 +89,12 @@ const PostContent = ({
       </PostSection>
       <Box my="lg" sx={{ alignSelf: 'flex-end' }}>
         <LikeChip
-          checked={like.includes(userInfo?.email)}
+          checked={like.includes(user?.email)}
           likeCount={like.length}
           onClick={() => {
-            if (!userInfo) return;
+            if (!user) return;
 
-            toggleLikeMutate({ checked: !like.includes(userInfo.email), email: userInfo.email });
+            toggleLikeMutate({ checked: !like.includes(user.email), email: user.email });
           }}
         />
       </Box>

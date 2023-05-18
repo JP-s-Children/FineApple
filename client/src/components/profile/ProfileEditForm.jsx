@@ -73,7 +73,7 @@ const ProfileEditForm = () => {
   const onSubmit = async data => {
     try {
       await editMyProfile({
-        userInfo: { ...data, email: user.email },
+        user: { ...data, email: user.email },
       });
 
       setUser({ ...user, email: user.email, nickName: data.nickName, avatarId: data.avatarId });
@@ -86,7 +86,7 @@ const ProfileEditForm = () => {
   };
 
   const checkDuplicateNickName = async newNickName => {
-    if (newNickName === userInfo.nickName) return false;
+    if (newNickName === user.nickName) return false;
 
     try {
       const isDuplicatedNickName = await checkDuplicatedNickName(newNickName);
