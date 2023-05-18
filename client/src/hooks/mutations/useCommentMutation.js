@@ -3,7 +3,7 @@ import { useSetRecoilState } from 'recoil';
 import useToast from '../useToast';
 import userState from '../../recoil/atoms/userState';
 
-const useCommentMutation = ({ requestFn, postId, updateFn, ...options }) => {
+const useCommentMutation = ({ requestFn, postId, updateFn, adoptedCommentUpdateFn, ...options }) => {
   const queryClient = useQueryClient();
   const toast = useToast();
   const setUser = useSetRecoilState(userState);
@@ -23,17 +23,9 @@ const useCommentMutation = ({ requestFn, postId, updateFn, ...options }) => {
 
       queryClient.setQueryData(queryKey, oldData => updateFn(oldData, variables));
 
-      if (Object.keys(variables).includes('adopted'))
+      if (adoptedCommentUpdateFn)
         queryClient.setQueryData(adoptedQueryKey, () =>
-          variables.adopted
-            ? {
-                ...prevComments.pages
-                  .map(({ comments }) => comments)
-                  .flat()
-                  .find(({ id }) => id === variables.commentId),
-                adopted: variables.adopted,
-              }
-            : null
+          adoptedCommentUpdateFn({ prevComments, prevAdoptedComment }, variables)
         );
 
       return { prevComments, prevAdoptedComment };

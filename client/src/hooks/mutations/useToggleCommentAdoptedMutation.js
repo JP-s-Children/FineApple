@@ -15,6 +15,16 @@ const useToggleCommentAdoptedMutation = postId => {
     postId,
     requestFn: ({ commentId, adopted }) => toggleCommentAdopted({ id: commentId, adopted }),
     updateFn: toggleAdopted,
+    adoptedCommentUpdateFn: ({ prevComments }, variables) =>
+      variables.adopted
+        ? {
+            ...prevComments.pages
+              .map(({ comments }) => comments)
+              .flat()
+              .find(({ id }) => id === variables.commentId),
+            adopted: variables.adopted,
+          }
+        : null,
   });
 
   return async variables => {
