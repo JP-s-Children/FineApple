@@ -13,7 +13,7 @@ import userState from '../../../recoil/atoms/userState';
 
 const Container = styled(List.Item)`
   .mantine-List-itemWrapper {
-    min-width: 990px;
+    min-width: 100%;
   }
 
   span > div {
@@ -88,7 +88,8 @@ const CommentContent = styled(Text)`
 const Comment = ({
   comment,
   postInfo,
-  mutateFns: { editMutate, toggleUsefulMutate, toggleCertifiedMutate, removeMutate },
+  isTopComment,
+  mutateFns: { editMutate, toggleAdoptedMutate, toggleCertifiedMutate, removeMutate },
 }) => {
   const { id, author, avatarId, adopted, content, createAt, level, nickName, like } = comment;
   const user = useRecoilValue(userState);
@@ -102,7 +103,7 @@ const Comment = ({
     placeholder: '의견을 알려주세요.',
   });
 
-  const handleClickCertified = (commentId, certified) => () => toggleCertifiedMutate({ commentId, certified });
+  const handleClickAdopt = (commentId, adopted) => () => toggleAdoptedMutate({ commentId, adopted });
 
   return (
     <Container>
@@ -140,13 +141,11 @@ const Comment = ({
 
               <Flex ml="auto" gap="10px">
                 {/* 해결된 글이 아닐 떄, 채택 버튼을 노출한다. */}
-                {!postInfo.completed && postInfo.email === user?.email && (
-                  <AppleRecommendButton onClick={handleClickCertified(id, true)} />
-                )}
+                {!postInfo.completed && <AppleRecommendButton onClick={handleClickAdopt(id, true)} />}
 
                 {/* 해결된 글이고, 채택된 답변일 경우 채택 취소 버튼을 노출한다. */}
-                {postInfo.completed && adopted && (
-                  <Button h="32px" radius="xl" color="red" onClick={handleClickCertified(id, false)}>
+                {isTopComment && postInfo.completed && adopted && (
+                  <Button h="32px" radius="xl" color="red" onClick={handleClickAdopt(id, false)}>
                     채택 취소
                   </Button>
                 )}
@@ -186,7 +185,7 @@ const Comment = ({
                     h="32px"
                     radius="xl"
                     onClick={() => {
-                      editMutate({ commentId: id, commentInfo: { content: editor.getHTML() } });
+                      editMutate({ commentId: id, content: editor.getHTML() });
                       setCommentEditable(false);
                     }}>
                     편집 완료

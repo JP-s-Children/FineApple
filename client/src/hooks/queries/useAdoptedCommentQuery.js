@@ -8,10 +8,8 @@ const useAdoptedCommentQuery = ({ postId }) => {
     queryFn: async () => {
       const snapshot = await getAdoptedComment({ postId });
 
-      return snapshot;
+      return specifySnapshotIntoData(snapshot)[0] ?? null;
     },
-
-    select: snapshot => specifySnapshotIntoData(snapshot)[0],
   });
 
   return data;

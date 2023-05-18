@@ -29,7 +29,7 @@ const getComments = async ({ postId, pageParam }) => {
   const { data, nextPage, totalLength } = await paginationQuery({
     pageParam,
     collectionName: COLLECTION,
-    searchCondition: and(where('postId', '==', postId), where('adopted', '==', false)),
+    searchCondition: where('postId', '==', postId),
     totalPageSearchCondition: where('postId', '==', postId),
   });
 
@@ -50,7 +50,7 @@ const editComment = async ({ id, content }) => {
   await updateDoc(doc(db, COLLECTION, id), { content, updateAt: serverTimestamp() });
 };
 
-const toggleAdopted = async ({ id, adopted }) => {
+const toggleCommentAdopted = async ({ id, adopted }) => {
   await updateDoc(doc(db, COLLECTION, id), { adopted });
 };
 
@@ -64,4 +64,12 @@ const removeComment = async ({ id }) => {
   await deleteDoc(doc(db, COLLECTION, id));
 };
 
-export { getComments, getAdoptedComment, createComment, editComment, removeComment, toggleAdopted, toggleCommentLike };
+export {
+  getComments,
+  getAdoptedComment,
+  createComment,
+  editComment,
+  removeComment,
+  toggleCommentAdopted,
+  toggleCommentLike,
+};

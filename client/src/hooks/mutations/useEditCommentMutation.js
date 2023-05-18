@@ -1,10 +1,10 @@
-import { editComment } from '../../api/post';
+import { editComment } from '../../services/comments';
 import { edit } from '../../constants/mutateComment';
 import useCommentMutation from './useCommentMutation';
 
 const useEditCommentMutation = postId =>
   useCommentMutation({
-    requestFn: editComment,
+    requestFn: ({ commentId, content }) => editComment({ id: commentId, content }),
     updateFn: edit,
     postId,
   });

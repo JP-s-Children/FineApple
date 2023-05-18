@@ -9,7 +9,7 @@ import {
   useCreateCommentMutation,
   useEditCommentMutation,
   useRemoveCommentMutation,
-  useToggleCommentUsefulMutation,
+  useToggleCommentAdoptedMutation,
   useToggleCertifiedMutation,
 } from '../hooks/mutations';
 
@@ -33,7 +33,7 @@ const Post = () => {
     editMutate: useEditCommentMutation(postId),
     removeMutate: useRemoveCommentMutation(postId),
     createMutate: useCreateCommentMutation(postId),
-    toggleUsefulMutate: useToggleCommentUsefulMutation(postId),
+    toggleAdoptedMutate: useToggleCommentAdoptedMutation(postId),
     toggleCertifiedMutate: useToggleCertifiedMutation(postId),
   };
 

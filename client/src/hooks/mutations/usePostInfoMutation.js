@@ -2,11 +2,10 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useSetRecoilState } from 'recoil';
 import userState from '../../recoil/atoms/userState';
 
-const usePostInfoMutation = ({ postId, requestFn, commentUpdateFn, postUpdateFn, ...options }) => {
+const usePostInfoMutation = ({ postId, requestFn, updateFn, ...options }) => {
   const queryClient = useQueryClient();
   const setUser = useSetRecoilState(userState);
 
-  const commentQueryKey = ['comments', postId];
   const postDetailQueryKey = ['postDetail', postId];
 
   const { mutate } = useMutation({
@@ -15,22 +14,17 @@ const usePostInfoMutation = ({ postId, requestFn, commentUpdateFn, postUpdateFn,
     },
 
     onMutate: async variables => {
-      await queryClient.cancelQueries({ queryKey: ['comments', 'postDetail'] });
+      await queryClient.cancelQueries({ queryKey: ['postDetail'] });
 
-      console.log(variables);
-
-      const prevComments = queryClient.getQueryData(commentQueryKey);
       const prevPost = queryClient.getQueryData(postDetailQueryKey);
 
-      queryClient.setQueryData(commentQueryKey, oldData => commentUpdateFn(oldData, variables));
-      queryClient.setQueryData(postDetailQueryKey, oldData => postUpdateFn(oldData, variables));
+      queryClient.setQueryData(postDetailQueryKey, oldData => updateFn(oldData, variables));
 
-      return { prevComments, prevPost };
+      return { prevPost };
     },
-    onError: (_, __, { prevComments, prevPost }) => {
+    onError: (_, __, { prevPost }) => {
       setUser(null);
 
-      queryClient.setQueryData(commentQueryKey, prevComments);
       queryClient.setQueryData(postDetailQueryKey, prevPost);
     },
     ...options,
