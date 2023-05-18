@@ -5,7 +5,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { Menu } from '@mantine/core';
 import userState from '../../../recoil/atoms/userState';
 import { AvatarIcon, SubMenu } from '..';
-import { MY_PROFILE_PATH, FAV_CATEGORY_PATH, SIGNIN_PATH } from '../../../constants/routes';
+import { MY_FAV_POSTS_PATH, MY_POSTS_PATH, MY_PROFILE_PATH, SIGNIN_PATH } from '../../../constants/routes';
 import { authSignOut } from '../../../services/auth';
 
 const AvatarWrapper = styled.div`
@@ -50,8 +50,8 @@ const UserMenu = () => {
       <SubMenu
         menuItems={[
           { size: 'lg', content: '프로필', path: MY_PROFILE_PATH },
-          { size: 'lg', content: '관심 카테고리 설정', path: FAV_CATEGORY_PATH },
-          { size: 'lg', content: '나의 질문 목록', path: FAV_CATEGORY_PATH },
+          { size: 'lg', content: '나의 질문', path: MY_POSTS_PATH },
+          { size: 'lg', content: '좋아요', path: MY_FAV_POSTS_PATH },
           { size: 'sm', content: '로그아웃', onClick: handleLogout },
         ]}
       />
