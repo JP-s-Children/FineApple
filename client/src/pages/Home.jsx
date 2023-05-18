@@ -94,7 +94,7 @@ const Home = () => {
             <Text mt="1rem" fz="6rem">
               Welcome.
             </Text>
-            <Text fz="7rem" variant="gradient" gradient={{ from: 'blue', to: '#FF7E37', deg: 120 }}>
+            <Text fz="7rem" variant="gradient" gradient={{ from: '#5b3bff', to: '#00b7d7', deg: 75 }}>
               FineApple
             </Text>
           </Flex>
