@@ -45,8 +45,6 @@ const CommentSection = ({ postInfo, mutateFns }) => {
 
   const user = useRecoilValue(userState);
 
-  console.log(user);
-
   const { scrollIntoView, targetRef } = useScrollIntoView({
     offset: 180,
   });
@@ -60,7 +58,6 @@ const CommentSection = ({ postInfo, mutateFns }) => {
     },
   });
 
-  // TODO : 유저 정보 받아서 넘기기
   const handleAddCommentClick = () => {
     mutateFns.createMutate(
       {
@@ -96,8 +93,7 @@ const CommentSection = ({ postInfo, mutateFns }) => {
           </Text>
         </Flex>
 
-        {/* 로그인한 유저에게만 노출한다. */}
-        {
+        {user && (
           <Button
             variant="subtle"
             radius="xl"
@@ -110,15 +106,14 @@ const CommentSection = ({ postInfo, mutateFns }) => {
             </Text>
             <FaLocationArrow size="16" />
           </Button>
-        }
+        )}
       </CommentsHeader>
       <CommentList>
         {adoptedComment && <Comment comment={adoptedComment} postInfo={postInfo} mutateFns={mutateFns} isTopComment />}
       </CommentList>
       {comments.length > 0 && <Divider mt="2rem" variant="dashed" />}
 
-      {/* 로그인한 유저에게만 노출한다. */}
-      {
+      {user && (
         <Container miw="990px" my="20px" ref={targetRef}>
           <Title m="5rem 0 2rem" ta="center" fz="2rem">
             💿 궁금한 점이 있다면 의견을 남겨주세요.
@@ -137,7 +132,7 @@ const CommentSection = ({ postInfo, mutateFns }) => {
             </Button>
           </Flex>
         </Container>
-      }
+      )}
       {comments.length > 0 && <Divider mb="4rem" variant="dashed" />}
       <CommentList>
         {comments.map(comment => (

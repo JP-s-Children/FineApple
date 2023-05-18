@@ -137,6 +137,8 @@ const Comment = ({
                   checked={like.includes(user?.email)}
                   likeCount={like.length}
                   onClick={() => {
+                    if (!user) return;
+
                     toggleLikeMutate({ commentId: id, checked: !like.includes(user?.email), email: user?.email });
                   }}
                 />
