@@ -71,8 +71,6 @@ const ProfileEditForm = () => {
   } = useController({ name: 'avatarId', control });
 
   const onSubmit = async data => {
-    console.log(data);
-
     try {
       await editMyProfile({
         userInfo: { ...data, email: user.email },
