@@ -7,7 +7,8 @@ import useTheme from '../../../hooks/useTheme';
 const Container = styled(Button)`
   border: none;
   height: 100%;
-  padding: 8px;
+  padding: 0px;
+
   :hover {
     background: none;
     i {
@@ -20,10 +21,15 @@ const ThemeIcon = styled.i`
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 6px;
-  border-radius: 10px;
-  border: 1px solid var(--opacity-border-color);
+  padding: 8px;
+  border-radius: 100%;
+  border: 3px solid var(--opacity-border-color);
   color: var(--font-color);
+  background-color: var(--opacity-bg-color);
+
+  :hover {
+    border: 3px solid var(--hover-font-color);
+  }
 `;
 
 const ThemeButton = () => {

@@ -11,9 +11,9 @@ import SubMenu from './SubMenu';
 const ComputerItSubMenu = () => {
   const menuItems = [
     { size: 'lg', content: '컴퓨터/IT', path: COMPUTER_IT_PATH },
-    { size: 'lg', content: '프로그래밍', path: COMPUTER_IT_PROGRAMMING_PATH },
-    { size: 'lg', content: '컴퓨터', path: COMPUTER_IT_COMPUTER_PATH },
-    { size: 'lg', content: '모바일', path: COMPUTER_IT_MOBILE_PATH },
+    { size: 'md', content: '프로그래밍', path: COMPUTER_IT_PROGRAMMING_PATH },
+    { size: 'md', content: '컴퓨터', path: COMPUTER_IT_COMPUTER_PATH },
+    { size: 'md', content: '모바일', path: COMPUTER_IT_MOBILE_PATH },
     { size: 'sm', content: '인기글', path: COMPUTER_IT_POPULAR_PATH },
   ];
 

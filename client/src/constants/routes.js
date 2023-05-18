@@ -1,11 +1,13 @@
 export const MAIN_PATH = '/';
 export const SIGNUP_PATH = '/signup';
 export const SIGNIN_PATH = '/signin';
-export const MY_PROFILE_PATH = '/myprofile';
-export const PROFILE_EDIT_PATH = '/profile/edit';
-export const PROFILE_PATH = '/profile';
-export const MY_POSTS_PATH = '/myposts';
-export const FAV_CATEGORY_PATH = '/fav-category';
+
+export const PROFILE_PATH = '/user-profile'; // user-profile/:nickName
+
+export const MY_PROFILE_PATH = '/profile';
+export const MY_PROFILE_EDIT_PATH = '/profile/edit';
+export const MY_POSTS_PATH = '/profile/myposts';
+export const MY_FAV_POSTS_PATH = '/profile/fav';
 
 export const COMPUTER_IT_PATH = '/computer-it';
 export const COMPUTER_IT_POPULAR_PATH = '/computer-it/list/popular';

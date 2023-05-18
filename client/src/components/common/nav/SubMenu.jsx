@@ -35,8 +35,10 @@ const SubMenuLabel = styled(Text)`
 `;
 
 const SubMenuItem = styled(Menu.Item)`
-  font-size: ${({ size }) => (size === 'sm' ? '15px' : '20px')};
-  font-weight: ${({ size }) => (size === 'sm' ? '400' : '700')};
+  font-size: ${({ size }) => (size === 'sm' ? '15px' : size === 'md' ? '18px' : '22px')};
+  font-weight: ${({ size }) => (size === 'sm' ? '400' : size === 'md' ? '600' : '700')};
+  margin-top: ${({ size }) => size === 'sm' && '8px'};
+  margin-bottom: ${({ size }) => size === 'lg' && '3px'};
   color: var(--font-color);
   width: fit-content;
   padding: 3px 5px;
@@ -50,7 +52,7 @@ const SubMenuItem = styled(Menu.Item)`
  * @param {{
  * label?: string
  * meunItems: Array<{
- *  size: 'sm' | 'lg',
+ *  size: 'sm' | 'md' | 'lg',
  *  content: string,
  *  path: string
  * }>

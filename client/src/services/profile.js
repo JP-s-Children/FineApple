@@ -43,11 +43,10 @@ const getMyProfile = async ({ email }) => {
     return {
       email,
       nickName,
-      firstName,
-      lastName,
+      name: lastName + firstName,
       phoneNumber,
       country,
-      birthDate,
+      birthDate: birthDate.toDate(),
       aboutMe,
       interestedCategory,
       avatarId,
