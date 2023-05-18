@@ -92,7 +92,7 @@ const Comment = ({
     placeholder: '의견을 알려주세요.',
   });
 
-  const handleClickAdopt = (commentId, adopted) => () => toggleAdoptedMutate({ commentId, adopted });
+  const handleClickAdopt = adopted => () => toggleAdoptedMutate({ commentId: id, adopted });
 
   return (
     <Container>
@@ -127,9 +127,9 @@ const Comment = ({
               </Link>
 
               <Flex ml="auto" gap="10px">
-                {isPostAuthor && !postInfo.completed && <AppleRecommendButton onClick={handleClickAdopt(id, true)} />}
+                {isPostAuthor && !postInfo.completed && <AppleRecommendButton onClick={handleClickAdopt(true)} />}
                 {isPostAuthor && isTopComment && postInfo.completed && adopted && (
-                  <Button h="32px" radius="xl" color="red" onClick={handleClickAdopt(id, false)}>
+                  <Button h="32px" radius="xl" color="red" onClick={handleClickAdopt(false)}>
                     채택 취소
                   </Button>
                 )}

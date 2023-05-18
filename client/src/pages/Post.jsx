@@ -10,7 +10,7 @@ import {
   useEditCommentMutation,
   useRemoveCommentMutation,
   useToggleCommentAdoptedMutation,
-  useToggleLikeMutation,
+  useToggleCommentLikeMutation,
 } from '../hooks/mutations';
 
 const Wrapper = styled(Container)`
@@ -34,7 +34,7 @@ const Post = () => {
     removeMutate: useRemoveCommentMutation(postId),
     createMutate: useCreateCommentMutation(postId),
     toggleAdoptedMutate: useToggleCommentAdoptedMutation(postId),
-    toggleLikeMutate: useToggleLikeMutation(postId),
+    toggleLikeMutate: useToggleCommentLikeMutation(postId),
   };
 
   return (

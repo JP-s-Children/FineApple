@@ -65,11 +65,7 @@ const getPostsByCategory = async ({ category = '', subCategory = '', pageParam }
       : where('category', '==', category),
   });
 
-  return {
-    posts: await addCommentsLengthListInPosts(posts),
-    totalLength,
-    nextPage,
-  };
+  return { posts: await addCommentsLengthListInPosts(posts), totalLength, nextPage };
 };
 
 const getSearchedPosts = async ({ keyword = '', category = '', subCategory = '', isRouteHome }) => {
@@ -120,10 +116,7 @@ const getMyPosts = async ({ author, pageParam }) => {
     searchCondition: where('author', '==', author),
   });
 
-  return {
-    posts: data,
-    nextPage,
-  };
+  return { posts: await addCommentsLengthListInPosts(data), nextPage };
 };
 
 const getPost = async ({ postId }) => {
@@ -139,7 +132,15 @@ const getPost = async ({ postId }) => {
 };
 
 // 사용자 프로필 - 글 목록
-const getProfileWithPosts = async () => {};
+const getProfileWithPosts = async ({ pageParam, userId }) => {
+  const { data, totalLength, nextPage } = paginationQuery({
+    collectionName: COLLECTION,
+    pageParam,
+    searchCondition: where('author', '==', userId),
+  });
+
+  return { posts: await addCommentsLengthListInPosts(data), totalLength, nextPage };
+};
 
 const createPost = async postInfo => {
   const postRef = await addDoc(collection(db, COLLECTION), { ...postInfo, createAt: serverTimestamp() });
@@ -160,14 +161,13 @@ const togglePostCompleted = async ({ id, completed }) => {
 };
 
 const togglePostLike = async ({ id, checked, userId }) => {
-  await updateDoc(doc(db, COLLECTION, id), {
-    like: checked ? arrayRemove(userId) : arrayUnion(userId),
-  });
+  await updateDoc(doc(db, COLLECTION, id), { like: checked ? arrayUnion(userId) : arrayRemove(userId) });
 };
 
 export {
   getPosts,
   getPostsByCategory,
+  getProfileWithPosts,
   getSearchedPosts,
   getMyPosts,
   getPopularPostsByCategory,
