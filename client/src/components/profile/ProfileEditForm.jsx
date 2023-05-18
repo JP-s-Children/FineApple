@@ -19,7 +19,7 @@ import {
   CountrySelect,
   DuplicateCheckInput,
   InputWrapper,
-  MyInterestCategories,
+  SelectInterestCategories,
   PhoneNumberInput,
 } from '..';
 import { editMyProfile } from '../../services/profile';
@@ -138,7 +138,7 @@ const ProfileEditForm = () => {
           </InputWrapper>
 
           <InputWrapper label="관심 카테고리">
-            <MyInterestCategories control={control} />
+            <SelectInterestCategories control={control} />
           </InputWrapper>
 
           <InputWrapper label="자기소개">

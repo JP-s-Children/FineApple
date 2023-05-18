@@ -10,7 +10,7 @@ const CategoryChip = styled(Chip)`
   }
 `;
 
-const MyInterestCategories = ({ control }) => {
+const SelectInterestCategories = ({ control }) => {
   const {
     field: { value: selectedCategories, onChange },
   } = useController({ name: 'interestCategories', control });
@@ -28,4 +28,4 @@ const MyInterestCategories = ({ control }) => {
   );
 };
 
-export default MyInterestCategories;
+export default SelectInterestCategories;
