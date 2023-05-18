@@ -44,7 +44,7 @@ const GridLabel = styled(GridCol)`
   font-size: 1rem;
 `;
 
-const AboutMe = styled(Text)`
+const AboutMe = styled.pre`
   background-color: var(--opacity-bg-color);
   border: 1px solid var(--opacity-border-color);
   width: 100%;
@@ -52,11 +52,16 @@ const AboutMe = styled(Text)`
   padding: 20px;
   margin-top: 10px;
   font-size: 1rem;
+  text-align: start;
+  overflow-x: auto;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  font-size: 15px;
 `;
 
 const MyProfile = () => {
   const navigate = useNavigate();
-  const loginUser = Recoil.useRecoilValue(userState);
+  const user = Recoil.useRecoilValue(userState);
   const {
     data: {
       email,
@@ -69,9 +74,9 @@ const MyProfile = () => {
       level,
       aboutMe,
       birthDate,
-      interestedCategory,
+      interestCategories,
     },
-  } = useQuery(myProfileQuery(loginUser.email));
+  } = useQuery(myProfileQuery(user.email));
 
   const handleEdit = () => {
     navigate(MY_PROFILE_EDIT_PATH);
@@ -94,9 +99,9 @@ const MyProfile = () => {
         <Wrapper>
           <Label>관심 카테고리</Label>
           <Flex gap="sm" mt="lg">
-            {interestedCategory.length === 0 && <Content>{'등록된 관심 카테고리가 없습니다.'}</Content>}
+            {interestCategories.length === 0 && <Content>{'등록된 관심 카테고리가 없습니다.'}</Content>}
 
-            {interestedCategory.map((categoryType, index) => (
+            {interestCategories.map((categoryType, index) => (
               <Link
                 key={index}
                 to={`/posts/${CATEGORY_INFO[categoryType].category}/${CATEGORY_INFO[categoryType].path}`}>
