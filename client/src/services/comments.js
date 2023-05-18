@@ -56,7 +56,7 @@ const toggleCommentAdopted = async ({ id, adopted }) => {
 
 const toggleCommentLike = async ({ id, checked, userId }) => {
   await updateDoc(doc(db, COLLECTION, id), {
-    like: checked ? arrayRemove(userId) : arrayUnion(userId),
+    like: checked ? arrayUnion(userId) : arrayRemove(userId),
   });
 };
 

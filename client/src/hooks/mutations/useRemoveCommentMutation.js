@@ -1,16 +1,35 @@
 import { removeComment } from '../../services/comments';
 import { remove } from '../../constants/mutateComment';
 import usePostInfoMutation from './usePostInfoMutation';
+import useCommentMutation from './useCommentMutation';
+import { togglePostCompleted } from '../../services/posts';
 
-const useRemoveCommentMutation = postId =>
-  usePostInfoMutation({
+const useRemoveCommentMutation = postId => {
+  const postMutate = usePostInfoMutation({
     postId,
-    requestFn: ({ commentId }) => removeComment({ id: commentId }),
-    commentUpdateFn: remove,
-    postUpdateFn: (oldData, variables) => ({
-      ...oldData,
-      completed: variables.adopted ? false : oldData.completed,
-    }),
+    requestFn: ({ adopted }) => {
+      if (!adopted) return;
+
+      togglePostCompleted({ id: postId, completed: false });
+    },
+    updateFn: (oldData, variables) => {
+      if (!variables.adopted) return oldData;
+
+      return { ...oldData, completed: false };
+    },
   });
+
+  const commentMutate = useCommentMutation({
+    requestFn: ({ commentId }) => removeComment({ id: commentId }),
+    updateFn: remove,
+    adoptedCommentUpdateFn: ({ prevAdoptedComment }, { adopted }) => (adopted ? null : prevAdoptedComment),
+    postId,
+  });
+
+  return variables => {
+    commentMutate(variables);
+    postMutate(variables);
+  };
+};
 
 export default useRemoveCommentMutation;
