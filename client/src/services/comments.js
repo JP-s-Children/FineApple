@@ -30,7 +30,6 @@ const getComments = async ({ postId, pageParam }) => {
     pageParam,
     collectionName: COLLECTION,
     searchCondition: where('postId', '==', postId),
-    totalPageSearchCondition: where('postId', '==', postId),
   });
 
   return {

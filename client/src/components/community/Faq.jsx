@@ -4,7 +4,7 @@ import { Accordion, Text, Container } from '@mantine/core';
 
 const Wrapper = styled(Container)`
   width: 100%;
-  height: 70vh;
+  height: 100%;
   margin: 0;
   padding: 0;
 `;
@@ -17,6 +17,7 @@ const AccordionContainer = styled(Accordion)`
   .mantine-Accordion-control {
     background: var(--opacity-bg-color);
     border-color: var(--opacity-border-color);
+    border-radius: 10px;
   }
 `;
 
@@ -33,10 +34,11 @@ const ItemTitle = styled(Text)`
 `;
 
 const ItemContent = styled(Text)`
+  margin-top: 10px;
+  padding: 10px;
   color: var(--font-color);
   font-size: 1.1rem;
   text-align: justify;
-  padding: 10px;
 `;
 
 const Faq = ({ faqList }) => (
@@ -48,7 +50,13 @@ const Faq = ({ faqList }) => (
             <ItemTitle>{title}</ItemTitle>
           </Accordion.Control>
           <Accordion.Panel>
-            <ItemContent>{content}</ItemContent>
+            <ItemContent>
+              {content.map(item => (
+                <Text key={item} py="0.4rem">
+                  {item}
+                </Text>
+              ))}
+            </ItemContent>
           </Accordion.Panel>
         </Item>
       ))}

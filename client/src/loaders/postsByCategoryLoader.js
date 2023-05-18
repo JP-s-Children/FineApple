@@ -5,8 +5,6 @@ const postsByCategoryLoader =
   async ({ params }) => {
     const query = postsByCategoryQuery(params);
 
-    console.log(params);
-
     // eslint-disable-next-line no-return-await
     return queryClient.getQueryData(query.queryKey) ?? (await queryClient.fetchInfiniteQuery(query));
   };

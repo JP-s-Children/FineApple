@@ -3,7 +3,7 @@ import styled from '@emotion/styled';
 import { Link } from 'react-router-dom';
 import { Badge, Box, Button, CloseButton, Divider, Flex, List, Text } from '@mantine/core';
 import { useRecoilValue } from 'recoil';
-import { AvatarIcon, AppleRecommendIcon, TextEditor, AppleRecommendButton, LikeChip } from '../..';
+import { AvatarIcon, AdoptedLabel, TextEditor, AdoptedButton, LikeChip } from '../..';
 import { PROFILE_PATH } from '../../../constants/routes';
 import formattedDate from '../../../utils/formattedDate';
 import transientOptions from '../../../constants/transientOptions';
@@ -92,13 +92,13 @@ const Comment = ({
     placeholder: '의견을 알려주세요.',
   });
 
-  const handleClickAdopt = (commentId, adopted) => () => toggleAdoptedMutate({ commentId, adopted });
+  const handleClickAdopt = adopted => () => toggleAdoptedMutate({ commentId: id, adopted });
 
   return (
     <Container>
       <CommentWrapper>
         <CommentHeader $adopted={adopted}>
-          {adopted && <AppleRecommendIcon color="white" />}
+          {adopted && <AdoptedLabel color="white" />}
           {isCommentAuthor && (
             <CloseButton
               title="Close popover"
@@ -127,9 +127,9 @@ const Comment = ({
               </Link>
 
               <Flex ml="auto" gap="10px">
-                {isPostAuthor && !postInfo.completed && <AppleRecommendButton onClick={handleClickAdopt(id, true)} />}
+                {isPostAuthor && !postInfo.completed && <AdoptedButton onClick={handleClickAdopt(true)} />}
                 {isPostAuthor && isTopComment && postInfo.completed && adopted && (
-                  <Button h="32px" radius="xl" color="red" onClick={handleClickAdopt(id, false)}>
+                  <Button h="32px" radius="xl" color="red" onClick={handleClickAdopt(false)}>
                     채택 취소
                   </Button>
                 )}
@@ -137,6 +137,8 @@ const Comment = ({
                   checked={like.includes(user?.email)}
                   likeCount={like.length}
                   onClick={() => {
+                    if (!user) return;
+
                     toggleLikeMutate({ commentId: id, checked: !like.includes(user?.email), email: user?.email });
                   }}
                 />

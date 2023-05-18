@@ -3,11 +3,13 @@ import Recoil from 'recoil';
 import styled from '@emotion/styled';
 import { Link } from 'react-router-dom';
 import { useDisclosure } from '@mantine/hooks';
-import { Badge, Button, Flex, Text, Title } from '@mantine/core';
+import { Badge, Box, Button, Flex, Text, Title } from '@mantine/core';
+import { throttle } from 'lodash';
 import formattedDate from '../../utils/formattedDate';
-import { AvatarIcon, CompletedIcon, DeletePostModal } from '..';
+import { AvatarIcon, CompletedIcon, DeletePostModal, LikeChip } from '..';
 import userState from '../../recoil/atoms/userState';
 import { PROFILE_PATH } from '../../constants/routes';
+import useTogglePostLike from '../../hooks/mutations/useTogglePostLike';
 
 const PostSection = styled.section`
   margin-top: 2.5rem;
@@ -42,6 +44,7 @@ const PostContent = ({
 }) => {
   const userInfo = Recoil.useRecoilValue(userState);
   const [opened, { close: closeModal, open: openModal }] = useDisclosure(false);
+  const toggleLikeMutate = useTogglePostLike({ postId: id });
 
   return (
     <>
@@ -49,7 +52,6 @@ const PostContent = ({
         <Flex justify="space-between" w="100%" mb="1rem">
           <Flex gap="1rem" mt="0.2rem" mb="0.5rem" h="30px">
             <CompletedIcon completed={completed} />
-            {/* <HeartIcon likeCount={like.length} /> */}
           </Flex>
           {author === userInfo?.email && (
             <Button radius="xl" color="red" variant="outline" onClick={openModal}>
@@ -84,8 +86,19 @@ const PostContent = ({
         <Content>
           <div dangerouslySetInnerHTML={{ __html: content }} />
         </Content>
-        <DeletePostModal postId={id} opened={opened} onClose={closeModal} />
       </PostSection>
+      <Box my="lg" sx={{ alignSelf: 'flex-end' }}>
+        <LikeChip
+          checked={like.includes(userInfo?.email)}
+          likeCount={like.length}
+          onClick={() => {
+            if (!userInfo) return;
+
+            toggleLikeMutate({ checked: !like.includes(userInfo.email), email: userInfo.email });
+          }}
+        />
+      </Box>
+      <DeletePostModal postId={id} opened={opened} onClose={closeModal} />
     </>
   );
 };

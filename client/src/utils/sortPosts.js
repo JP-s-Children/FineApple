@@ -4,7 +4,7 @@ const sortPosts = (posts, currentSort) =>
       ? new Date(b.createAt) - new Date(a.createAt)
       : currentSort === 'old'
       ? new Date(a.createAt) - new Date(b.createAt)
-      : a.like - b.like
+      : b.like.length - a.like.length
   );
 
 export default sortPosts;
