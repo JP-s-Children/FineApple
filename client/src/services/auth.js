@@ -26,7 +26,6 @@ const authSignIn = async ({ email, password }) => {
 const authSignUp = async ({ email, password, firstName, lastName, nickName, country, birthDate, phoneNumber }) => {
   try {
     const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-    // await updateProfile(auth.currentUser, { displayName: nickname, phoneNumber });
 
     await setDoc(doc(db, COLLECTION, email), {
       nickName,
@@ -35,7 +34,7 @@ const authSignUp = async ({ email, password, firstName, lastName, nickName, coun
       phoneNumber,
       country,
       birthDate,
-      interestedCategory: [],
+      interestCategories: [],
       avatarId: '',
       aboutMe: '',
       level: 1,
