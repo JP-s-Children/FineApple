@@ -19,7 +19,7 @@ const RootError = () => {
     }
   }
 
-  return <Navigate to="*" />;
+  return <Navigate to="/*" />;
 };
 
 export default RootError;
