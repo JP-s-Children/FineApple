@@ -1,8 +1,15 @@
-import styled from '@emotion/styled';
-import { Accordion, Text } from '@mantine/core';
 import React from 'react';
+import styled from '@emotion/styled';
+import { Accordion, Text, Container } from '@mantine/core';
 
-const Wrapper = styled(Accordion)`
+const Wrapper = styled(Container)`
+  width: 100%;
+  height: 70vh;
+  margin: 0;
+  padding: 0;
+`;
+
+const AccordionContainer = styled(Accordion)`
   margin-top: 12px;
 
   .mantine-Accordion-item,
@@ -33,17 +40,19 @@ const ItemContent = styled(Text)`
 `;
 
 const Faq = ({ faqList }) => (
-  <Wrapper multiple variant="separated" w="100%">
-    {faqList.map(({ title, content }, idx) => (
-      <Item key={idx} value={`faq-${title}`}>
-        <Accordion.Control>
-          <ItemTitle>{title}</ItemTitle>
-        </Accordion.Control>
-        <Accordion.Panel>
-          <ItemContent>{content}</ItemContent>
-        </Accordion.Panel>
-      </Item>
-    ))}
+  <Wrapper>
+    <AccordionContainer multiple variant="separated" w="100%">
+      {faqList.map(({ title, content }, idx) => (
+        <Item key={idx} value={`faq-${title}`}>
+          <Accordion.Control>
+            <ItemTitle>{title}</ItemTitle>
+          </Accordion.Control>
+          <Accordion.Panel>
+            <ItemContent>{content}</ItemContent>
+          </Accordion.Panel>
+        </Item>
+      ))}
+    </AccordionContainer>
   </Wrapper>
 );
 

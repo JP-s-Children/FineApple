@@ -11,10 +11,11 @@ const GlobalStyle = css`
     --font-color: #000;
     --hover-font-color: #0071e2;
     --body-bg-color: #fff;
-    --secondary-bg-color: #fbfbfc;
+    --secondary-bg-color: #fafafa;
+    --third-bg-color: #f1f3f5;
     --opacity-bg-color: #e5e5e520;
     --opacity-border-color: #e5e5e5;
-    --footer-bg-color: #f5f5f7;
+    --footer-bg-color: #fafafa;
     --footer-font-color: #6e6e73;
   }
 
@@ -23,8 +24,9 @@ const GlobalStyle = css`
     --hover-font-color: #56abff;
     --body-bg-color: #141517;
     --secondary-bg-color: #1a1b1e;
+    --third-bg-color: #373a40;
     --opacity-bg-color: #e5e5e530;
-    --opacity-border-color: #141517;
+    --opacity-border-color: #4b4c53;
     --footer-bg-color: #1a1b1e;
     --footer-font-color: #909296;
   }

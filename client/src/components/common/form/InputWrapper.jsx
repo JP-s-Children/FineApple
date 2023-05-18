@@ -14,6 +14,10 @@ const Wrapper = styled(Input.Wrapper)`
     color: var(--font-color);
   }
 
+  label {
+    color: var(--footer-font-color);
+  }
+
   textarea {
     height: 150px;
   }

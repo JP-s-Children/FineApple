@@ -14,12 +14,12 @@ const Container = styled.div`
   &[data-hovered='true'],
   &:hover {
     div {
-      font-weight: 600;
+      font-weight: 500;
     }
     border-right: 1px solid var(--hover-font-color);
     border-left: 1px solid var(--hover-font-color);
 
-    background-color: var(--opacity-bg-color);
+    background-color: var(--third-bg-color);
     box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
   }
 `;

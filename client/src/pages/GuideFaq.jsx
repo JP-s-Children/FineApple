@@ -54,7 +54,7 @@ const GuideFaq = () => {
 
   return (
     <Wrapper>
-      <Title size="52px" mt="24px" mb="40px">
+      <Title size="52px" mt="40px" mb="40px">
         자주 묻는 질문
       </Title>
       <Faq faqList={faqList} />

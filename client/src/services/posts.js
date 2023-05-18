@@ -1,7 +1,6 @@
 import {
   collection,
   doc,
-  or,
   getDocs,
   getDoc,
   addDoc,
@@ -15,6 +14,7 @@ import {
   startAfter,
   limit,
   and,
+  or,
   orderBy,
   getCountFromServer,
 } from 'firebase/firestore';
@@ -24,32 +24,8 @@ import { specifySnapshotIntoData, formattedCreateAt, formattedUpdateAt, paginati
 const COLLECTION = 'posts';
 const PAGE_SIZE = 10;
 
-// const getPosts = async () => {
-//   const postSnapshot = await getDocs(collection(db, COLLECTION));
-
-//   return specifySnapshotIntoData(postSnapshot);
-// };
-
-const getPosts = async ({ pageParam }) => {
-  const q = pageParam
-    ? query(collection(db, COLLECTION), startAfter(pageParam), limit(PAGE_SIZE))
-    : query(collection(db, COLLECTION), limit(PAGE_SIZE));
-
-  const postSnapshot = await getDocs(q);
-
-  return postSnapshot;
-};
-
-const getPostsByCategory = async ({ category = '', subCategory = '', pageParam }) => {
-  const { data, nextPage } = await paginationQuery({
-    collectionName: COLLECTION,
-    pageParam,
-    searchCondition: subCategory
-      ? and(where('category', '==', category), where('subCategory', '==', subCategory))
-      : where('category', '==', category),
-  });
-
-  const postIds = data.map(data => data.id);
+const addCommentsLengthListInPosts = async posts => {
+  const postIds = posts.map(post => post.id);
   const commentsRef = collection(db, 'comments');
 
   const commentsLengthList = await Promise.all(
@@ -63,24 +39,57 @@ const getPostsByCategory = async ({ category = '', subCategory = '', pageParam }
 
   const commentsLength = commentsLengthList.reduce((prev, curr) => ({ ...prev, ...curr }), {});
 
+  return posts.map(item => ({ ...item, commentsLength: commentsLength[item.id] }));
+};
+
+const getPosts = async ({ pageParam }) => {
+  const q = pageParam
+    ? query(collection(db, COLLECTION), startAfter(pageParam), limit(PAGE_SIZE))
+    : query(collection(db, COLLECTION), limit(PAGE_SIZE));
+
+  const postSnapshot = await getDocs(q);
+
+  return postSnapshot;
+};
+
+const getPostsByCategory = async ({ category = '', subCategory = '', pageParam }) => {
+  const {
+    data: posts,
+    totalLength,
+    nextPage,
+  } = await paginationQuery({
+    collectionName: COLLECTION,
+    pageParam,
+    searchCondition: subCategory
+      ? and(where('category', '==', category), where('subCategory', '==', subCategory))
+      : where('category', '==', category),
+  });
+
   return {
-    posts: data.map(item => ({ ...item, commentsLength: commentsLength[item.id] })),
+    posts: await addCommentsLengthListInPosts(posts),
+    totalLength,
     nextPage,
   };
 };
 
-const getSearchedPosts = async ({ keyword = '', category = '', subCategory = '' }) => {
+const getSearchedPosts = async ({ keyword = '', category = '', subCategory = '', isRouteHome }) => {
   const postsRef = collection(db, COLLECTION);
 
-  const q =
+  const customizeQuery = searchCondition => query(postsRef, searchCondition, orderBy('createAt', 'desc'), limit(5));
+
+  const qInHome =
     category === '' && subCategory === ''
-      ? query(postsRef, orderBy('createAt', 'desc'))
-      : query(
-          postsRef,
-          or(where('category', '==', category), where('subCategory', '==', subCategory)),
-          orderBy('createAt', 'desc'),
-          limit(5)
-        );
+      ? query(postsRef, orderBy('createAt', 'desc'), limit(5))
+      : customizeQuery(or(where('category', '==', category), where('subCategory', '==', subCategory)));
+
+  const qInCategoryRoute =
+    category === '' && subCategory === ''
+      ? query(postsRef, orderBy('createAt', 'desc'), limit(5))
+      : subCategory !== ''
+      ? customizeQuery(and(where('category', '==', category), where('subCategory', '==', subCategory)))
+      : customizeQuery(or(where('category', '==', category), where('subCategory', '==', subCategory)));
+
+  const q = isRouteHome ? qInHome : qInCategoryRoute;
 
   const filteredPostSnapshot = await getDocs(q);
 
@@ -89,6 +98,18 @@ const getSearchedPosts = async ({ keyword = '', category = '', subCategory = '' 
   );
 
   return searchedPosts;
+};
+
+const getPopularPostsByCategory = async ({ category }) => {
+  const { data: posts } = await paginationQuery({
+    collectionName: COLLECTION,
+    searchCondition: where('category', '==', category),
+  });
+
+  const postsWithCommentsLengthList = await addCommentsLengthListInPosts(posts);
+  return {
+    posts: postsWithCommentsLengthList.sort((prevPost, currPost) => currPost.like.length - prevPost.like.length),
+  };
 };
 
 // 내가 작성한 글 목록 :auth 정보 필요
@@ -146,9 +167,10 @@ const togglePostLike = async ({ id, checked, userId }) => {
 
 export {
   getPosts,
+  getPostsByCategory,
   getSearchedPosts,
   getMyPosts,
-  getPostsByCategory,
+  getPopularPostsByCategory,
   getPost,
   createPost,
   editPost,

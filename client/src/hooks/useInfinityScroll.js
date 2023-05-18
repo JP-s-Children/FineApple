@@ -11,8 +11,6 @@ const useInfinityScroll = callback => {
       }
     });
 
-    console.log(ref);
-
     observer.observe(ref.current);
   }, []);
 

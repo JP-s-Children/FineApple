@@ -19,9 +19,14 @@ const CommunityAutoComplete = styled(Autocomplete, transientOptions)`
     padding-left: 3rem;
     height: 50px;
     font-size: 18px;
+    border: 1px solid var(--opacity-border-color);
     border-radius: 10px;
     color: var(--font-color);
     background-color: var(--secondary-bg-color);
+
+    :focus {
+      border: 1px solid var(--hover-font-color);
+    }
   }
 
   & .mantine-Autocomplete-icon {
@@ -32,7 +37,7 @@ const CommunityAutoComplete = styled(Autocomplete, transientOptions)`
   & .mantine-Autocomplete-dropdown {
     padding: 1rem;
     border-radius: 10px;
-    border: 1px solid #e1e1e1;
+    border: 1px solid var(--opacity-border-color);
     background-color: var(--secondary-bg-color);
     div {
       gap: 10px;
@@ -42,13 +47,13 @@ const CommunityAutoComplete = styled(Autocomplete, transientOptions)`
 
 const LIMIT_OF_POSTS = 10;
 
-const AutoComplete = ({ width = 620, queryFn, category = '', subCategory = '' }) => {
+const AutoComplete = ({ width = 620, queryFn, category = '', subCategory = '', isRouteHome = true }) => {
   const [value, setValue] = React.useState('');
   const [debounced] = useDebouncedValue(value, 500);
 
   const navigate = useNavigate();
 
-  const posts = useAutoCompleteQuery({ inputValue: debounced, queryFn, category, subCategory });
+  const posts = useAutoCompleteQuery({ inputValue: debounced, queryFn, category, subCategory, isRouteHome });
 
   return (
     <CommunityAutoComplete
@@ -56,7 +61,7 @@ const AutoComplete = ({ width = 620, queryFn, category = '', subCategory = '' })
       $wrapperWidth={width}
       zIndex={10}
       dropdownPosition="bottom"
-      placeholder="질문을 검색해보세요!"
+      placeholder="질문 검색"
       value={value}
       limit={LIMIT_OF_POSTS}
       itemComponent={AutoCompleteItem}

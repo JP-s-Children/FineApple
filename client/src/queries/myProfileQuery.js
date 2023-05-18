@@ -9,6 +9,7 @@ const myProfileQuery = email => ({
     return data;
   },
   staleTime,
+  suspense: true,
 });
 
 export default myProfileQuery;

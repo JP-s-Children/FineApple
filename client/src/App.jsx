@@ -5,7 +5,7 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { Global } from '@emotion/react';
 import GlobalStyle from './styles/GlobalStyle';
 import AuthenticationGuard from './guard/AuthenticationGuard';
-import { Layout, RootError } from './components';
+import { Layout, RootError, CategoryPosts, PopularPosts } from './components';
 import { postsByCategoryLoader, postDetailLoader, rankLoader } from './loaders';
 import {
   Home,
@@ -13,17 +13,16 @@ import {
   SignUp,
   Question,
   ProfileEdit,
-  RegisterProduct,
   Rank,
   GuideFaq,
   MyProfile,
-  PopularPosts,
   Post,
   MyPosts,
   Profile,
   NotFound,
   CategoryLayout,
-  CategoryPosts,
+  ProfileLayout,
+  MyFavPosts,
 } from './pages';
 import { SIGNIN_PATH } from './constants/routes';
 
@@ -61,7 +60,6 @@ const router = createBrowserRouter([
           { index: true, element: <CategoryPosts /> },
           {
             path: ':subCategory',
-            loader: postsByCategoryLoader(queryClient),
             element: <CategoryPosts />,
           },
           {
@@ -75,10 +73,7 @@ const router = createBrowserRouter([
         loader: postDetailLoader(queryClient),
         element: <Post />,
       },
-      {
-        path: 'myposts',
-        element: <AuthenticationGuard redirectTo={SIGNIN_PATH} element={<MyPosts />} />,
-      },
+
       { path: 'guide-faq', element: <GuideFaq /> },
       {
         path: 'question',
@@ -86,20 +81,30 @@ const router = createBrowserRouter([
       },
       { path: 'rank', loader: rankLoader(queryClient), element: <Rank /> },
       {
-        path: 'profile/:nickName',
+        path: 'profile',
+        element: <AuthenticationGuard redirectTo={SIGNIN_PATH} element={<ProfileLayout />} />,
+        children: [
+          {
+            index: true,
+            element: <MyProfile />,
+          },
+          {
+            path: 'edit',
+            element: <ProfileEdit />,
+          },
+          {
+            path: 'fav',
+            element: <MyFavPosts />,
+          },
+          {
+            path: 'myposts',
+            element: <MyPosts />,
+          },
+        ],
+      },
+      {
+        path: 'user-profile/:nickName',
         element: <Profile />,
-      },
-      {
-        path: '/myprofile',
-        element: <AuthenticationGuard redirectTo={SIGNIN_PATH} element={<MyProfile />} />,
-      },
-      {
-        path: '/profile/edit',
-        element: <AuthenticationGuard redirectTo={SIGNIN_PATH} element={<ProfileEdit />} />,
-      },
-      {
-        path: '/fav-category',
-        element: <AuthenticationGuard redirectTo={SIGNIN_PATH} element={<RegisterProduct />} />,
       },
       {
         path: '*',

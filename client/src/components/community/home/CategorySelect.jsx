@@ -16,6 +16,11 @@ const Select = styled(MantineSelect)`
     font-size: 18px;
     color: var(--font-color);
     background-color: var(--secondary-bg-color);
+    border: 1px solid var(--opacity-border-color);
+
+    :focus {
+      border: 1px solid var(--hover-font-color);
+    }
   }
 
   & .mantine-Select-item {
@@ -40,7 +45,8 @@ const Select = styled(MantineSelect)`
 
   & .mantine-Select-dropdown {
     background-color: var(--secondary-bg-color);
-    border: 1px solid #e1e1e1;
+    border: 1px solid var(--opacity-border-color);
+    border-radius: 10px;
     div {
       gap: 10px;
     }
@@ -52,6 +58,7 @@ const data = [
   { value: 'programming', label: '프로그래밍', group: CATEGORY['computer-it'] },
   { value: 'computer', label: '컴퓨터', group: CATEGORY['computer-it'] },
   { value: 'mobile', label: '모바일', group: CATEGORY['computer-it'] },
+  { value: 'game', label: '게임', group: CATEGORY.game },
   { value: 'fps', label: 'FPS', group: CATEGORY.game },
   { value: 'mmorpg', label: 'MMORPG', group: CATEGORY.game },
   { value: 'aos', label: 'AOS', group: CATEGORY.game },

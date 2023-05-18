@@ -46,7 +46,7 @@ const SignInForm = () => {
         <InputWrapper label="이메일" error={errors?.email?.message}>
           <Input {...register('email')} placeholder="FineApple ID" autoFocus />
         </InputWrapper>
-        <InputWrapper error={errorMessage || errors?.password?.message}>
+        <InputWrapper label="비밀번호" error={errorMessage || errors?.password?.message}>
           <Input type="password" {...register('password')} placeholder="암호" />
         </InputWrapper>
         <Button type="submit" mt="xl" size="lg" radius="10px">

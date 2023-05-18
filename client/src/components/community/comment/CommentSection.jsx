@@ -16,7 +16,7 @@ const CommentsContainer = styled.section`
 
 const CommentsHeader = styled(Flex)`
   position: sticky;
-  top: 56.5px;
+  top: 0;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 2rem;
