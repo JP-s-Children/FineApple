@@ -8,13 +8,13 @@ const ModalContainer = styled(Modal)`
 
   section {
     height: 820px;
-    background-color: var(--body-bg-color);
+    background-color: var(--footer-bg-color);
   }
 
   .mantine-Modal-header,
   .mantine-Modal-body {
     color: var(--font-color);
-    background-color: var(--body-bg-color);
+    background-color: var(--footer-bg-color);
   }
 
   button.mantine-Modal-close {

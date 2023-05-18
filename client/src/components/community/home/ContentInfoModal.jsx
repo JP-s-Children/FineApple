@@ -1,29 +1,45 @@
 import React from 'react';
-import { Image, Text } from '@mantine/core';
+import { Badge, Flex, Image, Text, Title } from '@mantine/core';
 import { PopupModal } from '../../common';
+import { HighlightText } from '.';
 
-const FilterContentModal = ({ opened, onClose }) => (
-  <PopupModal opened={opened} onClose={onClose} title={'💡 콘텐츠 한 눈에 살펴보기'}>
+const filters = ['전체보기', '해결된 질문', '해결되지 않은 질문', '최신순', '오래된 순', '인기순'];
+
+const ContentInfoModal = ({ opened, onClose }) => (
+  <PopupModal opened={opened} onClose={onClose} title={`💡 카테고리 질문 목록 한 눈에 살펴보기`}>
     <Text fz="lg" fw="600">
-      {'FineApple 지원 커뮤니티에서 팔로우하는 스레드, 사용자 및 커뮤니티에 대한 보기를 관리하고 간소화할 수 있습니다.'}
+      {`FineApple 커뮤니티에서 제공하는 카테고리 질문 목록을 필터를 활용해 새롭게 정렬하여 볼 수 있습니다.`}
+    </Text>
+    <Flex direction="column" mt="20px" p="20px" bg="var(--opacity-bg-color)">
+      <Title fz="0.9rem">💿 필터 종류</Title>
+      <Flex mt="20px" gap="8px">
+        {filters.map(filter => (
+          <Badge key={filter}>{filter}</Badge>
+        ))}
+      </Flex>
+    </Flex>
+    <Text mt="40px">
+      {`페이지 상단의`} <HighlightText>질문 검색</HighlightText>
+      {` 입력란을 활용하여 페이지의 카테고리와 관련된 글 목록 중 최신 순으로 5개를 필터링하여 찾을 수 있습니다. 5개의 질문 가운데 원하는 질문이 없을 경우 `}
+      <HighlightText>입력란</HighlightText>
+      {`의 입력값을 상세히 적거나, 우측의 `}
+      <HighlightText>질문하기</HighlightText>
+      {' 버튼을 클릭하여 새로운 질문을 작성하고 답변을 기다릴 수 있습니다.'}
     </Text>
     <Text mt="20px">
-      {
-        '향상된 필터링 옵션을 사용하여 알림 콘텐츠를 커뮤니티 또는 카테고리 별로 관리할 수 있습니다. 스레드를 필터링하여 원하는 답변을 찾거나, 관심 있는 새 스레드를 탐색하거나, 여전히 도움이 필요한 다른 회원의 질문을 찾을 수 있습니다. FineApple 지원 커뮤니티에 로그인한 상태라면 프로파일 또는 오른쪽 상단 모서리의 탐색 막대에서 알림 보기에 접근할 수 있습니다.'
-      }
+      {`카테고리 별 질문 목록 페이지에서`} <HighlightText>필터 / 정렬</HighlightText>
+      {`을 활용하여, 관련 질문들을 `}
+      <HighlightText>[해결된 질문 | 해결되지 않은 질문]</HighlightText>
+      {' / '}
+      <HighlightText>[최신순 | 오래된 순 | 인기순]</HighlightText>
+      <Text display="inline">{`으로 필터링 합니다.`}</Text>
+      <Text mt="20px">
+        {` 필터링을 통해 원하는 질문을 찾고, 해당 질문을 클릭하여 질문의 내용 그리고 다른 회원들의 답변을 확인할 수 있습니다. 또, 랭킹 페이지에서 다른 회원의 이름을 클릭하고 해당 프로필로 이동하면, 해당 사용자가 작성한 글 목록을 확인할 수 있습니다.`}
+      </Text>
     </Text>
-    <Text mt="20px">
-      {`다른 회원의 프로파일을 보면 알림 탭에서 이들이 팔로우하는 질문, 회원 및 커뮤니티를 확인할 수 있습니다. 다른 회원이 커뮤니티에서 콘텐츠를 공유할 때마다 항상 확인하려는 경우 '팔로우'를 클릭하면 해당 회원의 게시물이 알림 보기에 나타납니다.`}
-    </Text>
-    <Image
-      maw={500}
-      mx="auto"
-      my="40px"
-      radius="md"
-      src="/community/filter-content-modal.png"
-      alt="filterContentImage"
-    />
+
+    <Image maw={380} mx="auto" my="20px" radius="md" src="/community/community-main.png" alt="filterContentImage" />
   </PopupModal>
 );
 
-export default FilterContentModal;
+export default ContentInfoModal;

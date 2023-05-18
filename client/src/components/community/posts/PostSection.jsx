@@ -24,7 +24,7 @@ const PostsContainer = styled(Flex, transientOptions)`
 
 const MyPosts = styled(List, transientOptions)`
   display: flex;
-  width: ${({ $isPopularIncluded }) => ($isPopularIncluded ? '1024px' : '100%')};
+  width: ${({ $isPopularIncluded }) => ($isPopularIncluded ? '1280px' : '100%')};
   flex-direction: column;
   gap: 1rem;
 `;
