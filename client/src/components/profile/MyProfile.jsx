@@ -1,123 +1,137 @@
 import React from 'react';
 import Recoil from 'recoil';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import styled from '@emotion/styled';
-import { Button, Divider, Flex, Grid, Text } from '@mantine/core';
+import { Badge, Button, Container, Flex, Grid, Text } from '@mantine/core';
 import { AvatarIcon } from '..';
 import formattedDate from '../../utils/formattedDate';
 import { MY_PROFILE_EDIT_PATH } from '../../constants/routes';
 import { myProfileQuery } from '../../queries';
 import userState from '../../recoil/atoms/userState';
+import { CATEGORY_INFO } from '../../constants/category';
 
-const ProfileWrapper = styled.div`
-  border-radius: 18px;
+const Wrapper = styled(Flex)`
+  flex-direction: column;
+  border-radius: 10px;
   border: 1px solid var(--opacity-border-color);
   background-color: var(--opacity-bg-color);
+  display: flex;
+  align-items: start;
+  width: 100%;
+  padding: 30px;
+  margin-top: 14px;
 `;
 
-const ColorDivider = styled(Divider)`
-  border-color: var(--body-bg-color);
-`;
-
-const Name = styled(Text)`
-  font-size: 1.4rem;
+const Label = styled(Text)`
+  font-size: 1.2rem;
   font-weight: 600;
 `;
 
-const PointInfo = styled(Text)`
-  font-size: 1.1rem;
-  font-weight: 300;
-  margin-right: 20px;
+const Content = styled(Text)`
+  font-size: 1rem;
+  font-weight: 400;
 `;
 
 const GridCol = styled(Grid.Col)`
   text-align: start;
-  font-size: 1.1rem;
+  font-size: 1rem;
   font-weight: 400;
 `;
 
 const GridLabel = styled(GridCol)`
   font-weight: 500;
-  font-size: 1.2rem;
+  font-size: 1rem;
 `;
 
 const AboutMe = styled(Text)`
-  background-color: var(--footer-bg-color);
+  background-color: var(--opacity-bg-color);
+  border: 1px solid var(--opacity-border-color);
+  width: 100%;
   border-radius: 10px;
-  margin-top: -16px;
   padding: 20px;
+  margin-top: 10px;
+  font-size: 1rem;
 `;
 
 const MyProfile = () => {
   const navigate = useNavigate();
   const loginUser = Recoil.useRecoilValue(userState);
-  const { data: userInfo } = useQuery(myProfileQuery(loginUser.email));
-
   const {
-    email,
-    nickName,
-    avatarId,
-    name,
-    country,
-    phoneNumber,
-    point,
-    level,
-    aboutMe,
-    birthDate,
-    interestedCategory,
-  } = userInfo;
+    data: {
+      email,
+      nickName,
+      avatarId,
+      name,
+      country,
+      phoneNumber,
+      point,
+      level,
+      aboutMe,
+      birthDate,
+      interestedCategory,
+    },
+  } = useQuery(myProfileQuery(loginUser.email));
 
   const handleEdit = () => {
     navigate(MY_PROFILE_EDIT_PATH);
   };
 
   return (
-    <ProfileWrapper>
-      <Flex p="30px">
+    <Flex>
+      <Container align="center" p="30px" miw="250px">
         <AvatarIcon avatarId={avatarId} size="xl" />
+        <Text fz="2rem" weight="500">
+          {nickName}
+        </Text>
+        <Text fz="1.1rem" fw="300" mx="auto">{`레벨 ${level} • 포인트 ${point}`}</Text>
+        <Button mt="15px" size="md" onClick={handleEdit}>
+          프로필 편집
+        </Button>
+      </Container>
 
-        <Flex direction="column" ml="30px" w="100%">
-          <Flex direction="row" align="center" justify="flex-start">
-            <Name>{nickName}</Name>
-            <Name fw="400" ml="10px">{`(${name})`}</Name>
+      <Container mt="26px">
+        <Wrapper>
+          <Label>관심 카테고리</Label>
+          <Flex gap="sm" mt="lg">
+            {interestedCategory.length === 0 && <Content>{'등록된 관심 카테고리가 없습니다.'}</Content>}
+
+            {interestedCategory.map((categoryType, index) => (
+              <Link key={index} to={`/${CATEGORY_INFO[categoryType].category}/${CATEGORY_INFO[categoryType].path}`}>
+                <Badge size="lg" variant={CATEGORY_INFO[categoryType].style} color={CATEGORY_INFO[categoryType].color}>
+                  {CATEGORY_INFO[categoryType].name}
+                </Badge>
+              </Link>
+            ))}
           </Flex>
-          <Flex>
-            <PointInfo>레벨 {level}</PointInfo>
-            <PointInfo>포인트 {point}</PointInfo>
-          </Flex>
+        </Wrapper>
 
-          <Button compact radius="10px" mt="5px" w="fit-content" onClick={handleEdit}>
-            프로필 편집
-          </Button>
-        </Flex>
-      </Flex>
+        <Wrapper>
+          <Label>계정 정보</Label>
+          <Grid gutter={10} columns={4} grow mt="md">
+            <GridLabel span={1}>이메일</GridLabel>
+            <GridCol span={3}>{email}</GridCol>
 
-      <ColorDivider size="md" />
+            <GridLabel span={1}>이름</GridLabel>
+            <GridCol span={3}>{name}</GridCol>
 
-      {/* TODO: 관심 카테고리 칩 목록 */}
-      <Flex w="100%">관심 카테고리 {interestedCategory}</Flex>
+            <GridLabel span={1}>국가</GridLabel>
+            <GridCol span={3}>{country}</GridCol>
 
-      <ColorDivider size="md" />
-      <Grid gutter={30} columns={4} m="50px" grow>
-        <GridLabel span={1}>이메일</GridLabel>
-        <GridCol span={3}>{email}</GridCol>
+            <GridLabel span={1}>생년월일</GridLabel>
+            <GridCol span={3}>{formattedDate(new Date(birthDate))}</GridCol>
 
-        <GridLabel span={1}>국가</GridLabel>
-        <GridCol span={3}>{country}</GridCol>
+            <GridLabel span={1}>연락처</GridLabel>
+            <GridCol span={3}>{phoneNumber}</GridCol>
+          </Grid>
+        </Wrapper>
 
-        <GridLabel span={1}>생년월일</GridLabel>
-        <GridCol span={3}>{formattedDate(new Date(birthDate))}</GridCol>
-
-        <GridLabel span={1}>연락처</GridLabel>
-        <GridCol span={3}>{phoneNumber}</GridCol>
-
-        <GridLabel span={4}>자기소개</GridLabel>
-        <GridCol span={4}>
+        <Wrapper>
+          <Label>자기소개</Label>
           <AboutMe>{aboutMe || '등록된 자기소개가 없습니다.'}</AboutMe>
-        </GridCol>
-      </Grid>
-    </ProfileWrapper>
+        </Wrapper>
+      </Container>
+    </Flex>
   );
 };
 
