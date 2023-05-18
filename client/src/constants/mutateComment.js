@@ -7,13 +7,11 @@ const create = (oldData, { commentInfo }) => ({
   ),
 });
 
-const edit = (oldData, { commentId, commentInfo }) => ({
+const edit = (oldData, { commentId, content }) => ({
   ...oldData,
   pages: oldData.pages.map(page => ({
     ...page,
-    comments: page.comments.map(comment =>
-      comment.id === commentId ? { ...comment, content: commentInfo.content } : comment
-    ),
+    comments: page.comments.map(comment => (comment.id === commentId ? { ...comment, content } : comment)),
   })),
 });
 
@@ -26,11 +24,11 @@ const remove = (oldData, { commentId }) => ({
   })),
 });
 
-const toggleUseful = (oldData, { commentId, useful }) => ({
+const toggleAdopted = (oldData, { commentId, adopted }) => ({
   ...oldData,
   pages: oldData.pages.map(page => ({
     ...page,
-    comments: page.comments.map(comment => (comment.id === commentId ? { ...comment, useful } : comment)),
+    comments: page.comments.map(comment => (comment.id === commentId ? { ...comment, adopted } : comment)),
   })),
 });
 
@@ -42,4 +40,4 @@ const toggleCertified = (oldData, { commentId, certified }) => ({
   })),
 });
 
-export { create, edit, remove, toggleUseful, toggleCertified };
+export { create, edit, remove, toggleAdopted, toggleCertified };

@@ -151,8 +151,12 @@ const editPost = async ({ id, title, content }) => {
   await updateDoc(doc(db, COLLECTION, id), { title, content, updateAt: serverTimestamp() });
 };
 
-const removePost = async id => {
+const removePost = async ({ id }) => {
   await deleteDoc(doc(db, COLLECTION, id));
+};
+
+const togglePostCompleted = async ({ id, completed }) => {
+  await updateDoc(doc(db, COLLECTION, id), { completed });
 };
 
 const togglePostLike = async ({ id, checked, userId }) => {
@@ -172,4 +176,5 @@ export {
   editPost,
   removePost,
   togglePostLike,
+  togglePostCompleted,
 };

@@ -45,6 +45,8 @@ const CommentSection = ({ postInfo, mutateFns }) => {
 
   const user = useRecoilValue(userState);
 
+  console.log(user);
+
   const { scrollIntoView, targetRef } = useScrollIntoView({
     offset: 180,
   });
@@ -66,9 +68,9 @@ const CommentSection = ({ postInfo, mutateFns }) => {
           postId: postInfo.id,
           like: [],
           adopted: false,
-          // author: user.email,
-          // nickName: user.nickName,
-          // avatarId: user.avatarId,
+          author: user.email,
+          nickName: user.nickName,
+          avatarId: user.avatarId,
           content: textEditorContent,
         },
       },
@@ -111,7 +113,7 @@ const CommentSection = ({ postInfo, mutateFns }) => {
         }
       </CommentsHeader>
       <CommentList>
-        {adoptedComment && <Comment comment={adoptedComment} postInfo={postInfo} mutateFns={mutateFns} />}
+        {adoptedComment && <Comment comment={adoptedComment} postInfo={postInfo} mutateFns={mutateFns} isTopComment />}
       </CommentList>
       {comments.length > 0 && <Divider mt="2rem" variant="dashed" />}
 
