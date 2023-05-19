@@ -143,7 +143,14 @@ const getProfileWithPosts = async ({ pageParam, userId }) => {
 };
 
 const createPost = async postInfo => {
-  const postRef = await addDoc(collection(db, COLLECTION), { ...postInfo, createAt: serverTimestamp() });
+  const postRef = await addDoc(collection(db, COLLECTION), {
+    ...postInfo,
+    images: [],
+    like: [],
+    completed: false,
+    createAt: serverTimestamp(),
+    updateAt: serverTimestamp(),
+  });
 
   return postRef.id;
 };
