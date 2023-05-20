@@ -40,7 +40,6 @@ const authSignUp = async ({ email, password, firstName, lastName, nickName, coun
 };
 
 const authSignOut = async () => {
-  // console.log(auth.currentUser);
   await signOut(auth);
 };
 
