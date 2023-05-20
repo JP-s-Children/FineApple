@@ -20,7 +20,7 @@ import {
 } from 'firebase/firestore';
 import { db } from './firebase';
 import { specifySnapshotIntoData, formattedCreateAt, formattedUpdateAt, paginationQuery } from './utils';
-import { addPoints } from './point';
+import { addPoints, deductPoints } from './point';
 
 const COLLECTION = 'posts';
 const PAGE_SIZE = 10;
@@ -162,8 +162,10 @@ const editPost = async ({ id, title, content }) => {
   await updateDoc(doc(db, COLLECTION, id), { title, content, updateAt: serverTimestamp() });
 };
 
-const removePost = async ({ id }) => {
+const removePost = async ({ id, author }) => {
   await deleteDoc(doc(db, COLLECTION, id));
+
+  await deductPoints({ email: author, points: 10 });
 };
 
 const togglePostCompleted = async ({ id, completed }) => {

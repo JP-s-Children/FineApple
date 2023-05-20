@@ -23,7 +23,7 @@ const deductPoints = async ({ email, points }) => {
     const userSnapshot = await getDoc(userDocRef);
     const { point } = userSnapshot.data();
 
-    await updateDoc(userDocRef, { level: calcLevel(point - points), point: point + points });
+    await updateDoc(userDocRef, { level: calcLevel(point - points), point: point - points });
   } catch (e) {
     console.error(e);
   }
