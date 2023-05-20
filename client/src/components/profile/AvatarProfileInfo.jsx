@@ -1,73 +1,78 @@
 import React from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { Divider, Flex, Text } from '@mantine/core';
+import ReactCountryFlag from 'react-country-flag';
+import { Badge, Flex, Group, Text } from '@mantine/core';
 import styled from '@emotion/styled';
-import { AvatarIcon } from '..';
+import { AvatarIcon, InterestCategories } from '..';
 import { profileByNickNameQuery } from '../../queries';
+import { convertCountryNameToCode } from '../../utils/countryCode';
 
-const ProfileWrapper = styled.div`
+const ProfileWrapper = styled(Flex)`
+  flex-direction: column;
   width: 100%;
   border-radius: 18px;
   border: 1px solid var(--opacity-border-color);
   background-color: var(--opacity-bg-color);
-  margin: 40px 0;
+  padding: 24px;
+  margin-top: 40px;
 `;
 
-const Name = styled(Text)`
-  font-size: 1.2rem;
-  font-weight: 600;
-`;
-
-const PointInfo = styled(Text)`
-  font-size: 1.1rem;
-  font-weight: 300;
-  margin-right: 20px;
-`;
-
-const ColorDivider = styled(Divider)`
-  border-color: var(--body-bg-color);
-`;
-
-const AboutMe = styled(Text)`
-  background-color: var(--footer-bg-color);
+const AboutMe = styled.pre`
+  background-color: var(--opacity-bg-color);
+  border: 1px solid var(--opacity-border-color);
+  width: 100%;
   border-radius: 10px;
-  margin-top: -16px;
   padding: 20px;
-  font-size: 1.2rem;
-  font-weight: 400;
-  text-align: justify;
+  margin-top: 20px;
+  font-size: 15px;
+
+  font-size: 1rem;
+  text-align: start;
+  overflow-x: auto;
+  white-space: pre-wrap;
+  word-wrap: break-word;
 `;
 
 const AvatarProfileInfo = ({ nickName }) => {
   const {
-    data: { userInfo },
+    data: { email, country, aboutMe, interestCategories, avatarId, level, point },
   } = useQuery(profileByNickNameQuery(nickName));
-
-  const { avatarId, level, point, aboutMe } = userInfo;
-  console.log(avatarId);
 
   return (
     <ProfileWrapper>
-      <Flex p="30px">
-        <AvatarIcon avatarId={avatarId} size="xl" />
-        <Flex direction="column" ml="30px" w="100%">
-          <Flex direction="row" align="center" justify="flex-start">
-            <Name fs="1.6rem" fw="600">
-              {nickName}
-            </Name>
+      <Flex>
+        <Flex m="auto">
+          <AvatarIcon avatarId={avatarId} size="xl" />
+        </Flex>
+        <Flex direction="row" ml="30px" w="100%" justify="space-between">
+          <Flex direction="column">
+            <Group>
+              <ReactCountryFlag
+                countryCode={convertCountryNameToCode(country)}
+                style={{
+                  fontSize: '2em',
+                }}
+                svg
+              />
+              <Text fz="1.6rem" fw="600">
+                {nickName}
+              </Text>
+            </Group>
+            <Text fz="1rem" fw="400" color="gray" mb="20px">
+              {email}
+            </Text>
+
+            <InterestCategories interestCategories={interestCategories} />
           </Flex>
-          <Flex direction="row" align="center" justify="flex-start">
-            <PointInfo>레벨 {level}</PointInfo>
-            <PointInfo>포인트 {point}</PointInfo>
+
+          <Flex direction="column" align="flex-end" justify="flex-start" gap="sm">
+            <Badge size="md" fz="md" mt="2px">{`L${level}`}</Badge>
+            <Text fz="1rem" fw="400" ml="sm">{`${point} 포인트`}</Text>
           </Flex>
         </Flex>
       </Flex>
 
-      <ColorDivider size="md" />
-
-      <AboutMe m="20px" align="">
-        {aboutMe || '등록된 자기소개가 없습니다.'}
-      </AboutMe>
+      <AboutMe>{aboutMe || '등록된 자기소개가 없습니다.'}</AboutMe>
     </ProfileWrapper>
   );
 };

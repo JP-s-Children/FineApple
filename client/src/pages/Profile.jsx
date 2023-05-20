@@ -2,8 +2,7 @@ import React from 'react';
 import styled from '@emotion/styled';
 import { Container, Skeleton } from '@mantine/core';
 import { useParams } from 'react-router-dom';
-import { postsByNickNameQuery } from '../queries';
-import { AvatarProfileInfo, PostSection } from '../components';
+import { AvatarProfileInfo } from '../components';
 
 const Wrapper = styled(Container)`
   min-width: 1024px;
@@ -16,7 +15,7 @@ const Wrapper = styled(Container)`
   color: var(--font-color);
 `;
 
-const CommunityProfile = () => {
+const Profile = () => {
   const { nickName } = useParams();
 
   return (
@@ -24,11 +23,13 @@ const CommunityProfile = () => {
       <React.Suspense fallback={<Skeleton width="100%" height={200} my="40px" />}>
         <AvatarProfileInfo nickName={nickName} />
       </React.Suspense>
-      <React.Suspense fallback={<Skeleton width="100%" height={200} my="40px" />}>
+
+      {/* TODO: MyPost 완료시 사용자 글목록 추가 */}
+      {/* <React.Suspense fallback={<Skeleton width="100%" height={200} my="40px" />}>
         <PostSection queryFn={postsByNickNameQuery(nickName)} isShownQuestionButton={false} />
-      </React.Suspense>
+      </React.Suspense> */}
     </Wrapper>
   );
 };
 
-export default CommunityProfile;
+export default Profile;
