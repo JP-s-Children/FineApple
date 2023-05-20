@@ -1,8 +1,10 @@
 import React from 'react';
+import Recoil from 'recoil';
 import styled from '@emotion/styled';
 import { Container, Title } from '@mantine/core';
 import { PostSection } from '../components/community';
 import { myPostsQuery } from '../queries';
+import userState from '../recoil/atoms/userState';
 
 const Wrapper = styled(Container)`
   min-width: 1024px;
@@ -15,13 +17,17 @@ const Wrapper = styled(Container)`
   color: var(--font-color);
 `;
 
-const MyPosts = () => (
-  <Wrapper>
-    <Title size="52px" mt="40px">
-      내가 작성한 질문
-    </Title>
-    <PostSection queryFn={myPostsQuery()} />
-  </Wrapper>
-);
+const MyPosts = () => {
+  const user = Recoil.useRecoilValue(userState);
+
+  return (
+    <Wrapper>
+      <Title size="52px" mt="40px">
+        내가 작성한 질문
+      </Title>
+      <PostSection queryFn={myPostsQuery(user.email)} />
+    </Wrapper>
+  );
+};
 
 export default MyPosts;

@@ -6,7 +6,6 @@ const paginationQuery = async ({
   pageParam,
   searchCondition,
   orderCondition = orderBy('createAt', 'desc'),
-  totalPageSearchCondition,
   pageSize = 10,
 }) => {
   const collectionRef = collection(db, collectionName);
@@ -18,7 +17,7 @@ const paginationQuery = async ({
 
   const data = await getDocs(q);
 
-  const snapshot = await getCountFromServer(query(collectionRef, totalPageSearchCondition ?? searchCondition));
+  const snapshot = await getCountFromServer(query(collectionRef, searchCondition));
 
   return {
     data: specifySnapshotIntoData(data),
