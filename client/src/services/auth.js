@@ -13,7 +13,7 @@ const authSignIn = async ({ email, password }) => {
   try {
     await signInWithEmailAndPassword(auth, email, password);
 
-    const userDocRef = doc(db, 'users', email);
+    const userDocRef = doc(db, COLLECTION, email);
     const userSnapshot = await getDoc(userDocRef);
     const { nickName, firstName, lastName, level, point, avatarId } = userSnapshot.data();
 
