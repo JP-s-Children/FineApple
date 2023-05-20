@@ -32,15 +32,11 @@ const SignInForm = () => {
     try {
       const userData = await authSignIn(data);
 
-      if (userData.error) {
-        reset();
-        return;
-      }
       setUser(userData);
       navigate(MAIN_PATH);
     } catch (e) {
+      reset();
       setErrorMessage(e.response.data.error);
-      console.log(e);
     }
   };
 

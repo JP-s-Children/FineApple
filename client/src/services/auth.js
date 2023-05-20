@@ -10,44 +10,33 @@ import { auth, db } from './firebase';
 const COLLECTION = 'users';
 
 const authSignIn = async ({ email, password }) => {
-  try {
-    const res = await signInWithEmailAndPassword(auth, email, password);
-    console.log('res', res);
+  await signInWithEmailAndPassword(auth, email, password);
 
-    const userDocRef = doc(db, COLLECTION, email);
-    const userSnapshot = await getDoc(userDocRef);
-    const { nickName, firstName, lastName, level, point, avatarId } = userSnapshot.data();
+  const userDocRef = doc(db, COLLECTION, email);
+  const userSnapshot = await getDoc(userDocRef);
+  const { nickName, firstName, lastName, level, point, avatarId } = userSnapshot.data();
 
-    return { email, firstName, lastName, nickName, level, point, avatarId };
-  } catch (e) {
-    return { error: 'user-not-found' };
-  }
+  return { email, firstName, lastName, nickName, level, point, avatarId };
 };
 
 const authSignUp = async ({ email, password, firstName, lastName, nickName, country, birthDate, phoneNumber }) => {
-  try {
-    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+  const userCredential = await createUserWithEmailAndPassword(auth, email, password);
 
-    await setDoc(doc(db, COLLECTION, email), {
-      nickName,
-      firstName,
-      lastName,
-      phoneNumber,
-      country,
-      birthDate,
-      interestCategories: [],
-      avatarId: '',
-      aboutMe: '',
-      level: 1,
-      point: 0,
-    });
+  await setDoc(doc(db, COLLECTION, email), {
+    nickName,
+    firstName,
+    lastName,
+    phoneNumber,
+    country,
+    birthDate,
+    interestCategories: [],
+    avatarId: '',
+    aboutMe: '',
+    level: 1,
+    point: 0,
+  });
 
-    return userCredential;
-  } catch (e) {
-    console.log(e);
-    if (e.code === 'auth/email-already-in-use') return { error: 'duplicated-email' };
-    return { error: 'error' };
-  }
+  return userCredential;
 };
 
 const authSignOut = async () => {
@@ -56,11 +45,19 @@ const authSignOut = async () => {
 };
 
 const checkDuplicatedEmail = async email => {
-  const checkedSignInMethods = await fetchSignInMethodsForEmail(auth, email);
-  return checkedSignInMethods.length > 0;
+  if (!email) return false;
+
+  try {
+    const checkedSignInMethods = await fetchSignInMethodsForEmail(auth, email);
+    return checkedSignInMethods.length > 0;
+  } catch (e) {
+    return false;
+  }
 };
 
 const checkDuplicatedNickName = async nickName => {
+  if (!nickName) return false;
+
   const usersRef = collection(db, COLLECTION);
 
   const q = query(usersRef, where('nickName', '==', nickName));

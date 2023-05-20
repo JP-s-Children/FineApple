@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { useController, useForm } from 'react-hook-form';
 import { useQuery } from '@tanstack/react-query';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Button, Container, Radio, Stack, Textarea } from '@mantine/core';
+import { Button, Container, Input, Radio, Stack, Textarea } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import userState from '../../recoil/atoms/userState';
 import useToast from '../../hooks/useToast';
@@ -17,7 +17,6 @@ import {
   AvatarEditModal,
   BirthDateInput,
   CountrySelect,
-  DuplicateCheckInput,
   InputWrapper,
   SelectInterestCategories,
   PhoneNumberInput,
@@ -86,12 +85,16 @@ const ProfileEditForm = () => {
   };
 
   const checkDuplicateNickName = async newNickName => {
-    if (newNickName === user.nickName) return false;
+    if (newNickName === user.nickName) {
+      clearErrors('nickName');
+      return false;
+    }
 
     try {
       const isDuplicatedNickName = await checkDuplicatedNickName(newNickName);
+
       if (isDuplicatedNickName) {
-        setError('nickName', { type: 'custom' });
+        setError('nickName', { type: 'custom', message: '이미 사용중인 닉네임입니다.' });
       } else if (errors.nickName?.type === 'custom') {
         clearErrors('nickName');
       }
@@ -115,7 +118,13 @@ const ProfileEditForm = () => {
           </Radio.Group>
 
           <InputWrapper label="닉네임" desc="커뮤니티에서 사용할 닉네임입니다.." error={errors?.nickName?.message}>
-            <DuplicateCheckInput placeholder="닉네임" checker={checkDuplicateNickName} {...register('nickName')} />
+            <Input
+              {...register('nickName')}
+              placeholder="닉네임"
+              onBlur={e => {
+                checkDuplicateNickName(e.target.value);
+              }}
+            />
           </InputWrapper>
 
           <InputWrapper label="전화번호" error={errors?.phoneNumber?.message}>
