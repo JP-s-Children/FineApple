@@ -1,10 +1,25 @@
-import { collection, doc, getDoc, getDocs, limit, orderBy, query, updateDoc } from 'firebase/firestore';
+import { collection, doc, getDoc, getDocs, limit, orderBy, query, updateDoc, where } from 'firebase/firestore';
 import { db } from './firebase';
 
 const COLLECTION = 'users';
 
-const getProfile = async email => {
-  console.log(email);
+const getProfileByNickName = async ({ nickName }) => {
+  const usersRef = collection(db, 'users');
+  const q = query(usersRef, where('nickName', '==', nickName));
+  const usersSnapshot = await getDocs(q);
+
+  const { country, aboutMe, interestCategories, avatarId, level, point } = usersSnapshot.docs[0].data();
+
+  return {
+    email: usersSnapshot.docs[0].id,
+    nickName,
+    country,
+    aboutMe,
+    interestCategories,
+    avatarId,
+    level,
+    point,
+  };
 };
 
 const getMyProfile = async ({ email }) => {
@@ -67,4 +82,4 @@ const getUserRanking = async ({ topCount }) => {
   }
 };
 
-export { getProfile, getMyProfile, editMyProfile, getUserRanking };
+export { getProfileByNickName, getMyProfile, editMyProfile, getUserRanking };
