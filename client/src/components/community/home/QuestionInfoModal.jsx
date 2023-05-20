@@ -33,7 +33,7 @@ const QuestionInfoModal = ({ opened, onClose }) => (
     </List>
     <Divider color="var(--opacity-border-color)" />
     <Text mt="20px">
-      {`질문 해결에 도움이 된 답변에`} <HighlightText>[채택된 답변] </HighlightText>
+      {`질문 해결에 도움이 된 답변에`} <HighlightText>채택된 답변 </HighlightText>
       {` 표시를 하여 도움을 준 커뮤니티 회원의 노고를 인정해 줍니다. 그러면 해당 회원은 포인트를 지급받아 커뮤니티에서 레벨이 올라갑니다.`}
     </Text>
   </PopupModal>

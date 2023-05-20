@@ -130,14 +130,13 @@ const getProfileWithPosts = async ({ author, pageParam }) => {
   return { posts: await addCommentsLengthListInPosts(data), totalLength, nextPage };
 };
 
-// Todo: Loader 적용 고려
 const getMyLikePosts = async ({ author, pageParam }) => {
-  const { data, totalLength, nextPage } = paginationQuery({
+  const { data, totalLength, nextPage } = await paginationQuery({
     collectionName: COLLECTION,
     pageParam,
     searchCondition: where('like', 'array-contains', author),
   });
-  console.log(data);
+
   return { posts: await addCommentsLengthListInPosts(data), totalLength, nextPage };
 };
 

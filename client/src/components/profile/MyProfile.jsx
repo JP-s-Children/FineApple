@@ -89,7 +89,7 @@ const MyProfile = () => {
           <Badge size="md" fz="md" mt="2px">{`L${level}`}</Badge>
           <Text fz="1rem" fw="400">{`${point} 포인트`}</Text>
         </Flex>
-        <Button mt="30px" size="sm" onClick={handleEdit}>
+        <Button mt="30px" size="sm" radius="10px" onClick={handleEdit}>
           프로필 편집
         </Button>
       </Container>
