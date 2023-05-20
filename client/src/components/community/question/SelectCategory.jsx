@@ -68,18 +68,20 @@ const SelectCategory = ({ name, control }) => {
     <Container w="100%" p="0">
       <Chip.Group value={selectedCategory.subCategory} onChange={onChangeCategory}>
         <Flex direction="column" w="100%" align="start" gap="sm">
-          <Wrapper>
-            <Text fz="md" fw="bold">
-              관심 카테고리
-            </Text>
-            <Group mt="sm">
-              {interestCategoryList.map(([categoryType, { name }]) => (
-                <CategoryChip key={categoryType} value={categoryType} variant="filled">
-                  {name}
-                </CategoryChip>
-              ))}
-            </Group>
-          </Wrapper>
+          {interestCategories.length > 0 && (
+            <Wrapper>
+              <Text fz="md" fw="bold">
+                관심 카테고리
+              </Text>
+              <Group mt="sm">
+                {interestCategoryList.map(([categoryType, { name }]) => (
+                  <CategoryChip key={categoryType} value={categoryType} variant="filled">
+                    {name}
+                  </CategoryChip>
+                ))}
+              </Group>
+            </Wrapper>
+          )}
 
           <Wrapper>
             <Group>

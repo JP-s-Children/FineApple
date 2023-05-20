@@ -1,18 +1,23 @@
 import React from 'react';
+import Recoil from 'recoil';
 import { useNavigate } from 'react-router-dom';
 import { Button, Flex, Image, Text } from '@mantine/core';
 import { PopupModal } from '../common';
 import { MY_POSTS_PATH } from '../../constants/routes';
 import useToast from '../../hooks/useToast';
 import { removePost } from '../../services/posts';
+import userState from '../../recoil/atoms/userState';
 
 const DeletePostModal = ({ postId, opened, onClose }) => {
+  const user = Recoil.useRecoilValue(userState);
   const navigate = useNavigate();
   const toast = useToast();
 
+  console.log(user);
+
   const handleDeletePostClick = async () => {
     try {
-      await removePost(postId);
+      await removePost({ id: postId, author: user.email });
 
       toast.success({ message: '게시물이 정상적으로 삭제되었습니다.' });
       navigate(MY_POSTS_PATH);
