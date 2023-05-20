@@ -1,15 +1,14 @@
 import React from 'react';
 import Recoil from 'recoil';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import styled from '@emotion/styled';
-import { Badge, Button, Container, Flex, Grid, Text } from '@mantine/core';
-import { AvatarIcon } from '..';
+import { Button, Container, Flex, Grid, Text } from '@mantine/core';
+import { AvatarIcon, InterestCategories } from '..';
 import formattedDate from '../../utils/formattedDate';
 import { MY_PROFILE_EDIT_PATH } from '../../constants/routes';
 import { myProfileQuery } from '../../queries';
 import userState from '../../recoil/atoms/userState';
-import { CATEGORY_INFO } from '../../constants/category';
 
 const Wrapper = styled(Flex)`
   flex-direction: column;
@@ -26,11 +25,6 @@ const Wrapper = styled(Flex)`
 const Label = styled(Text)`
   font-size: 1.2rem;
   font-weight: 600;
-`;
-
-const Content = styled(Text)`
-  font-size: 1rem;
-  font-weight: 400;
 `;
 
 const GridCol = styled(Grid.Col)`
@@ -97,20 +91,8 @@ const MyProfile = () => {
 
       <Container mt="26px">
         <Wrapper>
-          <Label>관심 카테고리</Label>
-          <Flex gap="sm" mt="lg">
-            {interestCategories.length === 0 && <Content>{'등록된 관심 카테고리가 없습니다.'}</Content>}
-
-            {interestCategories.map((categoryType, index) => (
-              <Link
-                key={index}
-                to={`/posts/${CATEGORY_INFO[categoryType].category}/${CATEGORY_INFO[categoryType].path}`}>
-                <Badge size="lg" variant={CATEGORY_INFO[categoryType].style} color={CATEGORY_INFO[categoryType].color}>
-                  {CATEGORY_INFO[categoryType].name}
-                </Badge>
-              </Link>
-            ))}
-          </Flex>
+          <Label mb="md">관심 카테고리</Label>
+          <InterestCategories interestCategories={interestCategories} />
         </Wrapper>
 
         <Wrapper>
