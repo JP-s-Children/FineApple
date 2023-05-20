@@ -1,24 +1,17 @@
-import { getMyPosts } from '../api/posts';
+import { getMyPosts } from '../services/posts';
 
 const staleTime = 3000;
 
-const myPostsQuery = () => ({
-  queryKey: ['myPosts'],
-  queryFn: async ({ pageParam = 1 }) => {
-    const { data } = await getMyPosts({ pageParam });
+const myPostsQuery = author => ({
+  queryKey: ['myPosts', author],
+  queryFn: async ({ pageParam }) => {
+    const data = await getMyPosts({ author, pageParam });
     return data;
   },
-  getNextPageParam: (lastPage, allPages) => {
-    const nextPage = allPages.length + 1;
-    const { totalLength } = lastPage;
-
-    return totalLength === 0 || Math.ceil(totalLength / allPages[0].posts.length) === allPages.length
-      ? undefined
-      : nextPage;
-  },
-  select: data => ({
-    posts: data.pages.map(({ posts }) => posts).flat(),
-    totalLength: data.pages[0].totalLength,
+  getNextPageParam: lastPage => lastPage.nextPage,
+  select: ({ pages }) => ({
+    posts: pages.map(({ posts }) => posts).flat(),
+    totalLength: pages[0].totalLength,
   }),
   staleTime,
 });
