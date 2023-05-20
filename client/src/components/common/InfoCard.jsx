@@ -23,7 +23,7 @@ const MoreButton = styled(Button)`
   justify-content: center;
   align-items: center;
   padding-right: 12px;
-  border-radius: 20px;
+  border-radius: 10px;
 `;
 
 /**

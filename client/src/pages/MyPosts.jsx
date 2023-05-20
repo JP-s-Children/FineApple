@@ -24,7 +24,7 @@ const MyPosts = () => {
   return (
     <Wrapper>
       <Title size="52px" mt="40px">
-        내가 작성한 질문
+        👨‍🚀 내가 작성한 질문
       </Title>
       <React.Suspense fallback={<Loader />}>
         <PostSection queryFn={myPostsQuery(user.email)} />
