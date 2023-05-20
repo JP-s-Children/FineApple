@@ -11,7 +11,8 @@ const COLLECTION = 'users';
 
 const authSignIn = async ({ email, password }) => {
   try {
-    await signInWithEmailAndPassword(auth, email, password);
+    const res = await signInWithEmailAndPassword(auth, email, password);
+    console.log('res', res);
 
     const userDocRef = doc(db, COLLECTION, email);
     const userSnapshot = await getDoc(userDocRef);
