@@ -48,12 +48,18 @@ const SignUpForm = () => {
 
   const onSubmit = async data => {
     try {
+      if (checkDuplicateNickName(data.nickName)) return;
+
       await authSignUp(data);
 
       toast.success({ message: '회원가입에 성공하였습니다.' });
       navigate(SIGNIN_PATH);
     } catch (e) {
-      toast.error({ message: '회원가입에 실패하였습니다.' });
+      if (e.code === 'auth/email-already-in-use') {
+        setError('email', { type: 'custom' });
+        return;
+      }
+      toast.error({ message: '회원가입에 실패하였습니다. 잠시 후에 다시 시도해 주세요.' });
     }
   };
 
