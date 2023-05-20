@@ -20,6 +20,7 @@ import {
 } from 'firebase/firestore';
 import { db } from './firebase';
 import { specifySnapshotIntoData, formattedCreateAt, formattedUpdateAt, paginationQuery } from './utils';
+import { addPoints } from './point';
 
 const COLLECTION = 'posts';
 const PAGE_SIZE = 10;
@@ -151,6 +152,8 @@ const createPost = async postInfo => {
     createAt: serverTimestamp(),
     updateAt: serverTimestamp(),
   });
+
+  await addPoints({ email: postInfo.author, points: 10 });
 
   return postRef.id;
 };
