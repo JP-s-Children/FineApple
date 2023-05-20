@@ -1,4 +1,4 @@
-import { doc, getDoc, updateDoc } from 'firebase/firestore';
+import { collection, doc, getDoc, getDocs, limit, orderBy, query, updateDoc } from 'firebase/firestore';
 import { db } from './firebase';
 
 const COLLECTION = 'users';
@@ -47,12 +47,24 @@ const getMyProfile = async ({ email }) => {
 
 const editMyProfile = async ({ userInfo: { email, ...userInfo } }) => {
   try {
-    await updateDoc(doc(db, COLLECTION, email), {
-      ...userInfo,
-    });
+    await updateDoc(doc(db, COLLECTION, email), userInfo);
   } catch (e) {
     console.log(e);
   }
 };
 
-export { getProfile, getMyProfile, editMyProfile };
+const getUserRanking = async ({ topCount }) => {
+  try {
+    const usersRef = collection(db, 'users');
+    const q = query(usersRef, orderBy('point', 'desc'), limit(topCount));
+    const usersSnapshot = await getDocs(q);
+    const userRanking = usersSnapshot.docs.map(user => user.data());
+
+    return userRanking;
+  } catch (e) {
+    console.log(e);
+    return { error: '' };
+  }
+};
+
+export { getProfile, getMyProfile, editMyProfile, getUserRanking };

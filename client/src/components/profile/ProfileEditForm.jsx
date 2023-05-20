@@ -73,7 +73,7 @@ const ProfileEditForm = () => {
   const onSubmit = async data => {
     try {
       await editMyProfile({
-        user: { ...data, email: user.email },
+        userInfo: { ...data, email: user.email },
       });
 
       setUser({ ...user, email: user.email, nickName: data.nickName, avatarId: data.avatarId });
