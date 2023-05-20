@@ -20,7 +20,7 @@ const TableContainer = styled(Table)`
     text-align: center !important;
   }
 
-  th:nth-child(3) {
+  th:nth-of-type(3) {
     width: 40%;
   }
 

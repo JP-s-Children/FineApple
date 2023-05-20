@@ -1,15 +1,16 @@
 import React from 'react';
 import Recoil from 'recoil';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
+import ReactCountryFlag from 'react-country-flag';
 import styled from '@emotion/styled';
 import { Badge, Button, Container, Flex, Grid, Text } from '@mantine/core';
-import { AvatarIcon } from '..';
+import { AvatarIcon, InterestCategories } from '..';
 import formattedDate from '../../utils/formattedDate';
 import { MY_PROFILE_EDIT_PATH } from '../../constants/routes';
 import { myProfileQuery } from '../../queries';
 import userState from '../../recoil/atoms/userState';
-import { CATEGORY_INFO } from '../../constants/category';
+import { convertCountryNameToCode } from '../../utils/countryCode';
 
 const Wrapper = styled(Flex)`
   flex-direction: column;
@@ -26,11 +27,6 @@ const Wrapper = styled(Flex)`
 const Label = styled(Text)`
   font-size: 1.2rem;
   font-weight: 600;
-`;
-
-const Content = styled(Text)`
-  font-size: 1rem;
-  font-weight: 400;
 `;
 
 const GridCol = styled(Grid.Col)`
@@ -89,28 +85,19 @@ const MyProfile = () => {
         <Text fz="2rem" weight="500">
           {nickName}
         </Text>
-        <Text fz="1.1rem" fw="300" mx="auto">{`레벨 ${level} • 포인트 ${point}`}</Text>
-        <Button mt="15px" size="md" onClick={handleEdit}>
+        <Flex direction="row" align="center" justify="center" gap="sm">
+          <Badge size="md" fz="md" mt="2px">{`L${level}`}</Badge>
+          <Text fz="1rem" fw="400">{`${point} 포인트`}</Text>
+        </Flex>
+        <Button mt="30px" size="sm" onClick={handleEdit}>
           프로필 편집
         </Button>
       </Container>
 
       <Container mt="26px">
         <Wrapper>
-          <Label>관심 카테고리</Label>
-          <Flex gap="sm" mt="lg">
-            {interestCategories.length === 0 && <Content>{'등록된 관심 카테고리가 없습니다.'}</Content>}
-
-            {interestCategories.map((categoryType, index) => (
-              <Link
-                key={index}
-                to={`/posts/${CATEGORY_INFO[categoryType].category}/${CATEGORY_INFO[categoryType].path}`}>
-                <Badge size="lg" variant={CATEGORY_INFO[categoryType].style} color={CATEGORY_INFO[categoryType].color}>
-                  {CATEGORY_INFO[categoryType].name}
-                </Badge>
-              </Link>
-            ))}
-          </Flex>
+          <Label mb="md">관심 카테고리</Label>
+          <InterestCategories interestCategories={interestCategories} />
         </Wrapper>
 
         <Wrapper>
@@ -123,7 +110,17 @@ const MyProfile = () => {
             <GridCol span={3}>{name}</GridCol>
 
             <GridLabel span={1}>국가</GridLabel>
-            <GridCol span={3}>{country}</GridCol>
+            <GridCol span={3}>
+              <ReactCountryFlag
+                countryCode={convertCountryNameToCode(country)}
+                style={{
+                  fontSize: '1em',
+                  marginRight: '8px',
+                }}
+                svg
+              />
+              {country}
+            </GridCol>
 
             <GridLabel span={1}>생년월일</GridLabel>
             <GridCol span={3}>{formattedDate(new Date(birthDate))}</GridCol>

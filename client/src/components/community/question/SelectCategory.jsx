@@ -57,7 +57,7 @@ const SelectCategory = ({ name, control }) => {
   const onChangeCategory = subCategory => {
     const category = computerItTypes.map(([categoryType]) => categoryType).includes(subCategory)
       ? 'computer-it'
-      : gameTypes.includes(subCategory)
+      : gameTypes.map(([categoryType]) => categoryType).includes(subCategory)
       ? 'game'
       : '';
 
@@ -67,7 +67,6 @@ const SelectCategory = ({ name, control }) => {
   return (
     <Container w="100%" p="0">
       <Chip.Group value={selectedCategory.subCategory} onChange={onChangeCategory}>
-        {/* TODO: Accordion */}
         <Flex direction="column" w="100%" align="start" gap="sm">
           <Wrapper>
             <Text fz="md" fw="bold">
