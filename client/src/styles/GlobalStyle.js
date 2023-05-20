@@ -17,6 +17,7 @@ const GlobalStyle = css`
     --opacity-border-color: #e5e5e5;
     --footer-bg-color: #fafafa;
     --footer-font-color: #6e6e73;
+    --like-color: #f59f01;
   }
 
   body[data-theme='dark'] {
@@ -29,6 +30,7 @@ const GlobalStyle = css`
     --opacity-border-color: #4b4c53;
     --footer-bg-color: #1a1b1e;
     --footer-font-color: #909296;
+    --like-color: #f59f01;
   }
 
   body {

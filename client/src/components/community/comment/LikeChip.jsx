@@ -4,7 +4,7 @@ import { AiFillHeart, AiOutlineHeart } from 'react-icons/ai';
 
 const LikeChip = ({ checked, likeCount, onClick }) => (
   <Badge size="xl" sx={{ cursor: 'pointer' }} onClick={onClick}>
-    <Flex c={checked ? '#F59F01' : 'gray'} align="center" gap="4px">
+    <Flex c={checked ? 'var(--like-color)' : 'gray'} align="center" gap="4px">
       {checked ? <AiFillHeart /> : <AiOutlineHeart />}
       <Text c="black"> {likeCount}</Text>
     </Flex>

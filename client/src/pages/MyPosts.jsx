@@ -5,6 +5,7 @@ import { Container, Title } from '@mantine/core';
 import { PostSection } from '../components/community';
 import { myPostsQuery } from '../queries';
 import userState from '../recoil/atoms/userState';
+import { Loader } from '../components';
 
 const Wrapper = styled(Container)`
   min-width: 1024px;
@@ -25,7 +26,9 @@ const MyPosts = () => {
       <Title size="52px" mt="40px">
         내가 작성한 질문
       </Title>
-      <PostSection queryFn={myPostsQuery(user.email)} />
+      <React.Suspense fallback={<Loader />}>
+        <PostSection queryFn={myPostsQuery(user.email)} />
+      </React.Suspense>
     </Wrapper>
   );
 };
