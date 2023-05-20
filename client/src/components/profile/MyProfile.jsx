@@ -2,13 +2,15 @@ import React from 'react';
 import Recoil from 'recoil';
 import { useNavigate } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
+import ReactCountryFlag from 'react-country-flag';
 import styled from '@emotion/styled';
-import { Button, Container, Flex, Grid, Text } from '@mantine/core';
+import { Badge, Button, Container, Flex, Grid, Text } from '@mantine/core';
 import { AvatarIcon, InterestCategories } from '..';
 import formattedDate from '../../utils/formattedDate';
 import { MY_PROFILE_EDIT_PATH } from '../../constants/routes';
 import { myProfileQuery } from '../../queries';
 import userState from '../../recoil/atoms/userState';
+import { convertCountryNameToCode } from '../../utils/countryCode';
 
 const Wrapper = styled(Flex)`
   flex-direction: column;
@@ -83,8 +85,11 @@ const MyProfile = () => {
         <Text fz="2rem" weight="500">
           {nickName}
         </Text>
-        <Text fz="1.1rem" fw="300" mx="auto">{`레벨 ${level} • 포인트 ${point}`}</Text>
-        <Button mt="15px" size="md" onClick={handleEdit}>
+        <Flex direction="row" align="center" justify="center" gap="sm">
+          <Badge size="md" fz="md" mt="2px">{`L${level}`}</Badge>
+          <Text fz="1rem" fw="400">{`${point} 포인트`}</Text>
+        </Flex>
+        <Button mt="30px" size="sm" onClick={handleEdit}>
           프로필 편집
         </Button>
       </Container>
@@ -105,7 +110,17 @@ const MyProfile = () => {
             <GridCol span={3}>{name}</GridCol>
 
             <GridLabel span={1}>국가</GridLabel>
-            <GridCol span={3}>{country}</GridCol>
+            <GridCol span={3}>
+              <ReactCountryFlag
+                countryCode={convertCountryNameToCode(country)}
+                style={{
+                  fontSize: '1em',
+                  marginRight: '8px',
+                }}
+                svg
+              />
+              {country}
+            </GridCol>
 
             <GridLabel span={1}>생년월일</GridLabel>
             <GridCol span={3}>{formattedDate(new Date(birthDate))}</GridCol>
