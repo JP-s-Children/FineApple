@@ -45,11 +45,19 @@ const authSignOut = async () => {
 };
 
 const checkDuplicatedEmail = async email => {
-  const checkedSignInMethods = await fetchSignInMethodsForEmail(auth, email);
-  return checkedSignInMethods.length > 0;
+  if (!email) return false;
+
+  try {
+    const checkedSignInMethods = await fetchSignInMethodsForEmail(auth, email);
+    return checkedSignInMethods.length > 0;
+  } catch (e) {
+    return false;
+  }
 };
 
 const checkDuplicatedNickName = async nickName => {
+  if (!nickName) return false;
+
   const usersRef = collection(db, COLLECTION);
 
   const q = query(usersRef, where('nickName', '==', nickName));
