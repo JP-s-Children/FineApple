@@ -1,11 +1,11 @@
-import { getMyPosts } from '../services/posts';
+import { getMyLikePosts } from '../services/posts';
 
 const staleTime = 3000;
 
-const myPostsQuery = author => ({
-  queryKey: ['myPosts', author],
+const myLikePostsQuery = author => ({
+  queryKey: ['myLikePosts', author],
   queryFn: async ({ pageParam }) => {
-    const data = await getMyPosts({ author, pageParam });
+    const data = await getMyLikePosts({ author, pageParam });
     return data;
   },
   getNextPageParam: lastPage => lastPage.nextPage,
@@ -17,4 +17,4 @@ const myPostsQuery = author => ({
   suspense: true,
 });
 
-export default myPostsQuery;
+export default myLikePostsQuery;

@@ -70,8 +70,8 @@ const PopupModal = ({ opened, onClose, title, children }) => (
     radius="18px"
     size="50%"
     overlayProps={{
-      opacity: 0.55,
-      blur: 1,
+      opacity: 0.25,
+      blur: 2.5,
     }}
     centered>
     {children}
