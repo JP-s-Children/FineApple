@@ -71,16 +71,16 @@ const getPostsByCategory = async ({ category = '', subCategory = '', pageParam }
 const getSearchedPosts = async ({ keyword = '', category = '', subCategory = '', isRouteHome }) => {
   const postsRef = collection(db, COLLECTION);
 
-  const customizeQuery = searchCondition => query(postsRef, searchCondition, orderBy('createAt', 'desc'), limit(5));
+  const customizeQuery = searchCondition => query(postsRef, searchCondition, orderBy('createAt', 'desc'));
 
   const qInHome =
     category === '' && subCategory === ''
-      ? query(postsRef, orderBy('createAt', 'desc'), limit(5))
+      ? query(postsRef, orderBy('createAt', 'desc'))
       : customizeQuery(or(where('category', '==', category), where('subCategory', '==', subCategory)));
 
   const qInCategoryRoute =
     category === '' && subCategory === ''
-      ? query(postsRef, orderBy('createAt', 'desc'), limit(5))
+      ? query(postsRef, orderBy('createAt', 'desc'))
       : subCategory !== ''
       ? customizeQuery(and(where('category', '==', category), where('subCategory', '==', subCategory)))
       : customizeQuery(or(where('category', '==', category), where('subCategory', '==', subCategory)));
@@ -89,9 +89,9 @@ const getSearchedPosts = async ({ keyword = '', category = '', subCategory = '',
 
   const filteredPostSnapshot = await getDocs(q);
 
-  const searchedPosts = specifySnapshotIntoData(filteredPostSnapshot).filter(({ title }) =>
-    new RegExp(keyword, 'i').test(title)
-  );
+  const searchedPosts = specifySnapshotIntoData(filteredPostSnapshot)
+    .filter(({ title }) => new RegExp(keyword, 'i').test(title))
+    .slice(0, 5);
 
   return searchedPosts;
 };
@@ -108,15 +108,36 @@ const getPopularPostsByCategory = async ({ category }) => {
   };
 };
 
-// 내가 작성한 글 목록 :auth 정보 필요
 const getMyPosts = async ({ author, pageParam }) => {
-  const { data, nextPage } = await paginationQuery({
+  const { data, totalLength, nextPage } = await paginationQuery({
     collectionName: COLLECTION,
     pageParam,
     searchCondition: where('author', '==', author),
   });
 
-  return { posts: await addCommentsLengthListInPosts(data), nextPage };
+  return { posts: await addCommentsLengthListInPosts(data), totalLength, nextPage };
+};
+
+// 사용자 프로필 - 글 목록
+const getProfileWithPosts = async ({ author, pageParam }) => {
+  const { data, totalLength, nextPage } = paginationQuery({
+    collectionName: COLLECTION,
+    pageParam,
+    searchCondition: where('author', '==', author),
+  });
+
+  return { posts: await addCommentsLengthListInPosts(data), totalLength, nextPage };
+};
+
+// Todo: Loader 적용 고려
+const getMyLikePosts = async ({ author, pageParam }) => {
+  const { data, totalLength, nextPage } = paginationQuery({
+    collectionName: COLLECTION,
+    pageParam,
+    searchCondition: where('like', 'array-contains', author),
+  });
+  console.log(data);
+  return { posts: await addCommentsLengthListInPosts(data), totalLength, nextPage };
 };
 
 const getPost = async ({ postId }) => {
@@ -129,17 +150,6 @@ const getPost = async ({ postId }) => {
     updateAt: formattedUpdateAt(postData),
     id: postSnapshot.id,
   };
-};
-
-// 사용자 프로필 - 글 목록
-const getProfileWithPosts = async ({ pageParam, userId }) => {
-  const { data, totalLength, nextPage } = paginationQuery({
-    collectionName: COLLECTION,
-    pageParam,
-    searchCondition: where('author', '==', userId),
-  });
-
-  return { posts: await addCommentsLengthListInPosts(data), totalLength, nextPage };
 };
 
 const createPost = async postInfo => {
@@ -174,10 +184,11 @@ const togglePostLike = async ({ id, checked, userId }) => {
 export {
   getPosts,
   getPostsByCategory,
-  getProfileWithPosts,
   getSearchedPosts,
-  getMyPosts,
   getPopularPostsByCategory,
+  getMyPosts,
+  getProfileWithPosts,
+  getMyLikePosts,
   getPost,
   createPost,
   editPost,
