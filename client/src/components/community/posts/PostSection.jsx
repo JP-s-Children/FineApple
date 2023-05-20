@@ -11,20 +11,20 @@ import filterPosts from '../../../utils/filterPosts';
 import transientOptions from '../../../constants/transientOptions';
 
 const Wrapper = styled(Container)`
-  min-width: 1280px;
+  min-width: 1024px;
   width: 100%;
   padding: 0;
 `;
 
 const PostsContainer = styled(Flex, transientOptions)`
   margin: 1rem auto 0;
-  width: ${({ $isPopularIncluded }) => ($isPopularIncluded ? '1280px' : '100%')};
+  width: ${({ $isPopularIncluded }) => ($isPopularIncluded ? '1024px' : '100%')};
   overflow: hidden;
 `;
 
 const MyPosts = styled(List, transientOptions)`
   display: flex;
-  width: ${({ $isPopularIncluded }) => ($isPopularIncluded ? '1280px' : '100%')};
+  width: ${({ $isPopularIncluded }) => ($isPopularIncluded ? '1024px' : '100%')};
   flex-direction: column;
   gap: 1rem;
 `;

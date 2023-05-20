@@ -7,7 +7,7 @@ import { PostSection } from '.';
 import { popularPostsByCategoryQuery } from '../../queries';
 
 const Wrapper = styled(Container)`
-  min-width: 1280px;
+  min-width: 1024px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -42,13 +42,13 @@ const PopularPosts = () => {
 
   return (
     <Wrapper>
-      <Flex justify="space-between" align="center" mt="2rem" miw="1280px" w="100%" h="140px">
+      <Flex justify="space-between" align="center" mt="2rem" miw="1024px" w="100%" h="140px">
         <PostsDescription>인기글</PostsDescription>
         <Button ml="2rem" size="lg" radius="10px" onClick={() => navigate(QUESTION_PATH)}>
           질문하기
         </Button>
       </Flex>
-      <Flex justify="end" p="0" miw="1280px">
+      <Flex justify="end" p="0" miw="1024px">
         <PostLabel>💡 좋아요가 많은 순으로 10개의 질문을 보여줍니다.</PostLabel>
       </Flex>
       <PostSection queryFn={popularPostsByCategoryQuery({ category })} />

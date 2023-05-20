@@ -14,7 +14,7 @@ import {
 } from '../hooks/mutations';
 
 const Wrapper = styled(Container)`
-  min-width: 1280px;
+  min-width: 1024px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -24,7 +24,6 @@ const Wrapper = styled(Container)`
   color: var(--font-color);
 `;
 
-// [] todo: postInfo의 author, certified auth 연결 후 임의 데이터 수정 필요
 const Post = () => {
   const { postId } = useParams();
   const { data: post } = useQuery(postDetailQuery(postId));
