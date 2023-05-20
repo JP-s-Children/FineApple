@@ -14,6 +14,7 @@ const myPostsQuery = author => ({
     totalLength: pages[0].totalLength,
   }),
   staleTime,
+  suspense: true,
 });
 
 export default myPostsQuery;
