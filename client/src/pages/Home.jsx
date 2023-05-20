@@ -35,8 +35,8 @@ const CategoryListContainer = styled(Flex)`
 
 const CategoryList = styled(List)`
   display: grid;
-  grid-template-rows: 1fr 1fr;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-rows: repeat(2, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   gap: 30px;
   margin-top: 1rem;
 `;
@@ -117,13 +117,13 @@ const Home = () => {
 
       <CategoryListContainer>
         <Text mb="2rem" fz="21px" fw="600">
-          카테고리를 선택하시면 관련 질문들이 표시됩니다
+          카테고리를 선택하면 관련 질문들이 표시됩니다
         </Text>
 
         <CategoryList>
           {Object.values(CATEGORY_INFO).map(({ name, path, category }) => (
             <Category key={name} path={path}>
-              <Link to={`${category}/${path}`}>
+              <Link to={`posts/${category}/${path}`}>
                 <CategoryDescription>{name}</CategoryDescription>
               </Link>
             </Category>
