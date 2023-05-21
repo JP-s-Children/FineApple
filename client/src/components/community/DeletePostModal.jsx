@@ -20,7 +20,7 @@ const DeletePostModal = ({ postId, opened, onClose }) => {
       toast.success({ message: '게시물이 정상적으로 삭제되었습니다.' });
       navigate(MY_POSTS_PATH);
     } catch (e) {
-      toast.error({ message: '게시물 삭제에 실패하였습니다. 잠시 후 다시 시도해주세요.' });
+      toast.error({ message: '게시물 삭제에 실패하였습니다. 잠시 후 다시 시도해 주세요.' });
     }
   };
 
