@@ -12,7 +12,7 @@ const NavItem = styled(Text, transientOptions)`
   font-size: 16px;
   font-weight: 500;
   font-family: 'Noto Sans Kr';
-  border-bottom: ${({ $isActive }) => ($isActive ? '2px solid var(--hover-font-color)' : '1px solid transparent')};
+  border-bottom: ${({ $isActive }) => ($isActive ? '3px solid var(--hover-font-color)' : '1px solid transparent')};
   :hover {
     color: var(--hover-font-color);
   }

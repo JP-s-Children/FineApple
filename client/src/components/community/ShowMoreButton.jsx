@@ -7,11 +7,12 @@ const ShowMoreButton = ({ loading, onClick }) => (
     <Button
       loading={loading}
       w={200}
-      radius="xl"
+      size="lg"
+      radius="10px"
       rightIcon={<BiDownArrowAlt size="22" />}
       fz="1rem"
       variant="gradient"
-      gradient={{ from: '#ed6ea0', to: '#ec8c69', deg: 35 }}
+      gradient={{ from: '#5b3bff', to: '#00b7d7', deg: 35 }}
       loaderPosition="right"
       onClick={onClick}>
       더보기

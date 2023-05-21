@@ -4,10 +4,10 @@ import { Container } from '@mantine/core';
 import { Link } from 'react-router-dom';
 
 const HeaderContainer = styled.header`
-  padding: 15px 0px 12px 0px;
+  padding: 11px 0px 11px 0px;
   width: 100%;
   min-width: 1024px;
-  border-bottom: 1px solid #e9ecef50;
+  border-bottom: 1px solid var(--opacity-border-color);
   background-color: var(--body-bg-color);
   box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 2px 0px;
   position: sticky;
@@ -42,6 +42,7 @@ const MenuWrapper = styled.div`
 `;
 
 const Menu = styled(Title)`
+  padding-top: 0.2rem;
   font-size: 14px;
   font-weight: 400;
 `;

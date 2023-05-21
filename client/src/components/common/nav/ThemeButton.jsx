@@ -21,7 +21,7 @@ const ThemeIcon = styled.i`
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 6px;
+  padding: 8px;
   border-radius: 100%;
   border: 3px solid var(--opacity-border-color);
   color: var(--font-color);

@@ -19,8 +19,8 @@ const AvatarWrapper = styled.div`
 const LoginLink = styled(Link)`
   color: var(--font-color);
   display: flex;
-  width: 40px;
-  height: 40px;
+  width: 42px;
+  height: 42px;
   justify-content: center;
   align-items: center;
   background: none !important;
@@ -30,6 +30,7 @@ const LoginLink = styled(Link)`
   font-weight: 600;
   :hover {
     color: var(--hover-font-color);
+    border: 3px solid var(--hover-font-color);
   }
 `;
 
