@@ -2,7 +2,7 @@ import React from 'react';
 import styled from '@emotion/styled';
 import { Container, Skeleton } from '@mantine/core';
 import { useParams } from 'react-router-dom';
-import { AvatarProfileInfo } from '../components';
+import { AvatarProfileInfoDetail } from '../components';
 
 const Wrapper = styled(Container)`
   min-width: 1024px;
@@ -21,7 +21,7 @@ const Profile = () => {
   return (
     <Wrapper>
       <React.Suspense fallback={<Skeleton width="100%" height={200} my="40px" />}>
-        <AvatarProfileInfo nickName={nickName} />
+        <AvatarProfileInfoDetail nickName={nickName} />
       </React.Suspense>
 
       {/* TODO: MyPost 완료시 사용자 글목록 추가 */}

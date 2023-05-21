@@ -33,7 +33,7 @@ const AboutMe = styled.pre`
   word-wrap: break-word;
 `;
 
-const AvatarProfileInfo = ({ nickName }) => {
+const AvatarProfileInfoDetail = ({ nickName }) => {
   const {
     data: { email, country, aboutMe, interestCategories, avatarId, level, point },
   } = useQuery(profileByNickNameQuery(nickName));
@@ -76,4 +76,4 @@ const AvatarProfileInfo = ({ nickName }) => {
     </ProfileWrapper>
   );
 };
-export default AvatarProfileInfo;
+export default AvatarProfileInfoDetail;
