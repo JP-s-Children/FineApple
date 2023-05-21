@@ -10,7 +10,6 @@ export { default as Profile } from './Profile';
 export { default as MyProfile } from './MyProfile';
 export { default as MyFavPosts } from './MyFavPosts';
 export { default as ProfileEdit } from './ProfileEdit';
-// export { default as RegisterProduct } from './RegisterProduct';
 export { default as Question } from './Question';
 export { default as Rank } from './Rank';
 export { default as NotFound } from './NotFound';
