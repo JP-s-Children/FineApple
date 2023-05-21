@@ -17,7 +17,7 @@ const ComputerItSubMenu = () => {
     { size: 'sm', content: '인기글', path: COMPUTER_IT_POPULAR_PATH },
   ];
 
-  return <SubMenu label="컴퓨터/IT 카테고리" menuItems={menuItems} />;
+  return <SubMenu label="컴퓨터 / IT 카테고리" menuItems={menuItems} />;
 };
 
 export default ComputerItSubMenu;
