@@ -70,6 +70,7 @@ const CommentSection = ({ postInfo, mutateFns }) => {
           avatarId: user.avatarId,
           content: textEditorContent,
           level: user.level,
+          createAt: new Date(),
         },
       },
       {
