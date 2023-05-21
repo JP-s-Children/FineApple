@@ -1,5 +1,6 @@
-import { collection, doc, getDoc, getDocs, limit, orderBy, query, updateDoc, where } from 'firebase/firestore';
+import { collection, doc, getDoc, getDocs, orderBy, query, updateDoc, where } from 'firebase/firestore';
 import { db } from './firebase';
+import { paginationQuery } from './utils';
 
 const COLLECTION = 'users';
 
@@ -86,18 +87,18 @@ const editMyProfile = async ({ userInfo: { email, ...userInfo } }) => {
   }
 };
 
-const getUserRanking = async ({ topCount }) => {
-  try {
-    const usersRef = collection(db, 'users');
-    const q = query(usersRef, orderBy('point', 'desc'), limit(topCount));
-    const usersSnapshot = await getDocs(q);
-    const userRanking = usersSnapshot.docs.map(user => user.data());
+const getUserRanking = async ({ pageParam }) => {
+  const { data, nextPage, totalLength } = await paginationQuery({
+    collectionName: COLLECTION,
+    pageParam,
+    orderCondition: orderBy('point', 'desc'),
+  });
 
-    return userRanking;
-  } catch (e) {
-    console.log(e);
-    return { error: '' };
-  }
+  return {
+    users: data,
+    nextPage,
+    totalLength,
+  };
 };
 
 export { getProfileByEmail, getProfileByNickName, getMyProfile, editMyProfile, getUserRanking };
