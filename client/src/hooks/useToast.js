@@ -18,11 +18,15 @@ const useToast = () => {
     create({ ...toastInfo, type: 'success' });
   };
 
+  const warning = toastInfo => {
+    create({ ...toastInfo, type: 'warning' });
+  };
+
   const error = toastInfo => {
     create({ ...toastInfo, type: 'error' });
   };
 
-  return { create, remove, success, error };
+  return { create, remove, success, warning, error };
 };
 
 export default useToast;

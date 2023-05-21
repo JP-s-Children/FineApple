@@ -62,6 +62,7 @@ const animation = {
 
 const bgc = {
   success: '#339af0',
+  warning: '#f59f01',
   error: '#ff6b6b',
 };
 
