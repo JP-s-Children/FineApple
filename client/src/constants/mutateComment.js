@@ -40,20 +40,16 @@ const toggleCertified = (oldData, { commentId, certified }) => ({
   })),
 });
 
-const toggleLike = (oldData, { commentId, email, checked }) => {
-  console.log(oldData);
-
-  return {
-    ...oldData,
-    pages: oldData.pages.map(page => ({
-      ...page,
-      comments: page.comments.map(comment =>
-        comment.id === commentId
-          ? { ...comment, like: checked ? [...comment.like, email] : comment.like.filter(_email => _email !== email) }
-          : comment
-      ),
-    })),
-  };
-};
+const toggleLike = (oldData, { commentId, email, checked }) => ({
+  ...oldData,
+  pages: oldData.pages.map(page => ({
+    ...page,
+    comments: page.comments.map(comment =>
+      comment.id === commentId
+        ? { ...comment, like: checked ? [...comment.like, email] : comment.like.filter(_email => _email !== email) }
+        : comment
+    ),
+  })),
+});
 
 export { create, edit, remove, toggleAdopted, toggleCertified, toggleLike };
