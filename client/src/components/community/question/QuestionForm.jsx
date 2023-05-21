@@ -22,10 +22,10 @@ const TitleInput = styled(Input)`
 `;
 
 const questionScheme = z.object({
-  title: z.string().regex(/.+/, { message: '제목을 입력해주세요' }),
-  content: z.string({ required_error: '질문 하실 내용을 입력해주세요' }),
+  title: z.string().regex(/.+/, { message: '제목을 입력해 주세요' }),
+  content: z.string({ required_error: '질문 하실 내용을 입력해 주세요' }),
   category: z.object({
-    category: z.string().regex(/.+/, { message: '카테고리를 선택해주세요' }),
+    category: z.string().regex(/.+/, { message: '카테고리를 선택해 주세요' }),
     subCategory: z.string(),
   }),
 });

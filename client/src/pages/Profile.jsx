@@ -23,7 +23,7 @@ const Profile = () => {
       <React.Suspense
         fallback={
           <>
-            <Skeleton width="100%" height={200} my="40px" />
+            <Skeleton width="100%" height={240} my="40px" />
             <Skeleton width="100%" height={600} my="40px" />
           </>
         }>

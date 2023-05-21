@@ -35,8 +35,6 @@ router.post('/signin', (req, res) => {
 	const { email, password } = req.body;
 
 	console.log(email, password);
-
-	// console.log(req);
 	// 401 Unauthorized
 	if (!email || !password)
 		return res

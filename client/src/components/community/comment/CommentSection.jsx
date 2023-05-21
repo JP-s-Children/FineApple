@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from '@emotion/styled';
 import { useRecoilValue } from 'recoil';
+import { useNavigate } from 'react-router-dom';
 import { FaLocationArrow } from 'react-icons/fa';
 import { useScrollIntoView } from '@mantine/hooks';
 import { Button, Container, Divider, Flex, List, Text, Title } from '@mantine/core';
@@ -9,6 +10,7 @@ import { Comment, ShowMoreButton, TextEditor } from '..';
 import useCommentsQuery from '../../../hooks/queries/useCommentsQuery';
 import useTextEditor from '../../../hooks/useTextEditor';
 import useAdoptedCommentQuery from '../../../hooks/queries/useAdoptedCommentQuery';
+import { SIGNIN_PATH } from '../../../constants/routes';
 
 const CommentsContainer = styled.section`
   margin-top: 2.5rem;
@@ -44,6 +46,7 @@ const CommentSection = ({ postInfo, mutateFns }) => {
   } = useCommentsQuery({ postId: postInfo.id });
 
   const user = useRecoilValue(userState);
+  const navigate = useNavigate();
 
   const { scrollIntoView, targetRef } = useScrollIntoView({
     offset: 180,
@@ -69,6 +72,8 @@ const CommentSection = ({ postInfo, mutateFns }) => {
           nickName: user.nickName,
           avatarId: user.avatarId,
           content: textEditorContent,
+          level: user.level,
+          createAt: new Date(),
         },
       },
       {
@@ -88,30 +93,42 @@ const CommentSection = ({ postInfo, mutateFns }) => {
           <Text fz="2rem" mt="1px">
             답글
           </Text>
-          <Text c="blue" fz="2.5rem">
+          <Text c="blue" fz="2.5rem" mb="0.1rem">
             {totalLength}
           </Text>
         </Flex>
 
-        {user && (
+        {user ? (
           <Button
-            variant="subtle"
-            radius="xl"
+            radius="md"
+            mb="0.2rem"
+            variant="gradient"
+            gradient={{ from: '#5b3bff', to: '#00b7d7', deg: 35 }}
+            rightIcon={<FaLocationArrow size="12" />}
             onClick={() => {
               editor.commands.focus();
               scrollIntoView({ alignment: 'start' });
             }}>
-            <Text mr="8px" fz="1rem">
-              답글 작성하기
-            </Text>
-            <FaLocationArrow size="16" />
+            답글 작성하기
           </Button>
+        ) : (
+          <Flex justify="center ">
+            <Button
+              radius="md"
+              mb="0.2rem"
+              variant="gradient"
+              gradient={{ from: '#5b3bff', to: '#00b7d7', deg: 35 }}
+              onClick={() => navigate(SIGNIN_PATH)}>
+              로그인 후 답글 작성하기
+            </Button>
+          </Flex>
         )}
       </CommentsHeader>
       <CommentList>
         {adoptedComment && <Comment comment={adoptedComment} postInfo={postInfo} mutateFns={mutateFns} isTopComment />}
       </CommentList>
-      {comments.length > 0 && <Divider mt="2rem" variant="dashed" />}
+
+      {comments.length > 0 && user && <Divider mt="2rem" variant="dashed" />}
 
       {user && (
         <Container miw="990px" my="20px" ref={targetRef}>
@@ -133,6 +150,7 @@ const CommentSection = ({ postInfo, mutateFns }) => {
           </Flex>
         </Container>
       )}
+
       {comments.length > 0 && <Divider mb="4rem" variant="dashed" />}
       <CommentList>
         {comments.map(comment => (

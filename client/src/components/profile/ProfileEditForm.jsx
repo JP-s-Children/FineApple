@@ -27,7 +27,7 @@ import { checkDuplicatedNickName } from '../../services/auth';
 const editProfileScheme = z.object({
   country: z.string(),
   birthDate: z.date(),
-  nickName: z.string().regex(/.+/, { message: '닉네임을 입력해주세요' }),
+  nickName: z.string().regex(/.+/, { message: '닉네임을 입력해 주세요' }),
   phoneNumber: z.string().regex(/^01(?:0|1|[6-9])-(?:\d{3}|\d{4})-\d{4}$/, { message: '적절한 전화번호가 아닙니다.' }),
   avatarId: z.string(),
   aboutMe: z.string().max(1000),
@@ -80,7 +80,7 @@ const ProfileEditForm = () => {
       toast.success({ message: '회원정보가 수정되었습니다.' });
       navigate(MY_PROFILE_PATH);
     } catch (e) {
-      toast.error({ message: '회원정보를 수정하는데 실패하였습니다. 잠시 후 다시 시도해주세요.' });
+      toast.error({ message: '회원정보를 수정하는데 실패하였습니다. 잠시 후 다시 시도해 주세요.' });
     }
   };
 

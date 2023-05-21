@@ -18,7 +18,7 @@ const SignUpLink = styled(Link)`
 const SignIn = () => (
   <Flex py="48px" c="var(--font-color)" direction="column" align="center" gap="8px" h="100vh">
     <Title fz="32px" mb="24px" order={2}>
-      FineApple에 로그인 하세요
+      FineApple 로그인
     </Title>
     <SignInForm />
     <Text fz="14px">

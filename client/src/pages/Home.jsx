@@ -105,7 +105,7 @@ const Home = () => {
         FineApple이 지원하는 커뮤니티를 사용해 보세요!
       </Text>
 
-      <Flex w="940px" justify="center" align="center" gap="10px" mt="2rem">
+      <Flex w="940px" justify="center" align="center" gap="10px" mt="1.5rem">
         <CategorySelect currentValue={currentValue} setCurrentValue={setCurrentValue} />
         <AutoComplete
           width={680}

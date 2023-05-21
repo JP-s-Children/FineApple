@@ -13,14 +13,14 @@ import { authSignUp, checkDuplicatedEmail, checkDuplicatedNickName } from '../..
 
 const signupScheme = z
   .object({
-    firstName: z.string().regex(/.+/, { message: '이름을 입력해주세요' }),
-    lastName: z.string().regex(/.+/, { message: '성을 입력해주세요' }),
+    firstName: z.string().regex(/.+/, { message: '이름을 입력해 주세요' }),
+    lastName: z.string().regex(/.+/, { message: '성을 입력해 주세요' }),
     country: z.string(),
     birthDate: z.date({ invalid_type_error: '날짜를 선택해 주세요' }),
     email: z.string().email({ message: '적절한 이메일이 아닙니다.' }),
     password: z.string().regex(/^(?=.*\d)(?=.*[a-zA-Z]).{8,}$/, { message: '적절한 패스워드가 아닙니다.' }),
-    confirmPassword: z.string().regex(/.+/, { message: '확인을 위해 패스워드를 한 번 더 입력해주세요' }),
-    nickName: z.string().regex(/.+/, { message: '닉네임을 입력해주세요' }),
+    confirmPassword: z.string().regex(/.+/, { message: '확인을 위해 패스워드를 한 번 더 입력해 주세요' }),
+    nickName: z.string().regex(/.+/, { message: '닉네임을 입력해 주세요' }),
     phoneNumber: z
       .string()
       .regex(/^01(?:0|1|[6-9])-(?:\d{3}|\d{4})-\d{4}$/, { message: '적절한 전화번호가 아닙니다.' }),

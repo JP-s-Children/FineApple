@@ -5,21 +5,26 @@ import { paginationQuery } from './utils';
 const COLLECTION = 'users';
 
 const getProfileByEmail = async ({ email }) => {
-  const userDocRef = doc(db, COLLECTION, email);
-  const userSnapshot = await getDoc(userDocRef);
+  try {
+    const userDocRef = doc(db, COLLECTION, email);
+    const userSnapshot = await getDoc(userDocRef);
 
-  const { country, nickName, aboutMe, interestCategories, avatarId, level, point } = userSnapshot.data();
+    const { country, nickName, aboutMe, interestCategories, avatarId, level, point } = userSnapshot.data();
 
-  return {
-    email,
-    nickName,
-    country,
-    aboutMe,
-    interestCategories,
-    avatarId,
-    level,
-    point,
-  };
+    return {
+      email,
+      nickName,
+      country,
+      aboutMe,
+      interestCategories,
+      avatarId,
+      level,
+      point,
+    };
+  } catch (e) {
+    console.error(e);
+    return { error: 'cannot get profile by email' };
+  }
 };
 
 const getProfileByNickName = async ({ nickName }) => {

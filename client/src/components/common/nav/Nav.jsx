@@ -20,7 +20,7 @@ const Wrapper = styled(Group)`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
 `;
 
 const LogoLink = styled(Link)`

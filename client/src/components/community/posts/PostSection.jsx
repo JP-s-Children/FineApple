@@ -51,7 +51,7 @@ const PostSection = ({ queryFn, isQuestionButtonShown = true }) => {
             <Text fz="2rem" fw="600" mt="1px">
               질문
             </Text>
-            <Text c="blue" fz="2.5rem">
+            <Text c="blue" fz="2.5rem" mb="0.1rem">
               {data?.totalLength}
             </Text>
           </Flex>
