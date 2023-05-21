@@ -69,6 +69,7 @@ const CommentSection = ({ postInfo, mutateFns }) => {
           nickName: user.nickName,
           avatarId: user.avatarId,
           content: textEditorContent,
+          level: user.level,
         },
       },
       {
