@@ -1,12 +1,15 @@
 import React from 'react';
 import Recoil from 'recoil';
 import styled from '@emotion/styled';
+import { useNavigate } from 'react-router-dom';
 import { useDisclosure } from '@mantine/hooks';
 import { Box, Button, Flex, Skeleton, Text, Title } from '@mantine/core';
 import formattedDate from '../../utils/formattedDate';
 import { AvatarProfileInfoLink, CompletedIcon, DeletePostModal, LikeChip } from '..';
 import userState from '../../recoil/atoms/userState';
 import { useTogglePostLike } from '../../hooks/mutations';
+import useToast from '../../hooks/useToast';
+import { SIGNIN_PATH } from '../../constants/routes';
 
 const PostSection = styled.section`
   margin-top: 2.5rem;
@@ -28,7 +31,12 @@ const Content = styled(Text)`
 
 const PostContent = ({ post: { id, author, title, createAt, content, completed, like } }) => {
   const user = Recoil.useRecoilValue(userState);
+
+  const navigate = useNavigate();
+  const toast = useToast();
+
   const [opened, { close: closeModal, open: openModal }] = useDisclosure(false);
+
   const toggleLikeMutate = useTogglePostLike({ postId: id });
 
   return (
@@ -51,7 +59,7 @@ const PostContent = ({ post: { id, author, title, createAt, content, completed, 
           {formattedDate(new Date(createAt))}
         </Text>
 
-        <React.Suspense fallback={<Skeleton width="100%" height={200} my="40px" />}>
+        <React.Suspense fallback={<Skeleton width="100%" radius="lg" height={100} my="40px" />}>
           <AvatarProfileInfoLink email={author} />
         </React.Suspense>
 
@@ -59,12 +67,17 @@ const PostContent = ({ post: { id, author, title, createAt, content, completed, 
           <div dangerouslySetInnerHTML={{ __html: content }} />
         </Content>
       </PostSection>
+
       <Box my="lg" sx={{ alignSelf: 'flex-end' }}>
         <LikeChip
           checked={like.includes(user?.email)}
           likeCount={like.length}
           onClick={() => {
-            if (!user) return;
+            if (!user) {
+              toast.warning({ message: '로그인 후 가능합니다.' });
+              navigate(SIGNIN_PATH);
+              return;
+            }
 
             toggleLikeMutate({ checked: !like.includes(user.email), email: user.email });
           }}
