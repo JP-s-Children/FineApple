@@ -3,7 +3,7 @@ import { getPostsByNickName } from '../api/posts';
 const staleTime = 3000;
 
 const postsByNickNameQuery = nickName => ({
-  queryKey: ['posts', nickName],
+  queryKey: ['postsByNickName', nickName],
   queryFn: async ({ pageParam = 1 }) => {
     const { data } = await getPostsByNickName({ param: nickName, pageParam });
     return data;
