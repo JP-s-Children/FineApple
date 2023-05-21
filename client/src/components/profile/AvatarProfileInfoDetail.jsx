@@ -1,15 +1,13 @@
 import React from 'react';
-import { useQuery } from '@tanstack/react-query';
 import ReactCountryFlag from 'react-country-flag';
 import { Badge, Flex, Group, Text } from '@mantine/core';
 import styled from '@emotion/styled';
 import { AvatarIcon, InterestCategories } from '..';
-import { profileByNickNameQuery } from '../../queries';
 import { convertCountryNameToCode } from '../../utils/countryCode';
 
 const ProfileWrapper = styled(Flex)`
   flex-direction: column;
-  width: 100%;
+  width: 1024px;
   border-radius: 18px;
   border: 1px solid var(--opacity-border-color);
   background-color: var(--opacity-bg-color);
@@ -33,47 +31,42 @@ const AboutMe = styled.pre`
   word-wrap: break-word;
 `;
 
-const AvatarProfileInfoDetail = ({ nickName }) => {
-  const {
-    data: { email, country, aboutMe, interestCategories, avatarId, level, point },
-  } = useQuery(profileByNickNameQuery(nickName));
-
-  return (
-    <ProfileWrapper>
-      <Flex>
-        <Flex m="auto">
-          <AvatarIcon avatarId={avatarId} size="xl" />
-        </Flex>
-        <Flex direction="row" ml="30px" w="100%" justify="space-between">
-          <Flex direction="column">
-            <Group>
-              <ReactCountryFlag
-                countryCode={convertCountryNameToCode(country)}
-                style={{
-                  fontSize: '2em',
-                }}
-                svg
-              />
-              <Text fz="1.6rem" fw="600">
-                {nickName}
-              </Text>
-            </Group>
-            <Text fz="1rem" fw="400" color="gray" mb="20px">
-              {email}
+const AvatarProfileInfoDetail = ({ nickName, email, country, aboutMe, interestCategories, avatarId, level, point }) => (
+  <ProfileWrapper>
+    <Flex>
+      <Flex m="auto">
+        <AvatarIcon avatarId={avatarId} size="xl" />
+      </Flex>
+      <Flex direction="row" ml="30px" w="100%" justify="space-between">
+        <Flex direction="column">
+          <Group>
+            <ReactCountryFlag
+              countryCode={convertCountryNameToCode(country)}
+              style={{
+                fontSize: '2em',
+              }}
+              svg
+            />
+            <Text fz="1.6rem" fw="600">
+              {nickName}
             </Text>
+          </Group>
+          <Text fz="1rem" fw="400" color="gray" mb="20px">
+            {email}
+          </Text>
 
-            <InterestCategories interestCategories={interestCategories} />
-          </Flex>
+          <InterestCategories interestCategories={interestCategories} />
+        </Flex>
 
-          <Flex direction="column" align="flex-end" justify="flex-start" gap="sm">
-            <Badge size="md" fz="md" mt="2px">{`L${level}`}</Badge>
-            <Text fz="1rem" fw="400" ml="sm">{`${point} 포인트`}</Text>
-          </Flex>
+        <Flex direction="column" align="flex-end" justify="flex-start" gap="sm">
+          <Badge size="md" fz="md" mt="2px">{`L${level}`}</Badge>
+          <Text fz="1rem" fw="400" ml="sm">{`${point} 포인트`}</Text>
         </Flex>
       </Flex>
+    </Flex>
 
-      <AboutMe>{aboutMe || '등록된 자기소개가 없습니다.'}</AboutMe>
-    </ProfileWrapper>
-  );
-};
+    <AboutMe>{aboutMe || '등록된 자기소개가 없습니다.'}</AboutMe>
+  </ProfileWrapper>
+);
+
 export default AvatarProfileInfoDetail;
