@@ -6,4 +6,5 @@ export { default as rankQuery } from './rankQuery';
 export { default as myProfileQuery } from './myProfileQuery';
 export { default as postsByNickNameQuery } from './postsByNickNameQuery';
 export { default as profileByNickNameQuery } from './profileByNickNameQuery';
+export { default as profileByEmailQuery } from './profileByEmailQuery';
 export { default as popularPostsByCategoryQuery } from './popularPostsByCategoryQuery';

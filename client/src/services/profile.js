@@ -3,6 +3,24 @@ import { db } from './firebase';
 
 const COLLECTION = 'users';
 
+const getProfileByEmail = async ({ email }) => {
+  const userDocRef = doc(db, COLLECTION, email);
+  const userSnapshot = await getDoc(userDocRef);
+
+  const { country, nickName, aboutMe, interestCategories, avatarId, level, point } = userSnapshot.data();
+
+  return {
+    email,
+    nickName,
+    country,
+    aboutMe,
+    interestCategories,
+    avatarId,
+    level,
+    point,
+  };
+};
+
 const getProfileByNickName = async ({ nickName }) => {
   const usersRef = collection(db, 'users');
   const q = query(usersRef, where('nickName', '==', nickName));
@@ -82,4 +100,4 @@ const getUserRanking = async ({ topCount }) => {
   }
 };
 
-export { getProfileByNickName, getMyProfile, editMyProfile, getUserRanking };
+export { getProfileByEmail, getProfileByNickName, getMyProfile, editMyProfile, getUserRanking };
