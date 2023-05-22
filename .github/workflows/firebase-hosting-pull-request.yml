@@ -7,6 +7,10 @@ jobs:
   build_and_preview:
     if: '${{ github.event.pull_request.head.repo.full_name == github.repository }}'
     runs-on: ubuntu-latest
+    permissions:
+      checks: write
+      contents: read
+      pull-requests: write    
     steps:
       - uses: actions/checkout@v3
       - name: Generate Environment Variables File
@@ -26,7 +30,7 @@ jobs:
           VITE_FIREBASE_APP_ID: ${{ secrets.VITE_FIREBASE_APP_ID }}
       - run: npm ci && npm run build
       - uses: FirebaseExtended/action-hosting-deploy@v0
-        with:
-          repoToken: '${{ secrets.GITHUB_TOKEN }}'
-          firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_FINEAPPLE_EA261 }}'
-          projectId: fineapple-ea261
+          with:
+            repoToken: '${{ secrets.GITHUB_TOKEN }}'
+            firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_FINEAPPLE_EA261 }}'
+            projectId: fineapple-ea261
