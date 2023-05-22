@@ -30,7 +30,6 @@ const getComments = async ({ postId, pageParam }) => {
     pageParam,
     collectionName: COLLECTION,
     searchCondition: where('postId', '==', postId),
-    totalPageSearchCondition: where('postId', '==', postId),
   });
 
   return {
@@ -41,7 +40,7 @@ const getComments = async ({ postId, pageParam }) => {
 };
 
 const createComment = async commentInfo => {
-  const commentRef = addDoc(collection(db, COLLECTION), { ...commentInfo, createAt: serverTimestamp() });
+  const commentRef = addDoc(collection(db, COLLECTION), { ...commentInfo });
 
   return commentRef.id;
 };
@@ -56,7 +55,7 @@ const toggleCommentAdopted = async ({ id, adopted }) => {
 
 const toggleCommentLike = async ({ id, checked, userId }) => {
   await updateDoc(doc(db, COLLECTION, id), {
-    like: checked ? arrayRemove(userId) : arrayUnion(userId),
+    like: checked ? arrayUnion(userId) : arrayRemove(userId),
   });
 };
 

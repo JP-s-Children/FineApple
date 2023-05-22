@@ -112,9 +112,9 @@ router.post('/:postId/comment', (req, res) => {
 
 		res.send({ postId });
 	} catch {
-		res
-			.status(403)
-			.send({ error: '로그인이 만료되었습니다. 다시 로그인 후 시도해주세요.' });
+		res.status(403).send({
+			error: '로그인이 만료되었습니다. 다시 로그인 후 시도해 주세요.',
+		});
 	}
 });
 
@@ -132,9 +132,9 @@ router.patch('/:postId/comment/:commentId', (req, res) => {
 
 		res.send({ commentId });
 	} catch {
-		res
-			.status(403)
-			.send({ error: '로그인이 만료되었습니다. 다시 로그인 후 시도해주세요.' });
+		res.status(403).send({
+			error: '로그인이 만료되었습니다. 다시 로그인 후 시도해 주세요.',
+		});
 	}
 });
 
@@ -155,9 +155,9 @@ router.patch('/:postId/comment/useful/:commentId', (req, res) => {
 
 		res.send({ commentId, postId });
 	} catch {
-		res
-			.status(403)
-			.send({ error: '로그인이 만료되었습니다. 다시 로그인 후 시도해주세요.' });
+		res.status(403).send({
+			error: '로그인이 만료되었습니다. 다시 로그인 후 시도해 주세요.',
+		});
 	}
 });
 
@@ -200,7 +200,9 @@ router.delete('/:postId/comment/:commentId', (req, res) => {
 	} catch {
 		res
 			.status(403)
-			.send({ error: '로그인이 만료되었습니다. 다시 로그인 후 시도해주세요.' });
+			.send({
+				error: '로그인이 만료되었습니다. 다시 로그인 후 시도해 주세요.',
+			});
 	}
 });
 

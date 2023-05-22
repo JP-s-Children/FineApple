@@ -11,4 +11,3 @@ export { default as ScrollToTopButton } from './ScrollToTopButton';
 export { default as AvatarIcon } from './AvatarIcon';
 export * from './form';
 export * from './nav';
-export * from './selectProduct';

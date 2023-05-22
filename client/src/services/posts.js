@@ -20,6 +20,7 @@ import {
 } from 'firebase/firestore';
 import { db } from './firebase';
 import { specifySnapshotIntoData, formattedCreateAt, formattedUpdateAt, paginationQuery } from './utils';
+import { addPoints, deductPoints } from './point';
 
 const COLLECTION = 'posts';
 const PAGE_SIZE = 10;
@@ -65,26 +66,22 @@ const getPostsByCategory = async ({ category = '', subCategory = '', pageParam }
       : where('category', '==', category),
   });
 
-  return {
-    posts: await addCommentsLengthListInPosts(posts),
-    totalLength,
-    nextPage,
-  };
+  return { posts: await addCommentsLengthListInPosts(posts), totalLength, nextPage };
 };
 
 const getSearchedPosts = async ({ keyword = '', category = '', subCategory = '', isRouteHome }) => {
   const postsRef = collection(db, COLLECTION);
 
-  const customizeQuery = searchCondition => query(postsRef, searchCondition, orderBy('createAt', 'desc'), limit(5));
+  const customizeQuery = searchCondition => query(postsRef, searchCondition, orderBy('createAt', 'desc'));
 
   const qInHome =
     category === '' && subCategory === ''
-      ? query(postsRef, orderBy('createAt', 'desc'), limit(5))
+      ? query(postsRef, orderBy('createAt', 'desc'))
       : customizeQuery(or(where('category', '==', category), where('subCategory', '==', subCategory)));
 
   const qInCategoryRoute =
     category === '' && subCategory === ''
-      ? query(postsRef, orderBy('createAt', 'desc'), limit(5))
+      ? query(postsRef, orderBy('createAt', 'desc'))
       : subCategory !== ''
       ? customizeQuery(and(where('category', '==', category), where('subCategory', '==', subCategory)))
       : customizeQuery(or(where('category', '==', category), where('subCategory', '==', subCategory)));
@@ -93,9 +90,9 @@ const getSearchedPosts = async ({ keyword = '', category = '', subCategory = '',
 
   const filteredPostSnapshot = await getDocs(q);
 
-  const searchedPosts = specifySnapshotIntoData(filteredPostSnapshot).filter(({ title }) =>
-    new RegExp(keyword, 'i').test(title)
-  );
+  const searchedPosts = specifySnapshotIntoData(filteredPostSnapshot)
+    .filter(({ title }) => new RegExp(keyword, 'i').test(title))
+    .slice(0, 5);
 
   return searchedPosts;
 };
@@ -112,18 +109,35 @@ const getPopularPostsByCategory = async ({ category }) => {
   };
 };
 
-// 내가 작성한 글 목록 :auth 정보 필요
 const getMyPosts = async ({ author, pageParam }) => {
-  const { data, nextPage } = await paginationQuery({
+  const { data, totalLength, nextPage } = await paginationQuery({
     collectionName: COLLECTION,
     pageParam,
     searchCondition: where('author', '==', author),
   });
 
-  return {
-    posts: data,
-    nextPage,
-  };
+  return { posts: await addCommentsLengthListInPosts(data), totalLength, nextPage };
+};
+
+// 사용자 프로필 - 글 목록
+const getProfileWithPosts = async ({ author, pageParam }) => {
+  const { data, totalLength, nextPage } = paginationQuery({
+    collectionName: COLLECTION,
+    pageParam,
+    searchCondition: where('author', '==', author),
+  });
+
+  return { posts: await addCommentsLengthListInPosts(data), totalLength, nextPage };
+};
+
+const getMyLikePosts = async ({ author, pageParam }) => {
+  const { data, totalLength, nextPage } = await paginationQuery({
+    collectionName: COLLECTION,
+    pageParam,
+    searchCondition: where('like', 'array-contains', author),
+  });
+
+  return { posts: await addCommentsLengthListInPosts(data), totalLength, nextPage };
 };
 
 const getPost = async ({ postId }) => {
@@ -138,11 +152,17 @@ const getPost = async ({ postId }) => {
   };
 };
 
-// 사용자 프로필 - 글 목록
-const getProfileWithPosts = async () => {};
-
 const createPost = async postInfo => {
-  const postRef = await addDoc(collection(db, COLLECTION), { ...postInfo, createAt: serverTimestamp() });
+  const postRef = await addDoc(collection(db, COLLECTION), {
+    ...postInfo,
+    images: [],
+    like: [],
+    completed: false,
+    createAt: serverTimestamp(),
+    updateAt: serverTimestamp(),
+  });
+
+  await addPoints({ email: postInfo.author, points: 10 });
 
   return postRef.id;
 };
@@ -151,8 +171,10 @@ const editPost = async ({ id, title, content }) => {
   await updateDoc(doc(db, COLLECTION, id), { title, content, updateAt: serverTimestamp() });
 };
 
-const removePost = async ({ id }) => {
+const removePost = async ({ id, author }) => {
   await deleteDoc(doc(db, COLLECTION, id));
+
+  await deductPoints({ email: author, points: 10 });
 };
 
 const togglePostCompleted = async ({ id, completed }) => {
@@ -160,17 +182,17 @@ const togglePostCompleted = async ({ id, completed }) => {
 };
 
 const togglePostLike = async ({ id, checked, userId }) => {
-  await updateDoc(doc(db, COLLECTION, id), {
-    like: checked ? arrayRemove(userId) : arrayUnion(userId),
-  });
+  await updateDoc(doc(db, COLLECTION, id), { like: checked ? arrayUnion(userId) : arrayRemove(userId) });
 };
 
 export {
   getPosts,
   getPostsByCategory,
   getSearchedPosts,
-  getMyPosts,
   getPopularPostsByCategory,
+  getMyPosts,
+  getProfileWithPosts,
+  getMyLikePosts,
   getPost,
   createPost,
   editPost,

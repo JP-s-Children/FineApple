@@ -3,7 +3,7 @@ import styled from '@emotion/styled';
 import { Link } from 'react-router-dom';
 import { Container, Flex, List, Text, Title } from '@mantine/core';
 import { AutoComplete, CategorySelect, Tutorials } from '../components';
-import categoryList from '../constants/categoryList';
+import { CATEGORY_INFO } from '../constants/category';
 import { getSearchedPosts } from '../services/posts';
 
 const Wrapper = styled(Container)`
@@ -35,8 +35,8 @@ const CategoryListContainer = styled(Flex)`
 
 const CategoryList = styled(List)`
   display: grid;
-  grid-template-rows: 1fr 1fr;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-rows: repeat(2, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   gap: 30px;
   margin-top: 1rem;
 `;
@@ -94,7 +94,7 @@ const Home = () => {
             <Text mt="1rem" fz="6rem">
               Welcome.
             </Text>
-            <Text fz="7rem" variant="gradient" gradient={{ from: 'blue', to: '#FF7E37', deg: 120 }}>
+            <Text fz="7rem" variant="gradient" gradient={{ from: '#5b3bff', to: '#00b7d7', deg: 75 }}>
               FineApple
             </Text>
           </Flex>
@@ -105,7 +105,7 @@ const Home = () => {
         FineApple이 지원하는 커뮤니티를 사용해 보세요!
       </Text>
 
-      <Flex w="940px" justify="center" align="center" gap="10px" mt="2rem">
+      <Flex w="940px" justify="center" align="center" gap="10px" mt="1.5rem">
         <CategorySelect currentValue={currentValue} setCurrentValue={setCurrentValue} />
         <AutoComplete
           width={680}
@@ -117,14 +117,14 @@ const Home = () => {
 
       <CategoryListContainer>
         <Text mb="2rem" fz="21px" fw="600">
-          카테고리를 선택하시면 관련 질문들이 표시됩니다
+          카테고리를 선택하면 관련 질문들이 표시됩니다
         </Text>
 
         <CategoryList>
-          {categoryList.map(({ path, category, content }) => (
-            <Category key={content} path={path}>
-              <Link to={`${category}/${path}`}>
-                <CategoryDescription>{content}</CategoryDescription>
+          {Object.values(CATEGORY_INFO).map(({ name, path, category }) => (
+            <Category key={name} path={path}>
+              <Link to={`posts/${category}/${path}`}>
+                <CategoryDescription>{name}</CategoryDescription>
               </Link>
             </Category>
           ))}

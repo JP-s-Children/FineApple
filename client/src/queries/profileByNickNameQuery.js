@@ -1,12 +1,12 @@
-import { getProfileByNickName } from '../api/profile';
+import { getProfileByNickName } from '../services/profile';
 
 const staleTime = 3000;
 
 const profileByNickNameQuery = nickName => ({
-  queryKey: ['profile', nickName],
+  queryKey: ['profileByNickname', nickName],
   queryFn: async () => {
-    const { data } = await getProfileByNickName(nickName);
-    return data;
+    const profile = await getProfileByNickName({ nickName });
+    return profile;
   },
   staleTime,
   suspense: true,

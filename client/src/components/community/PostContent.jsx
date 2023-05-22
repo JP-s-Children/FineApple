@@ -1,13 +1,15 @@
 import React from 'react';
 import Recoil from 'recoil';
 import styled from '@emotion/styled';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useDisclosure } from '@mantine/hooks';
-import { Badge, Button, Flex, Text, Title } from '@mantine/core';
+import { Box, Button, Flex, Skeleton, Text, Title } from '@mantine/core';
 import formattedDate from '../../utils/formattedDate';
-import { AvatarIcon, CompletedIcon, DeletePostModal } from '..';
+import { AvatarProfileInfoLink, CompletedIcon, DeletePostModal, LikeChip } from '..';
 import userState from '../../recoil/atoms/userState';
-import { PROFILE_PATH } from '../../constants/routes';
+import { useTogglePostLike } from '../../hooks/mutations';
+import useToast from '../../hooks/useToast';
+import { SIGNIN_PATH } from '../../constants/routes';
 
 const PostSection = styled.section`
   margin-top: 2.5rem;
@@ -16,16 +18,6 @@ const PostSection = styled.section`
 const PostTitle = styled(Title)`
   font-size: 2.5rem;
   word-break: keep-all;
-`;
-
-const AuthorProfile = styled.header`
-  display: flex;
-  gap: 20px;
-  margin-top: 2rem;
-  padding: 20px;
-  border: 1px solid #e5e5e5;
-  border-radius: 10px;
-  box-shadow: rgba(0, 0, 0, 0.06) 0px 2px 4px 0px inset;
 `;
 
 const Content = styled(Text)`
@@ -37,11 +29,15 @@ const Content = styled(Text)`
   word-break: keep-all;
 `;
 
-const PostContent = ({
-  post: { id, author, title, createAt, content, completed, like, avatarId, nickName, level, point },
-}) => {
-  const userInfo = Recoil.useRecoilValue(userState);
+const PostContent = ({ post: { id, author, title, createAt, content, completed, like } }) => {
+  const user = Recoil.useRecoilValue(userState);
+
+  const navigate = useNavigate();
+  const toast = useToast();
+
   const [opened, { close: closeModal, open: openModal }] = useDisclosure(false);
+
+  const toggleLikeMutate = useTogglePostLike({ postId: id });
 
   return (
     <>
@@ -49,9 +45,8 @@ const PostContent = ({
         <Flex justify="space-between" w="100%" mb="1rem">
           <Flex gap="1rem" mt="0.2rem" mb="0.5rem" h="30px">
             <CompletedIcon completed={completed} />
-            {/* <HeartIcon likeCount={like.length} /> */}
           </Flex>
-          {author === userInfo?.email && (
+          {author === user?.email && (
             <Button radius="xl" color="red" variant="outline" onClick={openModal}>
               질문 삭제하기
             </Button>
@@ -63,29 +58,32 @@ const PostContent = ({
         <Text mt="0.5rem" ml="0.2rem" fz="15px" c="grey">
           {formattedDate(new Date(createAt))}
         </Text>
-        <Link to={`${PROFILE_PATH}/${nickName}`}>
-          <AuthorProfile>
-            <AvatarIcon avatarId={avatarId} />
-            <Flex display="flex" gap="10px" direction="column">
-              <Text mt="-3px" ml="2px" fz="21px" fw="500" c="var(--font-color)">
-                {nickName}
-              </Text>
-              <Flex gap="8px" align="center">
-                <Badge variant="outline" size="lg" fz="14px">
-                  레벨 {level}
-                </Badge>
-                <Badge variant="outline" size="lg" fz="14px">
-                  포인트 {point}
-                </Badge>
-              </Flex>
-            </Flex>
-          </AuthorProfile>
-        </Link>
+
+        <React.Suspense fallback={<Skeleton width="100%" radius="lg" height={100} my="40px" />}>
+          <AvatarProfileInfoLink email={author} />
+        </React.Suspense>
+
         <Content>
           <div dangerouslySetInnerHTML={{ __html: content }} />
         </Content>
-        <DeletePostModal postId={id} opened={opened} onClose={closeModal} />
       </PostSection>
+
+      <Box my="lg" sx={{ alignSelf: 'flex-end' }}>
+        <LikeChip
+          checked={like.includes(user?.email)}
+          likeCount={like.length}
+          onClick={() => {
+            if (!user) {
+              toast.warning({ message: '로그인 후 가능합니다.' });
+              navigate(SIGNIN_PATH);
+              return;
+            }
+
+            toggleLikeMutate({ checked: !like.includes(user.email), email: user.email });
+          }}
+        />
+      </Box>
+      <DeletePostModal postId={id} opened={opened} onClose={closeModal} />
     </>
   );
 };

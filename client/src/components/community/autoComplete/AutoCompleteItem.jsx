@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from '@emotion/styled';
-import { useNavigate } from 'react-router';
+import { useNavigate, useLocation } from 'react-router';
 import { Flex, Text } from '@mantine/core';
 import { POST_PATH } from '../../../constants/routes';
 
@@ -30,14 +30,18 @@ const Content = styled(Text)`
   font-weight: 400;
   text-align: start;
   word-break: keep-all;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
 `;
 
 const AutoCompleteItem = React.forwardRef(({ title, id, ...option }, ref) => {
   const navigate = useNavigate();
+  const { pathname } = useLocation();
 
   return (
     <Container ref={ref} onClick={() => navigate(`${POST_PATH}/${id}`)} {...option}>
-      <Flex justify="flex-start" align="center" p="20px">
+      <Flex justify="flex-start" align="center" p="20px" w={pathname === '/' ? '630px' : '800px'}>
         <Content>{title}</Content>
       </Flex>
     </Container>

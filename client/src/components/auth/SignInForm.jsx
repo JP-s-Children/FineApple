@@ -10,6 +10,7 @@ import userState from '../../recoil/atoms/userState';
 import { MAIN_PATH } from '../../constants/routes';
 import { InputWrapper } from '../common/form';
 import { authSignIn } from '../../services/auth';
+import useToast from '../../hooks/useToast';
 
 const signinScheme = z.object({
   email: z.string().email({ message: '이메일 형식에 맞게 입력해 주세요.' }),
@@ -20,6 +21,7 @@ const SignInForm = () => {
   const navigate = useNavigate();
   const setUser = useSetRecoilState(userState);
   const [errorMessage, setErrorMessage] = React.useState('');
+  const toast = useToast();
 
   const {
     handleSubmit,
@@ -35,8 +37,9 @@ const SignInForm = () => {
       setUser(userData);
       navigate(MAIN_PATH);
     } catch (e) {
-      setErrorMessage(e.response.data.error);
       reset();
+      toast.error({ message: '아이디와 비밀번호를 다시 확인해 주세요.' });
+      setErrorMessage(e.response.data.error);
     }
   };
 

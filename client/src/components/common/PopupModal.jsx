@@ -8,13 +8,13 @@ const ModalContainer = styled(Modal)`
 
   section {
     height: 820px;
-    background-color: var(--body-bg-color);
+    background-color: var(--footer-bg-color);
   }
 
   .mantine-Modal-header,
   .mantine-Modal-body {
     color: var(--font-color);
-    background-color: var(--body-bg-color);
+    background-color: var(--footer-bg-color);
   }
 
   button.mantine-Modal-close {
@@ -70,8 +70,8 @@ const PopupModal = ({ opened, onClose, title, children }) => (
     radius="18px"
     size="50%"
     overlayProps={{
-      opacity: 0.55,
-      blur: 1,
+      opacity: 0.25,
+      blur: 2.5,
     }}
     centered>
     {children}

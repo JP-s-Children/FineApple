@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from '@emotion/styled';
 import { Flex, Menu, Text } from '@mantine/core';
+import { Link } from 'react-router-dom';
 
 const SubMenuContainer = styled(Menu.Dropdown)`
   min-width: 100vw;
@@ -34,7 +35,7 @@ const SubMenuLabel = styled(Text)`
   padding-left: 5px;
 `;
 
-const SubMenuItem = styled(Menu.Item)`
+const SubMenuItem = styled(Link)`
   font-size: ${({ size }) => (size === 'sm' ? '15px' : size === 'md' ? '18px' : '22px')};
   font-weight: ${({ size }) => (size === 'sm' ? '400' : size === 'md' ? '600' : '700')};
   margin-top: ${({ size }) => size === 'sm' && '8px'};
@@ -64,17 +65,11 @@ const SubMenu = ({ label, menuItems }) => (
     <SubMenuWrapper>
       <Flex direction="column">
         {label && <SubMenuLabel>{label}</SubMenuLabel>}
-        {menuItems.map(({ size, content, path, onClick }) =>
-          path ? (
-            <SubMenuItem key={`${content}-${path}`} size={size} component="a" href={path}>
-              {content}
-            </SubMenuItem>
-          ) : (
-            <SubMenuItem key={content} size={size} component="a" onClick={onClick}>
-              {content}
-            </SubMenuItem>
-          )
-        )}
+        {menuItems.map(({ size, content, path }) => (
+          <SubMenuItem key={`${content}-${path}`} to={path} size={size}>
+            {content}
+          </SubMenuItem>
+        ))}
       </Flex>
     </SubMenuWrapper>
   </SubMenuContainer>

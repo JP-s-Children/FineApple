@@ -6,6 +6,8 @@ const useEditCommentMutation = postId =>
   useCommentMutation({
     requestFn: ({ commentId, content }) => editComment({ id: commentId, content }),
     updateFn: edit,
+    adoptedCommentUpdateFn: ({ prevAdoptedComment }, { content }) =>
+      prevAdoptedComment ? { ...prevAdoptedComment, content } : prevAdoptedComment,
     postId,
   });
 

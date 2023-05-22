@@ -9,8 +9,8 @@ import { CATEGORY } from '../../constants/category';
 import { MAIN_PATH, QUESTION_PATH } from '../../constants/routes';
 
 const Wrapper = styled(Container)`
-  min-width: 1280px;
-  width: 1280px;
+  min-width: 1024px;
+  width: 1024px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -37,18 +37,20 @@ const CategoryPosts = () => {
 
   return (
     <Wrapper>
-      <Flex justify="space-between" align="center" mt="2rem" miw="1280px" w="100%" h="140px">
+      <Flex direction="column" mt="1rem" mb="2rem" miw="1024px" w="100%" h="165px">
         <PostsDescription> {subCategory ? CATEGORY[subCategory] : CATEGORY[category]}</PostsDescription>
-        <AutoComplete
-          width={820}
-          queryFn={getSearchedPosts}
-          category={category}
-          subCategory={subCategory}
-          isRouteHome={isRouteHome}
-        />
-        <Button ml="2rem" size="lg" radius="10px" onClick={() => navigate(QUESTION_PATH)}>
-          질문하기
-        </Button>
+        <Flex justify="space-between">
+          <AutoComplete
+            width={850}
+            queryFn={getSearchedPosts}
+            category={category}
+            subCategory={subCategory}
+            isRouteHome={isRouteHome}
+          />
+          <Button ml="2rem" size="lg" radius="10px" onClick={() => navigate(QUESTION_PATH)}>
+            질문하기
+          </Button>
+        </Flex>
       </Flex>
 
       <PostSection queryFn={postsByCategoryQuery({ category, subCategory })} />

@@ -2,8 +2,7 @@ import React from 'react';
 import styled from '@emotion/styled';
 import { Container, Skeleton } from '@mantine/core';
 import { useParams } from 'react-router-dom';
-import { postsByNickNameQuery } from '../queries';
-import { AvatarProfileInfo, PostSection } from '../components';
+import { ProfileInfo } from '../components';
 
 const Wrapper = styled(Container)`
   min-width: 1024px;
@@ -16,19 +15,22 @@ const Wrapper = styled(Container)`
   color: var(--font-color);
 `;
 
-const CommunityProfile = () => {
+const Profile = () => {
   const { nickName } = useParams();
 
   return (
     <Wrapper>
-      <React.Suspense fallback={<Skeleton width="100%" height={200} my="40px" />}>
-        <AvatarProfileInfo nickName={nickName} />
-      </React.Suspense>
-      <React.Suspense fallback={<Skeleton width="100%" height={200} my="40px" />}>
-        <PostSection queryFn={postsByNickNameQuery(nickName)} isShownQuestionButton={false} />
+      <React.Suspense
+        fallback={
+          <>
+            <Skeleton width="100%" height={240} my="40px" />
+            <Skeleton width="100%" height={600} my="40px" />
+          </>
+        }>
+        <ProfileInfo nickName={nickName} />
       </React.Suspense>
     </Wrapper>
   );
 };
 
-export default CommunityProfile;
+export default Profile;

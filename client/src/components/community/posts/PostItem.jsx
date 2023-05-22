@@ -66,7 +66,7 @@ const PostItem = ({ post: { id, title, createAt, category, subCategory, complete
               {title}
             </Title>
             <Text c="var(--footer-font-color)">{formattedDate(createAt)}</Text>
-            <Flex w="100%" mt="1rem" justify="space-between" fz="15px" c="var(--font-color)">
+            <Flex w="100%" mt="0.5rem" justify="space-between" fz="15px" c="var(--font-color)">
               <CompletedIcon completed={completed} />
               <Flex>
                 <Flex mr="1rem" gap="0.5rem" align="center">
@@ -76,7 +76,7 @@ const PostItem = ({ post: { id, title, createAt, category, subCategory, complete
                   </Text>
                 </Flex>
                 <Flex mr="1rem" gap="0.4rem" align="center">
-                  <AiFillHeart size="20" color="#F59F01" />
+                  <AiFillHeart size="20" color="var(--like-color)" />
                   <Text fz="1.2rem" fw="500">
                     {like.length}
                   </Text>

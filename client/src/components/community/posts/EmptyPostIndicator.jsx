@@ -21,7 +21,7 @@ const EmptyPostIndicator = ({ isButtonShown }) => {
 
   return (
     <Container>
-      <Title mb="0.5rem" fz="2rem" fw="500" ta="center">
+      <Title mb="0.5rem" fz="1.8rem" fw="500" ta="center">
         관련 질문이 없습니다 👷🏻‍♂️
       </Title>
       {isButtonShown && (

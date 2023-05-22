@@ -11,14 +11,14 @@ import filterPosts from '../../../utils/filterPosts';
 import transientOptions from '../../../constants/transientOptions';
 
 const Wrapper = styled(Container)`
-  min-width: 1280px;
+  min-width: 1024px;
   width: 100%;
   padding: 0;
 `;
 
 const PostsContainer = styled(Flex, transientOptions)`
   margin: 1rem auto 0;
-  width: ${({ $isPopularIncluded }) => ($isPopularIncluded ? '1280px' : '100%')};
+  width: ${({ $isPopularIncluded }) => ($isPopularIncluded ? '1024px' : '100%')};
   overflow: hidden;
 `;
 
@@ -51,7 +51,7 @@ const PostSection = ({ queryFn, isQuestionButtonShown = true }) => {
             <Text fz="2rem" fw="600" mt="1px">
               질문
             </Text>
-            <Text c="blue" fz="2.5rem">
+            <Text c="blue" fz="2.5rem" mb="0.1rem">
               {data?.totalLength}
             </Text>
           </Flex>
