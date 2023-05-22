@@ -1,5 +1,5 @@
-import { throttle } from 'lodash';
 import React from 'react';
+import { throttle } from 'lodash';
 import { togglePostLike } from '../../services/posts';
 import usePostInfoMutation from './usePostInfoMutation';
 
