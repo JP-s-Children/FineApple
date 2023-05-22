@@ -12,7 +12,7 @@ dist
 dist-ssr
 *.local
 package-lock.json
-.github
+
 .env
 
 # Editor directories and files
