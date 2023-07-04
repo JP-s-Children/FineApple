@@ -1,6 +1,6 @@
 # FineApple
 
-<img width="720" alt="배경화면" src="https://github.com/JP-s-Children/FineApple/assets/99726297/7559a2f6-5787-487d-bc1b-6da80a02d71b">
+<img width="720" alt="배경화면" src="https://github.com/JP-s-Children/FineApple/assets/99726297/8cb01b96-7464-47b2-932a-1a7846b75c4e">
 
 ## ▶︎ Introduce
 Community Web Application related to Computer / IT and Game topics
@@ -42,10 +42,6 @@ Completion of Deployment and Refactoring underway for responsive design
 <br/>
 
 ## 💿 Background on project planning and execution
-This is a team project from an offline bootcamp course. 
-<br/>
-부트캠프 오프라인 과정에서 진행한 팀 프로젝트입니다. 
-
 The FineApple project was planned and executed as a project to clone the UI/UX of the community feature of the Apple website by thinking about how to improve and supplement the UI/UX of the existing Apple website.
 <br/>
 FineApple 프로젝트는 기존 Apple 웹사이트의 UI / UX 면에서 부족한 부분들을 발견하여, Apple 웹사이트의 커뮤니티 기능의 UI / UX를 개선 및 보완하는 방안을 고민하여 클론하는 프로젝트로 기획 및 진행하였습니다.
@@ -57,7 +53,7 @@ We successfully completed the clone project with the aim of improving usability,
 
 <br/>
 
-## 💡 **Main Functions**
+## 💡 **Main Features**
 
 - Search for questions related to the topics you're interested in | 관심 있는 주제와 관련된 질문을 검색
 - Create a question if you don't see what you're looking for | 찾고자 하는 질문이 없을 경우 질문 작성
