@@ -2,7 +2,8 @@
 
 <img width="720" alt="배경화면" src="https://github.com/JP-s-Children/FineApple/assets/99726297/8cb01b96-7464-47b2-932a-1a7846b75c4e">
 
-> Check Our Demo Video! 👉 https://youtu.be/EHFsoLHsa
+> Check Our Demo Video! 👉 https://youtu.be/EHFsoLHsaOs
+> 
 
 <br/>
 
