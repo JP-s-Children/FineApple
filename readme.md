@@ -60,11 +60,16 @@ We successfully completed the clone project with the aim of improving usability,
 
 ## 💡 **Main Features**
 
+- Login, SignUp, and Edit Profile | 로그인, 회원가입, 그리고 프로필 편집 기능
+- Switch Theme (light & dark) | 테마 기능 (라이트 & 다크 테마)
 - Search for questions related to the topics you're interested in | 관심 있는 주제와 관련된 질문을 검색
 - Create a question if you don't see what you're looking for | 찾고자 하는 질문이 없을 경우 질문 작성
 - Reply to a question | 질문에 대한 답글 작성
 - Provide a list of questions related to the topic | 주제와 관련된 질문 목록 제공
 - Provide a list of popular articles related to your topic | 주제와 관련된 인기글 목록 제공
+- Provide Like Feature to collect liked Questions | 좋아요한 질문 목록을 모으기 위해 좋아요 기능 제공
+- Provide a list of questions which I pressed the like button | 내가 좋아요 버튼을 누른 질문 목록 제공
+- Provide Like Feature on Comment | 답글에 대한 좋아요 기능 제공
 - Give points to people who contribute to the community (ask questions, replies comment to post) | 커뮤니티 활동에 기여(질문 작성, 답글 작성)하는 사람들에게 포인트를 제공
 - Provide a ranking UI based on points and levels | 포인트, 레벨 기반의 랭킹 UI 제공
 
